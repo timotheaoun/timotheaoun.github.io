@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Home/styleHome.css">
+    <title>Parcours de Timothé AOUN</title>
+	 <meta name="description" content="Une courte description de mon site web.">
+  <meta name="keywords" content="portfolio, CV, compétences, Timothé AOUN, html">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Timothé AOUN">
+  </head>
+    <style>
+#competences {
+			padding: 2rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            background-color: #ffffffcc;
+			color: black;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#competences h2 {
+    color: #0072ff;
+    margin-bottom: 10px;
+}
+
+.competence-table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #e6f0ff;
+    color: #003366;
+}
+.level {
+    text-align: center;
+}
+
+.stars::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    letter-spacing: 3px;
+    font-size: 1.2em;
+    color: gold;
+}
+
+.stars-0::before    { content: "☆☆☆☆☆"; color: red;}
+.stars-0-5::before  { content: "★☆☆☆☆"; color: #ffd70080; }
+.stars-1::before    { content: "★☆☆☆☆"; color: red;}
+.stars-1-5::before  { content: "★★☆☆☆"; color: #ffd700cc; }
+.stars-2::before    { content: "★★☆☆☆"; color: orange; }
+.stars-2-5::before  { content: "★★★☆☆"; color: #ffd700cc; }
+.stars-3::before    { content: "★★★☆☆"; color: green; }
+.stars-3-5::before  { content: "★★★★☆"; color: #ffd700cc; }
+.stars-4::before    { content: "★★★★☆"; color: green; }
+.stars-4-5::before { content: "★★★★★☆"; }
+.stars-5::before    { content: "★★★★★"; color: #ffd700cc;  }
+
+
+        .button:hover {
+            background-color: #e9e9e9;
+        }
+
+        .image {
+            width: 10%;
+            height: 10%;
+        }
+
+        li {
+            color: black;
+        }
+
+        section {
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            background-color: #ffffffcc;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Segoe UI', sans-serif;
+            color: #222;
+        }
+
+        h1 {
+            border-bottom: 2px solid #888;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .carousel-container {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            margin: 1rem auto;
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+            border-radius: 10px;
+        }
+
+        .active {
+            opacity: 1;
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .accordion-header h2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin: 0;
+            font-size: 1.6rem;
+        }
+
+        .accordion-header .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            margin-left: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .accordion-header.active .arrow {
+            transform: rotate(90deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease;
+        }
+
+        .accordion-content.open {
+            max-height: 2000px;
+            margin-top: 1rem;
+        }
+		.year-block {
+    margin-bottom: 2rem;
+}
+
+.year-block h2 {
+    margin-bottom: 0.5rem;
+}
+
+h3 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+h4 {
+    margin: 0.3rem 0;
+}
+/* Cacher la flèche native */
+details summary {
+  list-style: none; /* enlève la flèche */
+  cursor: pointer;
+  display: flex;           /* pour aligner la flèche + texte sur la même ligne */
+  align-items: center;     /* vertical centering */
+  gap: 0.5em;              /* espace entre la flèche et le texte */
+  font-weight: bold;
+  color: black;
+}
+
+/* On cache la flèche native */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Flèche personnalisée */
+details[open] > summary::before {
+  content: "▼";           /* flèche vers le bas quand ouvert */
+  color: black;
+  font-size: 1em;
+  display: inline-block;
+  width: 1em;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+details:not([open]) > summary::before {
+  content: "▶";           /* flèche vers la droite quand fermé */
+  color: black;
+  font-size: 1em;
+  display: inline-block;
+  width: 1em;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+    </style>
+
+<body>
+    <nav>
+        <ul>
+<li><a href="cv/CV.html">CV Virtuel</a></li>
+<li><a href="Contact/Contact.html">Me contacter</a></li>
+<li><a href="Index.html">Accueil</a></li>	
+<li><a href="Maths/ProjetsMatheux.html">Projets numériques</a></li>		
+        </ul>
+    </nav>
+
+<section>
+    <h1>Mon parcours</h1>
+
+    <div class="year-block">
+        <h2>2023 (3<sup>ème</sup>, Collège Jeanne d'Arc)</h2>
+        <h4>Stage à TSE express médical</h4>
+        <h4>Obtention du brevet des collèges mention très bien</h4>
+    </div>
+
+    <div class="year-block">
+        <h2>2024 (2<sup>nde</sup>, Lycée Jeanne d'Arc)</h2>
+
+     
+            <h3>Mes stages </h3>
+            <h4>Stage dans une ludothèque municipale</h4>
+			<details>
+            <summary><h4>Stage au service</h4></summary>
+			</details>
+        <h3>Autre</h3>
+		<details>
+        <summary><h4>Participation à un concours d'éloquence</h4></summary>
+		<p> Csja</p>
+		</details>
+        <h4>Obtention du code de la route</h4>
+    </div>
+</section>
+
+
+<div class="section" id="competences">
+    <h1>Compétences techniques</h1>
+    <h2>Voici un aperçu de mes compétences principales, évaluées selon mon niveau de maîtrise :</h2>
+
+    <div class="competence-table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Compétence</th>
+                    <th>Description</th>
+                    <th>Niveau</th>
+					<th>Analyse</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Python</td>
+                    <td>Automatisations, assistants, logique algorithmique</td>
+                    <td class="level"><div class="Stars stars-3"></div></td>
+					<td> Bases solides en python et excellent raisonnement mais encore besoin de documentation pour de très nombreuses bibliothèques</td>
+                </tr>
+                <tr>
+                    <td>Batch / CMD</td>
+                    <td>Scripts systèmes Windows, sécurité, hashing, automatisations, réseau</td>
+                    <td class="level"><div class="Stars stars-5"></div></td>
+					<td> Excellente maitrise du terminal, création de scripts avancés en fonction des besoins, très bon repérage dans la structure du PC, des autorisations, de la sécurité, du hash...</td>
+                </tr>
+                <tr>
+                    <td>HTML / CSS</td>
+                    <td>Création de pages web statiques et interactives</td>
+                    <td class="level"><div class="Stars stars-2"></div></td>
+					<td> Bonne logique pour les bases d'une page web mais encore besoin d'utiliser des IA pour le css et le js avancé
+                </tr>
+                <tr>
+                    <td>Mathématiques</td>
+                    <td>Démonstrations, logique, compréhension, réutilisation</td>
+                    <td class="level"><div class="Stars stars-5"></div></td>
+					<td> Découverte de notions mathématiques avant même leurs études en cours (besoin de ces notions pour des projets), vraie curiosité en la matière. </td>
+                </tr>
+				<td>Français</td>
+				<td>Art oratoire, vocabulaire, réflexion, réthorique</td>
+				<td class="level"><div class="Stars stars-4-5"></div></td>
+				<td> Passion pour la langue française, lecture et participation à des concours d'éloquence</td>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    <script>
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const arrow = header.querySelector('.arrow');
+            content.classList.toggle('open');
+            header.classList.toggle('active');
+        }
+        window.onload = function () {
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Créer un grapheur en python sans bibliothèques ?</title>
+<link rel="stylesheet" href="../../style.css">
+ <meta name="description" content="Comment créer un grapheure python sans utiliser de bibliothèques ? (mise à part maths et turtle) | Timothé AOUN">
+ <meta name="keywords" content="grapheur python, créer un grapheur, python sans bibliothèques, comment faire un grapheur en python, sans bibliothèque, afficher graphique python, python graphique simple, Timothé AOUN">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Timothé AOUN">
+</head>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<body>
+  <div class="container">
+    <h1>Créer un grapheur en python sans bibliothèques ?</h1>
+		 <figcaption>Rédigé 29/05/2025</figcaption>
+	 <br>
+    <div id="Intro">
+	<h2> Introduction... </h2>
+	 Sur ma calculatrice NumWorks, j’ai toujours été émerveillé devant la fonctionnalité grapheur.  
+      J’aimerais recréer cela en Python, mais **sans utiliser de bibliothèques graphiques** comme tkinter ou matplotlib.  
+      <br><br>
+     Au début, j'ai essayé une première approche: à partir d'une expression, mon script calculait la pente ainsi que l'ordonnée à l'origine de la fonction. Malheuresement, bien qu'élégante, mon approche restait extrènement limitée. Comment les arrondis sont-ils possible à tracer ? (comme un simple fonction carré) Aujourd'hui, Lundi 26 mai 2025, j'ai enfin compris quelque chose...
+	 <br><br>
+	 En regardant la partie grapheur de ma calculatrice de plus près, j'ai remarqué qu'elle ne calculait pas un coefficient directeur mais toutes les valeurs de y pour des valeurs de x calculées avec un interval (par exemple x=0.01; 0.02...) quand on zoom ou dézoom, cet interval s'ajuste tout simplement, d'où le léger délais et le raffraichissement d'écran. On peut donc facilement recréer un grapheur en python sans réel besoin de bibliothèques (sauf math et turtle)
+    </div>
+	<br>
+	<br>
+	<div id="parties" >
+	<h2> Comment faire ? Quelles sont les difficultés du projet ?</h2>
+	<li>→  Il faut faire un input qui demande l'expression d'une fonction
+	<li>→  Il faut tracer l'axe des abcisses et des ordonnées et définir le centre comme l'origine du repère
+	<li>→  La fonction est extraite et réorganisée de façon à pouvoir être interprêtée par le script (par exemple transformer 3x+5 en 3*x+5)
+	<li>→  Une boucle part de xmin jusqu'à xmax en calculant f(x+0.01) avec x=x+0.01 à chaque boucles, on pourrait définir un fonction f(x) avec l'expression réorganisée de l'input
+	<li>→  Le problème c'est qu'il faut relier plusieurs points. Il faut donc dire au script à combien de degrés s'orienter et de combien avancer. Pour cela, nous allons devoir faire des maths, pour savoir de combien avancer, c'est relativement simple avec le théorème de pythagore par exemple, mais pour l'orientation, cela va être plus compliqué...
+<br>
+<br>
+<figure>
+<img src="Geogebra.png" alt="Projet créé sur géogébra: https://www.geogebra.org">
+ <figcaption>Créé avec GeoGebra – www.geogebra.org</figcaption>
+</figure>
+Xa et Xb sont des valeurs prises sur la même droite tout comme Ya et Yb donc le triangle est rectangle. D'après le théorème de pythagore, la longeur AB est de: $$AB=\sqrt{\underbrace{(X_b - X_a)^2}_{\text{Longeur du triangle}} + \underbrace{(Y_b - Y_a)^2}_{\text{Hauteur du triangle}}}$$
+$$AB=\sqrt{\underbrace{(X_a - X_b)^2}_{\text{(A-B)^2=(B-A)^2}} + \underbrace{(Y_a - Y_b)^2}_{\text{Idem}}}$$
+<br>
+Le problème, c'est pour calculer à combien s'orienter:
+Les formules trigonométriques utilisent la longueur des côtés. Le cosinus d'un angle, par exemple, utilise le rapport entre le côté adjaccent à cet angle par l'hypothénuse du triangle
+<br>
+cos(Â)=(Xb-Xa)/AB 
+<figure>
+<img src="GeogebraAngles.png" alt="Projet créé sur géogébra: https://www.geogebra.org">
+ <figcaption>Créé avec GeoGebra – www.geogebra.org</figcaption>
+</figure>
+ Le problème est qu'on a aucun moyen de discerner le triangle AOB du triangle AOB': O étant le milieu du segment B'B. D'un côté, géométriquement parlant, ce sont les mêmes triangles: ils sont symétriques et le plan est retournable.
+D'un autre côté, ce ne sont pas les mêmes triangles si on part du principe que c'est un quadrant: ^(OAB)=^(OAB') mais par rapport à notre droite de référence passant par [AO] l'un aura une orientation négative et l'autre positive
+<br>
+<br>
+ Prenons un exemple simple en scratch
+<br>
+<figure>
+<img src="ScratchAngles-.png" width="55%" alt="Projet créé sur scratch: https://scratch.mit.edu/">
+ <figcaption>Créé avec Scratch – scratch.mit.edu </figcaption>
+</figure>
+
+Le petit hérisson part de l'axe des abcisses et pour tracer [AB], avant d'avancer, il doit s'orienter à   \( -\widehat{OAB} \) et non   \( \widehat{OAB} \) tandis que pour tracer [AB'], il doit s'orienter à   \( \widehat{OAB} \) degrés. 
+<figure>
+	<img src="ScratchAngles+.png" width="55%" alt="Projet créé sur scratch: https://scratch.mit.edu/">
+ <figcaption>Créé avec Scratch – scratch.mit.edu </figcaption>
+</figure>
+	Le problème est le même avec les sinus et tangentes puisqu'ils se basent uniquement sur des rapports de longueurs (donc en valeur absolue), ils nous donnent l'angle ^(OAB) qui est égal à ^(OAB') mais c'est tout!
+	<br>
+	<br>
+	En réalité, ce qu'on cherche, c'est cet angle par rapport à la droite parallèle à l'axe des abcisses passant par le milieu de BB'. 
+	<br>
+	En réfléchissant un peu, j'ai trouvé la solution: il faut vérifier si Yb est inférieur à Ya (donc B en dessous de A) ce qui veut dire qu'il faut s'orienter dans le sens des aiguilles d'une montre donc positivement. En cas inverse, il faut s'orienter négativement
+	En gros, il faut ajouter une condition qui vérifie si B est en dessous ou au dessus de b. Cela nous permet de savoir si on s'oriente à +Arcoss((Xb-Xa)/AB) degrés ou -Arcoss((Xb-Xa)/AB) degrés. 
+ça a l'aire compliqué mais regardez cette représentation que j'ai construite sur Géogébra: 
+<figure>
+	<img src="Zones.png" width="55%" alt="Projet créé avec Géogébra ">
+ <figcaption>Créé avec Géogébra  www.geogebra.org</figcaption>
+</figure>
+Comme Arcoss est comprise entre 0 et 180 degrés et que le sens d'orientation choisi est dans le sens des aiguilles d'une montre, quand B est en dessous de A, on s'oriente à Arcoss(...) car on va dans le sens des aiguilles d'une montre. Dans l'autre cas, il faut s'orienter à -Arcoss(...)
+
+	</div>
+	<br>
+	<br>
+	<div id="Code">
+	<h2> Allez, codons ! </h2>
+<div class="code-container" role="region" aria-label="Bloc de code Python">
+  <div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
+  </div>
+  <pre class="code-content" id="code-block">
+print("hello world")
+  </pre>
+</div>
+
+  </div>
+  
+  
+  
+  <script>
+  function copyCode() {
+    const code = document.getElementById('code-block').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      alert('Code copié dans le presse-papiers !');
+    });
+  }
+</script>
+</body>
+</html>

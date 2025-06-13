@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Projets Mathématiques</title>
+ <meta name="description" content="Bienvenue sur mon site web personnel">
+  <meta name="keywords" content="Maths, Timothé, AOUN, logique, projets">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Timothé AOUN">
+</head>
+
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background-color: #0a0014;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    color: white;
+  }
+
+  body {
+    position: relative;
+    --mouse-x: 50vw;
+    --mouse-y: 50vh;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        circle at var(--mouse-x) var(--mouse-y),
+        rgba(180, 150, 255, 0.08) 0%,
+        rgba(130, 70, 255, 0.03) 20%,
+        transparent 60%
+      );
+    transition: background-position 0.05s ease;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    padding: 3em;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 1em;
+    color: #d7cfff;
+    text-shadow: 0 0 10px rgba(130, 70, 255, 0.6);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5em;
+  }
+  
+
+  .card {
+    background-color: #1a0e2a;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(120, 60, 255, 0.25);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 30px rgba(180, 130, 255, 0.8);
+  }
+
+  .card-content {
+    padding: 1em;
+  }
+
+  .card-title {
+    font-size: 1.3em;
+    margin: 0 0 0.5em;
+    color: #d9b3ff;
+  }
+
+  .card-class {
+    font-size: 0.9em;
+    color: #c3a0f7;
+    font-style: italic;
+    margin-top: 0.5em;
+  }
+
+  .card-content img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0.3em 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+</style>
+<body>
+  <div class="container">
+    <h1>Mes projets et idées mathématiques</h1>
+    <div class="grid" id="projetGrid"></div>
+  </div>
+<div id="projetGrid"></div>
+
+<script>
+  const projets = [
+    {
+      titre: "Créer un grapheur en python sans bibliothèques ?",
+      lien: "\Projets/Grapheur/Grapheur.html",
+      image: "Images/Grapheur.png",
+      classe: "Maths, python, logique personnelle"
+    },
+    {
+      titre: "La puissance des suites",
+      lien: "\Projets/la_puissance_des_suites/suites.html",
+      image: "Images/html.png",
+      classe: "maths, python, logique personnelle"
+    },
+	{
+      titre: "On tourne en roud dans un cercle (partie 1)",
+      lien: "#",
+      image: "Images/html.png",
+      classe: "Origines du cercle, logique personnelle"
+    },
+		{
+      titre: "On tourne en roud dans un cercle (partie 2)",
+      lien: "#",
+      image: "Images/html.png",
+      classe: "Trouver pi, maths, histoire, logique personnelle, python"
+    },
+			{
+      titre: "On tourne en roud dans un cercle (partie 3)",
+      lien: "#",
+      image: "Images/html.png",
+      classe: "Cercle trigonométrique, maths, histoire, logique personnelle, python"
+    },
+    {
+      titre: "L'étrange cas du chat de Schrödinger",
+      lien: "#",
+      image: "Images/Chat.png",
+      classe: "philo, paradoxe physique"
+    },
+   {
+      titre: "Et si on simulait l'évolution?",
+      lien: "#",
+      image: "Images/Chat.png",
+      classe: "philo, paradoxe physique"
+    },
+	
+	   {
+      titre: "Tester sa culture scientifique... Et mathématique",
+      lien: "\Projets/Quizz/Test1.html",
+      image: "Images/html.jpg",
+      classe: "Culture générale, hors sujet"
+    },
+  ];
+
+  const container = document.getElementById('projetGrid');
+
+  projets.forEach(proj => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `
+      <a href="${proj.lien}">
+        <div class="card-content">
+          <h2 class="card-title">${proj.titre}</h2>
+          <img src="${proj.image}" alt="${proj.titre}">
+          <p class="card-class">${proj.classe || ""}</p>
+        </div>
+      </a>
+    `;
+    container.appendChild(div);
+  });
+
+  document.addEventListener('mousemove', e => {
+    const x = e.clientX + "px";
+    const y = e.clientY + "px";
+    document.body.style.setProperty('--mouse-x', x);
+    document.body.style.setProperty('--mouse-y', y);
+  });
+</script>
+
+</body>
+</html>

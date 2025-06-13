@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Parcours de Timothé AOUN</title>
+		 <link rel="icon" type="image/icon" href="Icon.ico">
+<link rel="stylesheet" href="Home/styleHome.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+ <meta name="description" content="Bienvenue sur mon site web personnel">
+  <meta name="keywords" content="Portfolio, lignes de code, Timothé, AOUN, HTML">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Timothé AOUN">
+</head>
+<style>
+mark {
+  background-color: transparent;
+  color: inherit;
+  padding: 0 2px;
+  display: inline-block;
+  background-image: linear-gradient(120deg, rgba(0, 122, 255, 0.3) 60%, rgba(0, 122, 255, 0.5));
+  background-repeat: no-repeat;
+  background-size: 100% 70%;
+  background-position: 0 75%;
+  border-radius: 2px;
+}
+mark2 {
+  background-color: transparent;
+  color: inherit;
+  padding: 0 2px;
+  display: inline-block;
+ background-image: linear-gradient(90deg, rgba(255, 200, 150, 0.4), rgba(255, 150, 150, 0.6), rgba(200, 150, 255, 0.8));
+  background-repeat: no-repeat;
+  background-size: 100% 100%; /* Plus droit et moins arrondi */
+  background-position: 0 10%; /* Ajuste la position verticale */
+  border-radius: 5px; /* Angle plus droit */
+}
+
+.reasons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+			color: black;
+        }
+        .reason {
+            flex: 1 1 calc(33.333% - 10px); /* 3 colonnes */
+            background-color: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .reason:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .reason span {
+            display: block;
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+		.cv-link {
+  position: relative;
+}
+
+.cv-link:hover::after {
+  content: "";
+  position: absolute;
+  top: -250px;
+  left: 50px;
+  width: 200px;
+  height: 200px;
+  background-image: url('cv.png');
+  background-size: cover;
+}
+
+
+		</style>
+<body>
+<nav>
+    <ul>
+<li><a href="cv/CV.html">CV Virtuel</a></li>
+<li><a href="Contact/Contact.html">Me contacter</a></li>
+<li><a href="Index.html">Accueil</a></li>	
+<li><a href="Maths/ProjetsMatheux.html">Projets numériques</a></li>		
+</ul>
+</nav>
+<script>
+    window.onload = function() { 
+        var today = new Date();
+        var currentHour = today.getHours();
+        var salutationText = "";
+
+        if (currentHour >= 6 && currentHour < 18) {
+            salutationText = "Bonjour";
+        } else {
+            salutationText = "Bonsoir";
+        }
+
+        // Texte à afficher
+        var completeText = salutationText + " et bienvenue sur mon site personnel.";
+        
+        // Appel de la fonction pour afficher le texte lettre par lettre
+        typeWriter(completeText, 0);
+    };
+
+    function typeWriter(text, i) {
+        if (i < text.length) {
+            document.getElementById("dynamicSalutation").innerHTML += text.charAt(i);
+            i++;
+            setTimeout(function() { typeWriter(text, i); }, 50); // Vitesse de frappe (100 ms par lettre)
+        }
+    }
+</script>
+
+
+<div class="salutation-section">
+    <center>
+        <h2 id="dynamicSalutation"> 
+        <h2>Pasionné de l'univers du numérique, des sciences et des mathématiques, j'ai mis en oeuvre de nombreux projets...</h2>
+    <h2>   En explorant mon CV et mes projets, j'espère vous faire découvrir un profil aussi sérieux que flexible </h2>
+	</center>
+</div>
+
+<section>
+    <center><h1>Pourquoi un site?</h1></center>
+	<h5>
+                  J’ai entièrement conçu ce site en HTML/CSS, sans utiliser de générateurs d’éditeurs graphiques. Il reflète ma passion pour le développement, les mathématiques, la logique et les systèmes. <br>
+    À travers ce site, je souhaite démontrer mes compétences concrètes et mon autonomie, tout en rendant mes projets accessibles à tous. <br>
+    Mon objectif : Prouver que même mineur, je suis capable de mener à bien des projets qui nécessitent du temps, de l'autonomie et un savoir-faire en plusieurs domaines. Ce site est une vitrine de ce que je peux accomplir par moi-même.
+</h5>

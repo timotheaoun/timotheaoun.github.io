@@ -1,0 +1,195 @@
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: linear-gradient(to bottom,#3498db, #a3e4d7, #ffffff, #f7dc6f, #f39c12, #d35400, #c0392b);
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, white, grey, black);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: black;
+    width: 12px;
+} 
+body {
+    position: relative;
+    min-height: 100vh;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+
+}
+a {
+  text-decoration: none;
+  color: black;
+  transition: color 1s ease, background-color 1s ease; /* Transition pour couleur et fond */
+}
+
+a:hover {
+  color: white; /* Couleur du texte au survol */
+  background-color: black; /* Fond noir au survol */
+}
+
+body::before {
+    content: "";
+    position: fixed; /* Utilise fixed pour que l'image suive le défilement */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('Site.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: -1; /* Assure que l'image reste derrière le contenu */
+}
+
+        section {
+            padding: 40px;
+            margin: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            color: #ff9800; /* Couleur orange, tu peux ajuster selon tes préférences */
+        }
+
+        h2 {
+            color: pink;
+            display: inline-block;
+        }
+        h3 {
+            color: purple;
+            display: inline-block;
+        }
+        h5 {
+            color: purple;
+            display: inline-block;
+            font-size: 18px;
+line-height: 1.8;
+        }
+h6 {
+ font-size: 19px;
+  color: black;
+  font-family: "Elephant", serif;
+  display: inline-block;
+}
+
+.custom-h7 {
+  color: black;
+  font-family: "Times New Roman", serif;
+  display: inline-block;
+ font-size: 19px;
+}
+
+header {
+    background: linear-gradient(to right, purple, #3498db, #a3e4d7, white, #a3e4d7, purple, black );
+    color: Black;
+    text-align: center;
+    padding: 20px;
+}
+
+        h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+        p {
+            font-size: 16px;
+            margin: 0;
+			color: black;
+
+        }
+line { 
+    font-size: 20px;
+            margin: 0;
+            display: inline;
+            margin-right: 16px;
+			font-size: 16px;
+			color: black;
+}
+
+        section {
+    margin: 20px;
+    background-color: rgba(255, 255, 255, 0.85); 
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+#ImgSites {
+    display: flex;
+    flex-wrap: nowrap; /* Désactive le retour à la ligne pour garder les images sur une seule ligne */
+    gap: 15px;
+    justify-content: flex-start;
+    max-width: 100%; /* Option : peut être ajusté pour la taille totale du conteneur */
+    margin: 0 auto;
+    margin-left: 0px;
+    overflow-x: auto; /* Pour ajouter un défilement si les images dépassent la largeur */
+}
+
+#ImgSites img {
+    height: 50%; /* Hauteur fixe */
+    width: 50%; /* Largeur fixe */
+    object-fit: cover;
+    flex: 0 0 auto;
+}
+
+
+
+        h2 {
+            font-size: 24px;
+            margin-top: 0;
+        }
+		h4 {
+            font-size: 15px;
+            margin-top: 0;
+			color: purple;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        nav {
+                background: linear-gradient(to right, black, #333, grey, black);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+        }.salutation-section {
+    position: relative; 
+    min-height: 30vh; 
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px; 
+    overflow: hidden; 
+}
+
+.salutation-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('Homemodern.Jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    filter: blur(2px); 
+    z-index: -1; 
+}
+
