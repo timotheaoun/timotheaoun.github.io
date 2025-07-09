@@ -65,7 +65,7 @@ body::before {
             display: inline-block;
         }
         h5 {
-            color: purple;
+            color: rgb(100, 100, 255);
             display: inline-block;
             font-size: 18px;
 line-height: 1.8;
