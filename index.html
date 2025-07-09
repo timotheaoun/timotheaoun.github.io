@@ -3,14 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Parcours de Timothé AOUN</title>
-		 <link rel="icon" type="image/icon" href="Icon.ico">
-<link rel="stylesheet" href="/aboutme/Home/StyleHome.css">
+		 <link rel="icon" type="image/icon" href="Home/Icon.png">
+<link rel="stylesheet" href="Home/StyleHome.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
- <meta name="description" content="Bienvenue sur mon site web personnel">
-  <meta name="keywords" content="Portfolio, lignes de code, Timothé, AOUN, HTML">
-  <meta name="robots" content="index, follow">
 <meta name="google-site-verification" content="LuaPTRNLr78qmpZJLB-JFJP8ZWfRsM40MD9TsQUWosY" />
-  <meta name="author" content="Timothé AOUN">
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Bienvenue ! Ici, je rassemble les projets que je développe par passion, les outils que je conçois, et les idées que j’explore au fil de mes apprentissages..">
+<meta name="keywords" content="Portfolio, Timothé, AOUN, développeur, timotheaoun, Timothée">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Timothé AOUN">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://timotheaoun.github.io/">
+<meta property="og:title" content="Timothé AOUN – Portfolio">
+<meta property="og:description" content="Bienvenue ! Ici, je rassemble les projets que je développe par passion, les outils que je conçois, et les idées que j’explore au fil de mes apprentissages.">
+<meta property="og:image" content="https://ton-site.com/chemin/vers/ton-image.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Timothé AOUN – Portfolio">
+<meta name="twitter:description" content="Bienvenue sur mon site personnel où je partage mes projets de code et mes découvertes.">
+<meta name="twitter:image" content="Home/Icon.png">
+
 </head>
 <style>
 mark {
@@ -77,15 +92,44 @@ mark2 {
   background-size: cover;
 }
 
+.footer-icons {
+  margin-top: 50px;
+  padding: 20px 0;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.footer-icons a {
+  margin: 0 10px;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  overflow: hidden;
+}
+
+.footer-icons a:hover {
+  transform: scale(1.1);
+}
+
+.footer-icons img {
+  width: 60%;
+  height: 60%;
+  margin-top: 20%;
+  object-fit: contain;
+}
 
 		</style>
 <body>
 <nav>
     <ul>
-<li><a href="Cv/CV.Html">CV Virtuel</a></li>
+<li><a href="cv/CV.html">CV Virtuel</a></li>
 <li><a href="Contact/Contact.html">Me contacter</a></li>
 <li><a href="Index.html">Accueil</a></li>	
-<li><a href="maths/ProjetsMatheux.html">Projets numériques</a></li>		
+<li><a href="Maths/ProjetsMatheux.html">Projets numériques</a></li>		
 </ul>
 </nav>
 <script>
@@ -120,15 +164,56 @@ mark2 {
 <div class="salutation-section">
     <center>
         <h2 id="dynamicSalutation"> 
-        <h2>Pasionné de l'univers du numérique, des sciences et des mathématiques, j'ai mis en oeuvre de nombreux projets...</h2>
-    <h2>   En explorant mon CV et mes projets, j'espère vous faire découvrir un profil aussi sérieux que flexible </h2>
+<h2>Convaincu que la passion est le moteur de l'excellence, je mets mes compétences au service de projets concrets, rigoureux et innovants. À travers mon portfolio, vous découvrirez des réalisations techniques, mais aussi une approche méthodique, structurée et adaptable.</h2>
+
 	</center>
 </div>
 
 <section>
     <center><h1>Pourquoi un site?</h1></center>
 	<h5>
-                  J’ai entièrement conçu ce site en HTML/CSS, sans utiliser de générateurs d’éditeurs graphiques. Il reflète ma passion pour le développement, les mathématiques, la logique et les systèmes. <br>
-    À travers ce site, je souhaite démontrer mes compétences concrètes et mon autonomie, tout en rendant mes projets accessibles à tous. <br>
-    SITE EN CONSTRUCTION 🚧🚧🚧
-</h5>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspJe m'appelle Timothé, je suis passionné par une grande variété de domaines: L'art oratoire, les mathématiques, la programmation ainsi que les sciences de la vie. J'ai mis à bien de nombreux projets dont la conception de ce site web. Mon objectif principal est de rendre accessible à tous mes projets, que vous pouvez consulter dans la rubrique <i> mes projets </i>, vous pouvez également découvrir mon savoir-faire et mes compétences dans la partie <i>CV</i>. Je vous souhaite une bonne visite...
+    </h5>
+	</section>
+	<section>
+<center><h1>Comment ais-je conçu la page&nbsp;?</h1></center>
+<h5>    La page sur laquelle vous lisez ces quelques mots a été entièrement conçue en lignes de code html. Je l'ai ensuite hébergée sur GitHub. </h5>
+</section>
+<section>
+  <center><h1>Projets en cours</h1></center>
+  <h5>
+    Je travaille actuellement sur :
+    <ul>
+      <li>La création d'un grapheur en python sans maplotlib (python)</li>
+      <li>Un PDF sur les mathématiques (Html)</li>
+      <li>Un coffre-fort numérique sécurisé (batch + python)</li>
+	  <li>Une simulation de l'évolution et de la sélection naturelle par mutations aléatoires du phénotype (python)</li>
+    </ul>
+  </h5>
+</section>
+<section>
+  <center><h1>Ce que je veux apprendre</h1></center>
+  <h5>
+    Mon objectif cette année (2025) est de renforcer mes compétences en :
+    <ul>
+      <li>Python (de manière plus avancée)</li>
+      <li>Javascript</li>
+      <li>C#</li>
+	  <li>Mathématiques et sciences de la vie</li>
+	  <li>Modélisation pour décrire des phénomènes physiques (projet de simulation de l'évolution)</li>
+    </ul>
+  </h5>
+</section>
+
+<footer class="footer-icons">
+<p> Retrouvez-moi sur </p>
+  <a href="https://github.com/timotheaoun" target="_blank">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+  </a>
+  <a href="mailto:aountimothe.network@gmail.com">
+    <img src="https://img.icons8.com/ios-filled/50/000000/gmail.png" alt="Gmail">
+  </a>
+  <a href="https://www.linkedin.com/in/timotheaoun/" target="_blank">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn">
+  </a>
+</footer>
