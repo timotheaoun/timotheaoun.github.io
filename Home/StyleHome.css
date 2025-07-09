@@ -186,7 +186,7 @@ line {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('HomeModern.jpg'); 
+    background-image: url('https://raw.githubusercontent.com/timotheaoun/timotheaoun.github.io/refs/heads/main/Home/HomeModern.jpg'); 
     background-size: cover; 
     background-position: center; 
     filter: blur(2px); 
