@@ -103,6 +103,19 @@
   background-position: 0 10%; /* Ajuste la position verticale */
   border-radius: 5px; /* Angle plus droit */
 }
+	  .dots::after {
+  content: "";
+  animation: dotsAnim 1.2s steps(4, end) infinite;
+}
+
+@keyframes dotsAnim {
+  0%   { content: ""; }
+  25%  { content: "."; }
+  50%  { content: ".."; }
+  75%  { content: "..."; }
+  100% { content: ""; }
+}
+
   </style>
 </head>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -338,9 +351,19 @@ turtle.done()
         <li><span class="crayon aqua">\( -\widehat{FAO'} \)</span> → Il faut s'orienter à <span class="mark2">arcoss(AO/AD)+90 degrés</span></li>
       </ul>
     </div>
-<h2>Je suis en train de coder la suite de la page 🚧🚧🚧</h2>
+<h2>
+  Je suis en train de coder la suite de la page 🚧🚧🚧
+  <span class="dots"></span>
+</h2>
+
 
 	</div>
+	<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    alert("Je suis en train de coder la suite de la page 🚧🚧🚧");
+  });
+</script>
+
   <script>
   function copyCode() {
     const code = document.getElementById('code-block').innerText;
@@ -349,5 +372,23 @@ turtle.done()
     });
   }
 </script>
+	<div id="popup" style="
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 2px solid #333;
+  padding: 20px;
+  z-index: 999;
+  font-family: Arial, sans-serif;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+">
+  Je suis en train de coder la suite de la page 🚧🚧🚧
+  <br><br>
+  <button onclick="document.getElementById('popup').style.display='none'">OK</button>
+</div>
+
 </body>
 </html>
