@@ -9,6 +9,101 @@
  <meta name="keywords" content="grapheur python, créer un grapheur, python sans bibliothèques, comment faire un grapheur en python, sans bibliothèque, afficher graphique python, python graphique simple, Timothé AOUN">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Timothé AOUN">
+  <style>
+  a {
+  text-decoration: none;
+  color: green;
+  }
+  a:hover {
+ text-decoration: underline;
+  color: orange ;
+  }
+  code1 {
+  background-color: rgb(50, 10, 40);
+  color: #444;
+  }
+  .commentaire {
+      flex: 1;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #333;
+      background-color: transparent;
+      padding: 10px;
+      border-left: 2px solid #888;
+    }
+	    .crayon {
+      display: inline-block;
+      padding: 0.2em 0.4em;
+      position: relative;
+      z-index: 0;
+      color: #000;
+    }
+
+    .crayon::before {
+      content: '';
+      position: absolute;
+      top: 0.1em;
+      left: 0;
+      right: 0;
+      bottom: 0.1em;
+      z-index: -1;
+      transform: rotate(-1deg);
+      filter: blur(0.7px);
+      opacity: 0.8;
+      border-radius: 8px;
+    }
+
+    .crayon.vert::before {
+      background: repeating-linear-gradient(
+        45deg,
+        #4caf50,
+        #4caf50 2px,
+        #388e3c 3px,
+        #4caf50 4px
+      );
+    }
+
+    .crayon.bleu::before {
+      background: repeating-linear-gradient(
+        -45deg,
+        #2196f3,
+        #2196f3 2px,
+        #1565c0 3px,
+        #2196f3 4px
+      );
+    }
+
+    .crayon.rouge::before {
+      background: repeating-linear-gradient(
+        60deg,
+        #f44336,
+        #f44336 2px,
+        #c62828 3px,
+        #f44336 4px
+      );
+    }
+
+    .crayon.aqua::before {
+      background: repeating-linear-gradient(
+        -60deg,
+        #00ffff,
+        #00ffff 2px,
+        #00cccc 3px,
+        #00ffff 4px
+      );
+    }
+	.mark2 {
+  background-color: transparent;
+  color: inherit;
+  padding: 0 2px;
+  display: inline-block;
+ background-image: linear-gradient(90deg, rgba(255, 200, 150, 0.6), rgba(255, 150, 150, 0.7), rgba(200, 150, 255, 0.8));
+  background-repeat: no-repeat;
+  background-size: 100% 100%; /* Plus droit et moins arrondi */
+  background-position: 0 10%; /* Ajuste la position verticale */
+  border-radius: 5px; /* Angle plus droit */
+}
+  </style>
 </head>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async
@@ -51,7 +146,7 @@ Les formules trigonométriques utilisent la longueur des côtés. Le cosinus d'u
 <br>
 cos(Â)=(Xb-Xa)/AB 
 <figure>
-<img src="GeogebraAngles.PNG" alt="Projet créé sur géogébra: https://www.geogebra.org">
+<img src="GeogebraAngles.png" alt="Projet créé sur géogébra: https://www.geogebra.org">
  <figcaption>Créé avec GeoGebra – www.geogebra.org</figcaption>
 </figure>
  Le problème est qu'on a aucun moyen de discerner le triangle AOB du triangle AOB': O étant le milieu du segment B'B. D'un côté, géométriquement parlant, ce sont les mêmes triangles: ils sont symétriques et le plan est retournable.
@@ -79,7 +174,7 @@ Le petit hérisson part de l'axe des abcisses et pour tracer [AB], avant d'avanc
 	En gros, il faut ajouter une condition qui vérifie si B est en dessous ou au dessus de b. Cela nous permet de savoir si on s'oriente à +Arcoss((Xb-Xa)/AB) degrés ou -Arcoss((Xb-Xa)/AB) degrés. 
 ça a l'aire compliqué mais regardez cette représentation que j'ai construite sur Géogébra: 
 <figure>
-	<img src="Zones.PNG" width="55%" alt="Projet créé avec Géogébra ">
+	<img src="Zones.png" width="55%" alt="Projet créé avec Géogébra ">
  <figcaption>Créé avec Géogébra  www.geogebra.org</figcaption>
 </figure>
 Comme Arcoss est comprise entre 0 et 180 degrés et que le sens d'orientation choisi est dans le sens des aiguilles d'une montre, quand B est en dessous de A, on s'oriente à Arcoss(...) car on va dans le sens des aiguilles d'une montre. Dans l'autre cas, il faut s'orienter à -Arcoss(...)
@@ -89,6 +184,17 @@ Comme Arcoss est comprise entre 0 et 180 degrés et que le sens d'orientation ch
 	<br>
 	<div id="Code">
 	<h2> Allez, codons ! </h2>
+
+<p> Déjà, importons les bibliothèques nécessaires au projet: 
+<li>Nous allons être obligés d'importer la bibliothèque <code>math</code> qui va nous être indispensable pour utiliser des fonctions, pour plus d'informations, vous pouvez <a href="https://docs.python.org/fr/3.5/library/math.html#module-math">La documentation de <code>math</code></a>
+<li>Nous allons également devoir utiliser <code>turle</code>: Cette bibliothèque est indispensable pour gérer les tracés de notre grapheur. Pour plus d'infos, vous pouvez égaement consulter <a href="https://docs.python.org/3/library/turtle.html">La documentation de <code>turle</code></a>
+<p> On se retrouve donc avec</p>
+<code1>
+import turtle
+import math
+</code1>
+<p> Il nous faut maintenant tracer la grille et les axes:</p>
+
 <div class="code-container" role="region" aria-label="Bloc de code Python">
   <div class="code-header">
     python
@@ -97,14 +203,144 @@ Comme Arcoss est comprise entre 0 et 180 degrés et que le sens d'orientation ch
     </button>
   </div>
   <pre class="code-content" id="code-block">
-print("hello world")
+# --- Paramètres du quadrillage ---
+step = 50  # distance entre les lignes du quadrillage
+size = 500  # taille du plan
+
+# --- Initialisation de la fenêtre ---
+turtle.setup(size + 100, size + 100)
+turtle.speed(0)
+turtle.hideturtle()
+turtle.bgcolor("white")
+turtle.title("Grapheur - Sans biblis")
+
+# --- Quadrillage ---
+def draw_grid():
+    turtle.pencolor("lightgray")
+    for x in range(-size // 2, size // 2 + 1, step):
+        turtle.penup()
+        turtle.goto(x, -size // 2)
+        turtle.pendown()
+        turtle.goto(x, size // 2)
+    for y in range(-size // 2, size // 2 + 1, step):
+        turtle.penup()
+        turtle.goto(-size // 2, y)
+        turtle.pendown()
+        turtle.goto(size // 2, y)
+
+    # Axes
+    turtle.pencolor("black")
+    turtle.penup()
+    turtle.goto(-size // 2, 0)
+    turtle.pendown()
+    turtle.goto(size // 2, 0)
+    turtle.penup()
+    turtle.goto(0, -size // 2)
+    turtle.pendown()
+    turtle.goto(0, size // 2)
+
+# --- Coordonnées de départ ---
+X0, Y0 = 0, 0  # touche l'axe des ordonnées et l'axe des abcisses (donc en gros axe de symétrie)
   </pre>
 </div>
+<p> Et on appelle la fonction avec <code1>draw_grid()</code1>
+<p> Et voilà, on obtient maintenant cela en éxécutant le script python: </p>
+<img src="Execution1.axes.png" width="55%">
+<p> Si vous avez du mal à comprendre ce que fait le programme, vous pouvez consulter ma rubrique <a href="#Informatique.pyton.premierspas">Informatique>learnpython>premierspas </a>. De manière assez simplifiée, voici un programme que j'ai codé sur scratch assez similaire:</p>
+<iframe src="https://scratch.mit.edu/projects/editor/?tutorial=getStarted" width="100%"></iframe>
 
+<br> 
+<p> On va maintenant créer une fonction f(x), pour le moment, prédéfinie sur 2x+3:</p>
+ <code1> def Fonction(x): </code1><br>
+ <code1>     return 2 * x + 3 </code1>
+ <p> On commence notre code par créer un xmin et xmax (plus tard adaptable si on décide de créer une échelle) et on s'oriente au niveau du point le plus à gauche à calculer tel qu'il forme un point G(xmin; <code>fonction(xmin)</code>), on se met à ce point avec <code1>turtle.goto(xa, ya)</code1>0</p>
+ <div class="code-container" role="region" aria-label="Bloc de code Python">
+  <div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
   </div>
-  
-  
-  
+  <pre class="code-content" id="code-block">
+xmin=-25
+xmax=25
+xa=xmin
+ya=Fonction(xa)
+echelle = 50  # 1 unité mathématique = 50 pixels
+turtle.goto(xa * echelle, ya * echelle)
+  </pre>
+   </div>
+ <p> On va maintenant rentrer dans le vif du sujet puisque toute la logique que je vous ai expliqué précédemment va rentrer en jeu: <br></p>
+ <li>Création d'une fonction <code>avancer_et_orienter</code> avec en paramètre les coordonnées de deux points:</li>
+ <div class="code-container" role="region" aria-label="Bloc de code Python">
+  <div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
+  </div>
+  <pre class="code-content" id="code-block">
+def avancer_et_orienter(xb, yb, xa, ya):
+    AB=math.sqrt((xa-xb)**2+(ya-yb)**2) #Comme xb=xa+1, on pourrait juste mettre '((1/10)**2+(ya-yb)**2)**1/2' mais c'est mieux ainsi au cas où on adapterait les pas (de 1/10 ici)
+    Orientation=math.acos((xb-xa)/AB)
+    angle_degres = math.degrees(Orientation)  # Conversion en degrés (fois pi/180)
+    if yb > ya:
+        Orientation=360-Orientation #En théorie, on pourrait juste mettre un - mais je préfère les angles positifs
+    turtle.setheading(Orientation)
+    turtle.pendown()     
+    turtle.forward(AB) #On avance de la longeur exacte entre A(xa;ya) et B(xa+1;<code>fonction(a+1)</code>)-->Donc pas besoin de calculer xb ni yb, il nous faut juste un compteur qui ajoute 1 à x à chaque fois
+    turtle.penup()  
+    turtle.setheading(90) #s'orienter à 90 degrés pour revenir à l'orientation initiale
+  </pre>
+   </div>
+ <p> Enfin, pour finir, j'avais fait cela </p>
+ <div class="code-container" role="region" aria-label="Bloc de code Python">
+  <div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
+  </div>
+  <pre class="code-content" id="code-block">
+while xa+1 < xmax :
+    xb=xa+1/10
+    yb=Fonction(xb)
+    avancer_et_orienter(xb, yb, xa, ya)
+    xa=xb
+    ya=yb   
+turtle.done()
+</pre>
+</div>
+</div>
+<br><br>
+<div id="Theend">
+<h2> Le retour des maths 🤯 </h2>
+<p> L'heure du test était arrivée, tout content, je cliquai sur le script et là... Horreur😱, deux fautes magistrales étaient présentes dans mon code. Au lieu de tout corriger, je vais vous expliquer mais pour ça, on va devoir refaire des maths</p>
+<center><h3> Un problème d'échelle:</h3></center>
+<p>...</p>
+<center><h3>Attendez, pas si vite!  on oublie atan2 !!!</h3></center>
+<p> Tout à l'heure, je vous ai dit qu'avec les formules trigonométriques, nous ne pouvions pas discerner les deux triangles ci-dessous car elles prennent les longueurs en compte. J'ai ensuite dit qu'il suffisait de regarder si B est au dessus de A.</p>
+<figure>
+<img src="GeogebraAngles.png" alt="Projet créé sur géogébra: https://www.geogebra.org">
+ <figcaption>Créé avec GeoGebra – www.geogebra.org</figcaption>
+</figure>
+<p>En revanche, j'avais complètement oublié deux autres cas où le triangle serait le même:</p>
+<figure>
+<img src="GeogebraOrientations2.png" alt="Projet créé sur géogébra: https://www.geogebra.org">
+ <figcaption>Créé avec GeoGebra – www.geogebra.org | Édité sur Canva - https://www.canva.com</figcaption>
+</figure>
+ <div class="commentaire">
+      <p>Légende commentée</p>
+      <ul>
+        <li><span class="crayon vert">\( -\widehat{DAO} \)</span> → Il faut s'orienter à -arcoss(AO/AD)degrés soit <span class="mark2">360-arcoss(AO/AD) degrés</span></li>
+        <li><span class="crayon bleu">\( -\widehat{EAO} \)</span> → Il faut s'orienter à <span class="mark2">arcoss(AO/AD)degrés</span></li>
+        <li><span class="crayon rouge">\( -\widehat{GAO'} \)</span> → Il faut s'orienter à -arcoss(AO/AD)-90 degrés soit <span class="mark2">270-arcoss(AO/AD) degrés</span></li>
+        <li><span class="crayon aqua">\( -\widehat{FAO'} \)</span> → Il faut s'orienter à <span class="mark2">arcoss(AO/AD)+90 degrés</span></li>
+      </ul>
+    </div>
+
+
+
   <script>
   function copyCode() {
     const code = document.getElementById('code-block').innerText;
