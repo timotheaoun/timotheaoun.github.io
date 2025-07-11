@@ -85,6 +85,19 @@ h2 {
       animation: fadeInText 1.2s ease-out forwards;
       opacity: 0;
     }
+
+	#Theend{
+      font-size: 1.2em;
+      line-height: 1.6;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1.5em;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(200, 10, 100, 0.8);
+      backdrop-filter: blur(3px);
+      animation: fadeInText 1.2s ease-out forwards;
+      opacity: 0;
+    }
+
     @keyframes fadeInText {
       0% {
         opacity: 0;
