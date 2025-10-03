@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QCM enseignement scientifique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2em;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    .question {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+
+    .answers label {
+      display: block;
+      margin-bottom: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 12px 20px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .answers input[type="radio"] {
+      display: none;
+    }
+
+    .answers label:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .answers label.selected {
+      background-color: rgb(70,50,200) !important;
+      box-shadow: 0 0 10px blue;
+      font-weight: 500;
+    }
+
+    button {
+      background-color: #ff6b81;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+      display: block;
+      margin: 30px auto 0;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff4757;
+    }
+
+    .result {
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: 500;
+      margin-top: 20px;
+    }
+
+    .qcm-container {
+      position: relative;
+      width: 600px;
+      padding: 30px;
+      border-radius: 15px;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.2); /* pour du contraste */
+    }
+
+    .quiz-content {
+      position: relative;
+      z-index: 1;
+      padding: 20px;
+    }
+
+    .question-image {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .question-image img {
+      max-width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+    }
+
+  </style>
+</head>
+<body>
+<div class="qcm-container">
+  <div class="video-wrapper"></div>
+
+  <div class="quiz-content">
+    <h1>QCM sur l'oreille</h1>
+    <div id="quiz">
+      <div id="question" class="question"></div>
+      <div id="question-image" class="question-image"></div> <!-- Conteneur pour l'image -->
+      <div class="answers" id="answers"></div>
+      <button onclick="nextQuestion()">Passer à la question suivante</button>
+      <div class="result" id="result"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    {
+      question: "En combien de parties se compose l'oreille",
+      options: ["1 partie", "2 parties", "3 parties", "4 parties"],
+      answer: 2,
+    },
+    {
+      question: "Les cellules cillées sont situées dans",
+      options: ["L'oreille externe", "La cochlée", "les canaux semi-circulaires", "L'Étrier", "Le marteau", "le cerveau"],
+      answer: 1,
+    },
+    {
+      question: "Nous entendons...",
+      options: [
+        "Grâce à un récepteur unique stimulé par une neuro-hormone: la hertz-alpha, dans notre cochlée",
+        "par le biais de plusieurs opérations: mécaniques, électriques, chimiques (amplification, conversion...)",
+        "Une autre oreille elle-même contenant une oreille qui contient une oreille... jusqu'à l'échelle atomique",
+        "On entend pas, l'ouïe n'est qu'une vision abstraite, une illusion créée par le cerveau, le son n'est qu'une illusion, il n'existe pas"
+      ],
+      answer: 1,
+    },
+    {
+      question: "Quelle est la première partie de l'oreille qui capte le son ?",
+      options: ["Le tympan", "L'oreille interne", "L'oreille moyenne", "L'oreille externe"],
+      answer: 3,
+      image: "help.png"
+    },
+	{
+  question: "Quel est le rôle de l'oreille moyenne ?",
+  options: [
+    "Amplifier les sons dans le cerveau",
+    "Transformer les sons en signaux chimiques",
+    "Transmettre les vibrations mécaniquement",
+    "Filtrer les fréquences aiguës uniquement"
+  ],
+  answer: 2,
+},
+{
+  question: "Quel est l’ordre de passage du son dans l’oreille ?",
+  options: [
+    "Oreille moyenne → oreille externe → oreille interne",
+    "Oreille externe → oreille moyenne → oreille interne",
+    "Tympan → cerveau → cochlée",
+    "Cochlée → tympan → oreille moyenne"
+  ],
+  answer: 1,
+},
+{
+  question: "Combien d’osselets composent l’oreille moyenne ?",
+  options: ["1", "2", "3", "4"],
+  answer: 2,
+},
+{
+  question: "Parmi les propositions suivantes, laquelle est une cellule de l’oreille interne ?",
+  options: ["Cellule pilée", "Cellule épidermique", "Cellule ciliée", "Cellule tactile"],
+  answer: 2,
+},
+{
+  question: "Quelles cellules amplifient le son dans l’oreille ?",
+  options: [
+    "Cellules ciliées internes",
+    "Cellules de soutien",
+    "Cellules ciliées externes",
+    "Cellules auditives centrales"
+  ],
+  answer: 2,
+},
+{
+  question: "L’organe de Corti se trouve dans…",
+  options: [
+    "Le cerveau auditif",
+    "La cochlée",
+    "Le tympan",
+    "L’oreille moyenne"
+  ],
+  answer: 1,
+},
+{
+  question: "À quoi sert la cochlée ?",
+  options: [
+    "Elle transforme les vibrations en signaux nerveux",
+    "Elle détecte les odeurs",
+    "Elle produit de la cire pour protéger l’oreille",
+    "Elle équilibre la pression de l’air"
+  ],
+  answer: 0,
+},
+{
+  question: "Comment les cellules ciliées déclenchent-elles un signal ?",
+  options: [
+    "Elles vibrent et envoient du sang dans le nerf auditif",
+    "Elles se contractent et chauffent le liquide de la cochlée",
+    "Leurs cils bougent et ouvrent des canaux ioniques",
+    "Elles se replient dans l’oreille moyenne"
+  ],
+  answer: 2,
+},
+{
+  question: "QUESTION BONNUS ✔️✔️✔️: Qu’est-ce que la tonotopie ?",
+  options: [
+    "Une maladie de l’oreille",
+    "Une organisation spatiale des fréquences sonores",
+    "Un nerf de l’équilibre",
+    "Un test de l’audition en laboratoire"
+  ],
+  answer: 1,
+},
+{
+  question: "Que se passe-t-il quand un son est trop fort ?",
+  options: [
+    "Le tympan se décolle",
+    "Les cellules ciliées peuvent être détruites",
+    "Le cerveau refuse de traiter le son",
+    "La cochlée se ferme temporairement"
+  ],
+  answer: 1,
+}
+
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  function loadQuestion() {
+    const q = questions[currentQuestion];
+    document.getElementById("question").innerText = q.question;
+
+    // Affichage de l'image, si elle existe
+    const imageContainer = document.getElementById("question-image");
+    if (q.image) {
+      imageContainer.innerHTML = `<img src="${q.image}" alt="Image de la question">`;
+    } else {
+      imageContainer.innerHTML = ''; // Si aucune image, vider le conteneur
+    }
+
+    const answersDiv = document.getElementById("answers");
+    answersDiv.innerHTML = "";
+
+    q.options.forEach((option, index) => {
+      const label = document.createElement("label");
+      label.classList.add("answer-option");
+
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "answer";
+      input.value = index;
+
+      label.appendChild(input);
+      label.appendChild(document.createTextNode(option));
+
+      label.addEventListener("click", () => {
+        // Retire la sélection des autres
+        document.querySelectorAll(".answers label").forEach(l => l.classList.remove("selected"));
+        // Ajoute la sélection à l'élément cliqué
+        label.classList.add("selected");
+        input.checked = true;
+      });
+
+      answersDiv.appendChild(label);
+    });
+  }
+
+  function nextQuestion() {
+    const radios = document.querySelectorAll('input[name="answer"]');
+    let selected = null;
+    radios.forEach((radio) => {
+      if (radio.checked) selected = parseInt(radio.value);
+    });
+
+    if (selected === null) return alert("Merci de sélectionner une réponse avant de continuer.");
+
+    if (selected === questions[currentQuestion].answer) score++;
+
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      document.getElementById("quiz").innerHTML =
+        `<div class='result'>Votre score est de ${score} / ${questions.length - 1}</div>`;
+
+    }
+  }
+
+  loadQuestion();
+</script>
+</body>
+</html>

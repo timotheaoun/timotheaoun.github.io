@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Créer un grapheur en python sans bibliothèques ?</title>
+<link rel="stylesheet" href="../../Style.css">
+ <meta name="description" content="Comment créer un grapheure python sans utiliser de bibliothèques ? (mise à part maths et turtle) | Timothé AOUN">
+ <meta name="keywords" content="grapheur python, créer un grapheur, python sans bibliothèques, comment faire un grapheur en python, sans bibliothèque, afficher graphique python, python graphique simple, Timothé AOUN">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Timothé AOUN">
+  <style>
+  a {
+  text-decoration: none;
+  color: green;
+  }
+  a:hover {
+ text-decoration: underline;
+  color: orange ;
+  }
+  code1 {
+  background-color: rgb(50, 10, 40);
+  color: #444;
+  }
+  .commentaire {
+      flex: 1;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #333;
+      background-color: transparent;
+      padding: 10px;
+      border-left: 2px solid #888;
+    }
+	    .crayon {
+      display: inline-block;
+      padding: 0.2em 0.4em;
+      position: relative;
+      z-index: 0;
+      color: #000;
+    }
+
+    .crayon::before {
+      content: '';
+      position: absolute;
+      top: 0.1em;
+      left: 0;
+      right: 0;
+      bottom: 0.1em;
+      z-index: -1;
+      transform: rotate(-1deg);
+      filter: blur(0.7px);
+      opacity: 0.8;
+      border-radius: 8px;
+    }
+
+    .crayon.vert::before {
+      background: repeating-linear-gradient(
+        45deg,
+        #4caf50,
+        #4caf50 2px,
+        #388e3c 3px,
+        #4caf50 4px
+      );
+    }
+
+    .crayon.bleu::before {
+      background: repeating-linear-gradient(
+        -45deg,
+        #2196f3,
+        #2196f3 2px,
+        #1565c0 3px,
+        #2196f3 4px
+      );
+    }
+
+    .crayon.rouge::before {
+      background: repeating-linear-gradient(
+        60deg,
+        #f44336,
+        #f44336 2px,
+        #c62828 3px,
+        #f44336 4px
+      );
+    }
+
+    .crayon.aqua::before {
+      background: repeating-linear-gradient(
+        -60deg,
+        #00ffff,
+        #00ffff 2px,
+        #00cccc 3px,
+        #00ffff 4px
+      );
+    }
+	.mark2 {
+  background-color: transparent;
+  color: inherit;
+  padding: 0 2px;
+  display: inline-block;
+ background-image: linear-gradient(90deg, rgba(255, 200, 150, 0.6), rgba(255, 150, 150, 0.7), rgba(200, 150, 255, 0.8));
+  background-repeat: no-repeat;
+  background-size: 100% 100%; /* Plus droit et moins arrondi */
+  background-position: 0 10%; /* Ajuste la position verticale */
+  border-radius: 5px; /* Angle plus droit */
+}
+	  .dots::after {
+  content: "";
+  animation: dotsAnim 1.2s steps(4, end) infinite;
+}
+
+@keyframes dotsAnim {
+  0%   { content: ""; }
+  25%  { content: "."; }
+  50%  { content: ".."; }
+  75%  { content: "..."; }
+  100% { content: ""; }
+}
+
+  </style>
+</head>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<body>
+  <div class="container">
+    <h1>Créer un grapheur en python sans bibliothèques ?</h1>
+		 <figcaption>Rédigé 29/05/2025</figcaption>
+	 <br>
+    <div id="Intro">
+	<h2> Introduction... </h2>
+	<p>    <strong>Maplotlib</strong>. C'est le premier résultat qu'on obtient quand on recherche "bibliothèque python  pour créer grapheur". Avec cette bibliothèque, on peut littéralement créer un graphe en 7 lignes
+	
+	<div class="code-container" role="region" aria-label="Bloc de code Python">
+  <div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
+  </div>
+  <pre class="code-content" id="code-block">
+import matplotlib.pyplot as plt
+x = [1, 2, 3, 4]
+y = [10, 20, 25, 30]
+plt.plot(x, y)
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.show()
+  </pre>
+</div>
+<p>    Mais nous, on cherche à savoir comment marche maplotlib, c'est pourquoi, nous allons créer une bibliothèque très simple pour tracer une fonction... Et c'est là que tout va se compliquer...
+</div>
+</body>
+</html>

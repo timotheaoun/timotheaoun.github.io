@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Projets Mathématiques</title>
+<meta name="description" content="Bienvenue sur mon site web personnel">
+<meta name="keywords" content="Maths, Timothé, AOUN, logique, projets">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Timothé AOUN">
+
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background-color: #0a0014;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    color: white;
+  }
+
+  body {
+    position: relative;
+    --mouse-x: 50vw;
+    --mouse-y: 50vh;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        circle at var(--mouse-x) var(--mouse-y),
+        rgba(180, 150, 255, 0.08) 0%,
+        rgba(130, 70, 255, 0.03) 20%,
+        transparent 60%
+      );
+    transition: background-position 0.05s ease;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    padding: 3em;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 0.6em;
+    color: #d7cfff;
+    text-shadow: 0 0 10px rgba(130, 70, 255, 0.6);
+  }
+
+  /* Barre de recherche */
+  .search-wrap {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: min(720px, 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid rgba(130,70,255,0.18);
+    padding: 0.45rem 0.6rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(90,40,150,0.18);
+  }
+
+  .search input[type="search"] {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #efeaff;
+    font-size: 1rem;
+    width: 100%;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .search .icon {
+    width: 20px; height: 20px;
+    display: inline-block;
+    margin-right: 0.5rem;
+    opacity: 0.9;
+    color: #cbb8ff;
+  }
+
+  .search .clear-btn {
+    background: rgba(255,255,255,0.04);
+    border: 0;
+    color: #cbb8ff;
+    padding: 0.25rem 0.45rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    transition: background .15s ease;
+  }
+  .search .clear-btn:hover { background: rgba(255,255,255,0.06); }
+
+  .filters {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+  }
+
+  select.filter-select {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    color: #efeaff;
+    border: 1px solid rgba(130,70,255,0.14);
+    padding: 0.45rem 0.6rem;
+    border-radius: 10px;
+    appearance: none;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(20,10,40,0.25);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5em;
+  }
+
+  .card {
+    background-color: #1a0e2a;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(120, 60, 255, 0.25);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 30px rgba(180, 130, 255, 0.8);
+  }
+
+  .card-content {
+    padding: 1em;
+  }
+
+  .card-title {
+    font-size: 1.2em;
+    margin: 0 0 0.5em;
+    color: #f0e6ff;
+  }
+
+  .card-class {
+    font-size: 0.88em;
+    color: #d6c4f9;
+    font-style: italic;
+    margin-top: 0.5em;
+  }
+
+  .card-content img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0.3em 0;
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.3em 0.6em;
+    border-radius: 8px;
+    font-size: 0.75em;
+    font-weight: bold;
+    margin-top: 0.8em;
+    color: white;
+    text-align: center;
+    width: fit-content;
+  }
+
+  /* Couleurs par catégorie */
+  .badge.projets { background-color: #ff4b4b; }
+  .badge.notions { background-color: #4caf50; }
+  .badge.informatique { background-color: #2196f3; }
+  .badge.Physique { background-color: purple; }
+
+  /* highlight texte trouvé */
+  mark.match {
+    background: linear-gradient(90deg,#ffd6ff,#e0d1ff);
+    color: #22002a;
+    padding: 0 .12rem;
+    border-radius: 3px;
+  }
+
+  /* responsive */
+  @media (max-width: 540px) {
+    h1 { font-size: 1.7rem; margin-bottom: 0.4rem; }
+    .search { padding: 0.4rem; }
+    .search .icon { display: none; }
+    .search .clear-btn { padding: 0.2rem 0.35rem; }
+  }
+  /* style du select (élément affiché) */
+.filter-select,
+#categorySelect {
+  color: #efeaff; /* texte sélectionné */
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(130,70,255,0.14);
+  -webkit-appearance: none; /* masque le style natif sur WebKit/Blink */
+  appearance: none;
+}
+
+/* style des options dans le menu déroulant */
+#categorySelect option,
+.filter-select option {
+  background-color: #1a0e2a;  /* fond des lignes */
+  color: #efeaff;             /* couleur du texte */
+}
+
+/* option survolée / option sélectionnée (selon navigateur) */
+#categorySelect option:hover,
+#categorySelect option:focus {
+  background-color: #2a1538;
+  color: #fff;
+}
+
+#categorySelect option:checked {
+  background-color: #3a2250;
+  color: #fff;
+}
+
+/* masquer l'icône par défaut sur IE/Edge si besoin */
+select::-ms-expand { display: none; }
+
+</style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Mes projets et idées mathématiques</h1>
+
+    <!-- Barre de recherche + filtres -->
+    <div class="search-wrap" role="search" aria-label="Recherche de projets">
+      <div class="search" aria-hidden="false">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M21 21l-4.35-4.35" stroke="#cbb8ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="11" cy="11" r="6" stroke="#cbb8ff" stroke-width="1.6"/>
+        </svg>
+        <input id="searchInput" type="search" placeholder="Rechercher titre, notion, classe... (ex: vecteurs, Python)" aria-label="Recherche de projets" />
+        <button id="clearBtn" class="clear-btn" title="Effacer la recherche" aria-label="Effacer la recherche">×</button>
+      </div>
+
+      <div class="filters" aria-hidden="false">
+        <label for="categorySelect" class="sr-only" style="position:absolute;left:-9999px">Filtrer par catégorie</label>
+        <select id="categorySelect" class="filter-select" aria-label="Filtrer par catégorie">
+          <option value="">Toutes catégories</option>
+          <option value="projets">Projets</option>
+          <option value="notions">Notions</option>
+          <option value="informatique">Informatique</option>
+          <option value="Physique">Physique</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid" id="projetGrid"></div>
+  </div>
+
+<script>
+  const projets = [
+    {
+      titre: "Recoder maplotlib | niveau facile",
+      lien: "Projets/Grapheur/Grapheur.html",
+      image: "Images/Grapheur.jpg",
+      classe: "Python, vecteurs, trigonométrie, géométrie",
+      categorie: "informatique"
+    },
+    {
+      titre: "Déplacer un objet | Panique vectorielle",
+      lien: "Projets/Vectors/Vectors.html",
+      image: "Images/Vectors.png",
+      classe: "Vecteurs, trigonométrie, géométrie",
+      categorie: "projets"
+    },
+    {
+      titre: "Déplacer un objet | Inertie dans le monde 3D",
+      lien: "Projets/Martices/Martices.html",
+      image: "Images/Vectors3d.jpg",
+      classe: "Matrices, vecteurs, trigonométrie, géométrie",
+      categorie: "projets"
+    },
+    {
+      titre: "Les Cercles sous tous leurs plans",
+      lien: "Projets/On_tourne_en_rond_dans_un_cercle/Partie1.html",
+      image: "Images/Cercle.png",
+      classe: "Pi, Géométrie, Trigonométrie",
+      categorie: "notions"
+    },
+    {
+      titre: "Les suites et les fonctions | Faille mathématique ?",
+      lien: "Projets/La_puissance_des_suites/Suites.html",
+      image: "Images/Suites.jpg",
+      classe: "Suites, Fonctions, Programmation, Informatique",
+      categorie: "notions"
+    },
+    {
+      titre: "La simulation numérique",
+      lien: "#",
+      image: "Images/Simulation.png",
+      classe: "Sélection naturelle, interractions atomiques, philosophie, Python",
+      categorie: "informatique"
+    },
+        {
+      titre: "Simuler la gravité",
+      lien: "notions",
+      image: "Images/Gravity.jpg",
+      classe: "Sélection naturelle, interractions atomiques, philosophie, Python",
+      categorie: "physique"
+    },
+    {
+      titre: "Le théorème du blob",
+      lien: "#",
+      image: "Images/Blobs.png",
+      classe: "Conversions, unités",
+      categorie: "notions"
+    },
+    {
+      titre: "Mes fiches de révision du bac de maths",
+      lien: "#",
+      image: "Images/Maths.PNG",
+      classe: "Conversions, unités",
+      categorie: "notions"
+    },
+  ];
+
+  const container = document.getElementById('projetGrid');
+  const input = document.getElementById('searchInput');
+  const clearBtn = document.getElementById('clearBtn');
+  const categorySelect = document.getElementById('categorySelect');
+
+  // util: échappe regex
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  // met en surbrillance les correspondances (pour titre et classe)
+  function highlight(text, query) {
+    if (!query) return text;
+    const q = escapeRegExp(query.trim());
+    if (!q) return text;
+    const re = new RegExp('('+q+')', 'ig');
+    return text.replace(re, '<mark class="match">$1</mark>');
+  }
+
+  // rendu
+  function renderList(filterText = '', filterCat = '') {
+    const q = filterText.trim().toLowerCase();
+    container.innerHTML = '';
+    const filtered = projets.filter(p => {
+      const inCat = !filterCat || p.categorie === filterCat;
+      if (!q) return inCat;
+      const inTitle = p.titre.toLowerCase().includes(q);
+      const inClasse = (p.classe || '').toLowerCase().includes(q);
+      const inCatText = (p.categorie || '').toLowerCase().includes(q);
+      return inCat && (inTitle || inClasse || inCatText);
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<p style="grid-column: 1/-1; color:#d4c5ff; opacity:0.9">Aucun projet trouvé pour votre recherche.</p>`;
+      return;
+    }
+
+    filtered.forEach(proj => {
+      const div = document.createElement('div');
+      div.className = 'card';
+      // highlight titre & classe
+      const highlightedTitle = highlight(proj.titre, filterText);
+      const highlightedClasse = highlight(proj.classe || '', filterText);
+
+      div.innerHTML = `
+        <a href="${proj.lien}">
+          <div class="card-content">
+            <h2 class="card-title">${highlightedTitle}</h2>
+            <img src="${proj.image}" alt="${proj.titre}">
+            <p class="card-class">${highlightedClasse}</p>
+            ${proj.categorie ? `<span class="badge ${proj.categorie}">${proj.categorie}</span>` : ""}
+          </div>
+        </a>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  // debounce simple
+  function debounce(fn, ms=180) {
+    let t;
+    return (...args) => {
+      clearTimeout(t);
+      t = setTimeout(() => fn(...args), ms);
+    };
+  }
+
+  const doSearch = debounce(() => {
+    renderList(input.value, categorySelect.value);
+  }, 140);
+
+  input.addEventListener('input', doSearch);
+  categorySelect.addEventListener('change', () => renderList(input.value, categorySelect.value));
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    categorySelect.value = '';
+    input.focus();
+    renderList('', '');
+  });
+
+  // initial render
+  renderList('', '');
+
+  document.addEventListener('mousemove', e => {
+    const x = e.clientX + "px";
+    const y = e.clientY + "px";
+    document.body.style.setProperty('--mouse-x', x);
+    document.body.style.setProperty('--mouse-y', y);
+  });
+</script>
+
+</body>
+</html>
+
+

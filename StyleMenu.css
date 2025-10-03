@@ -1,0 +1,29 @@
+/* Style du menu contextuel */
+.custom-context-menu {
+ display: none;
+    position: absolute;
+    opacity: 0.8; /* Réglez entre 0 et 1 pour l'opacité souhaitée */
+    background-color: black;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/* Style des options du menu */
+.custom-context-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.custom-context-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.custom-context-menu li:hover {
+    background-color: #555;
+}
+

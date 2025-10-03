@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>La puissance des suites mathématiques</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+ <meta name="description" content="...>
+ <meta name="keywords" content="Timothé AOUN">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Timothé AOUN">
+</head>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+
+<script>
+  // Exécuter après chargement du DOM
+  window.addEventListener('DOMContentLoaded', (event) => {
+    hljs.highlightAll(); // Applique à tous les blocs <code class="language-python">
+  });
+
+  // Fonction de copie
+  function copyCode() {
+    const code = document.querySelector("#Code code").innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      alert("Code copié !");
+    });
+  }
+</script>
+
+
+<body>
+  <div class="container">
+    <h1>La puissance des suites mathématiques</h1>
+		 <figcaption>Rédigé le 02/06/2025</figcaption>
+    <div id="Intro">
+	<h2> Introduction... </h2>
+	 <figcaption>Afin de ne pas donner de valeurs exactes concernant de l'argent, les chiffres que j'utiliserais ne seront pas mes revenus réels mais bien des chiffres quelconques qui serviront d'exemple. Je vous souhaite une bonne lecture et une bonne réflexion...</figcaption>
+<br>     
+     J'ai toujours pensé que les maths menaient à la programmation: Les conditions, les portes logiques, les boucles, TOUT pourrait et peut se résumer à un programme informatique. En même temps, les ordinateurs fonctionnant avec un système de comptage (le binaire, l'absence ou la présence d'électricite), on peut s'en douter. Bref, que veux-je dire par là et quel rapport avec les suites ?! Laissez-moi vous expliquer...
+<br>
+	J'étais réellement en seconde quand j'ai commencé à comprendre l'étonnant lien unissant programmation et mathématiques. Mon idée était simple: Les mathématiques telles que je les connaissaient ne disposaient pas des éléments nécessaires pour tout illustrer - j'avais découvert les suites par hazard en me demandant combien j'aurais d'argent sur mon compte en banque sachant que je gagnais 20€ par mois et qu'il augmentait de 2% chaque année. C'est alors que j'ai compris qu'on ne pouvait pas illustrer le comportement de mon argent avec de simples notations algébriques type Wx+y=z mais qu'il fallait un programme informatique faisant cela:
+		
+		
+<div id="Code">
+  <div class="code-container" role="region" aria-label="Bloc de code Python">
+    <div class="code-header">
+      python
+      <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+        📋 Copier
+      </button>
+    </div>
+    <pre><code class="language-python">
+Evolutions = 4  # Pour faire 4 fois la fructification
+Compteur = 0    # Je vais faire une boucle while plutôt qu'un for i in range
+Argent = 500    # Partons par exemple de 500€ avant la moindre évolution
+while Compteur != Evolutions:  # On part de 0 inclus à 4 exclus
+    Argent = 1.02 * Argent + 12 * 20
+    Compteur += 1
+print(Argent)
+    </code></pre>
+  </div>
+</div>
+<p> Page web en construction...
+  
+</div>
+
+
