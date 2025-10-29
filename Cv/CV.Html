@@ -183,41 +183,133 @@ h3 {
 h4 {
     margin: 0.3rem 0;
 }
-/* Cacher la flèche native */
-details summary {
-  list-style: none; /* enlève la flèche */
+
+.btn-pro {
+  background-color: #2563eb; /* bleu professionnel */
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
   cursor: pointer;
-  display: flex;           /* pour aligner la flèche + texte sur la même ligne */
-  align-items: center;     /* vertical centering */
-  gap: 0.5em;              /* espace entre la flèche et le texte */
-  font-weight: bold;
-  color: black;
+  transition: background-color 0.25s, transform 0.1s;
 }
 
-/* On cache la flèche native */
-details summary::-webkit-details-marker {
-  display: none;
+.btn-pro:hover {
+  background-color: #1d4ed8; /* bleu plus foncé au survol */
+  transform: translateY(-1px);
 }
 
-/* Flèche personnalisée */
-details[open] > summary::before {
-  content: "▼";           /* flèche vers le bas quand ouvert */
-  color: black;
-  font-size: 1em;
-  display: inline-block;
-  width: 1em;
-  text-align: center;
-  transition: transform 0.3s ease;
+.btn-pro:active {
+  transform: translateY(0);
+}
+/* Ligne du stage + bouton */
+.experience-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-details:not([open]) > summary::before {
-  content: "▶";           /* flèche vers la droite quand fermé */
-  color: black;
-  font-size: 1em;
-  display: inline-block;
-  width: 1em;
-  text-align: center;
-  transition: transform 0.3s ease;
+.btn-pro {
+  background-color: #2563eb;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background-color 0.25s, transform 0.1s;
+}
+
+.btn-pro:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* --- Fenêtre modale --- */
+.modal {
+  display: none; /* cachée par défaut */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #ffffff;
+  margin: 6% auto;
+  padding: 25px;
+  border-radius: 12px;
+  width: 80%;
+  max-width: 700px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* Titre + texte */
+.modal-content h2 {
+  color: #1e3a8a;
+  margin-bottom: 10px;
+}
+
+.modal-content p {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Bouton de téléchargement */
+.download-btn {
+  margin-top: 15px;
+  background-color: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.download-btn:hover {
+  background-color: #15803d;
+}
+
+/* Photos */
+.modal-images {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.modal-images img {
+  width: 100%;
+  max-width: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Bouton fermer */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+.close:hover {
+  color: #000;
+}
+.no-scroll {
+  overflow: hidden;
 }
 
     </style>
@@ -226,43 +318,98 @@ details:not([open]) > summary::before {
     <nav>
         <ul>
 <li><a href="cv/CV.html">CV Virtuel</a></li>
-<li><a href="Contact/Contact.html">Me contacter</a></li>
-<li><a href="Index.html">Accueil</a></li>	
-<li><a href="Maths/ProjetsMatheux.html">Projets numériques</a></li>		
+<li><a href="..\index.html">Accueil</a></li>	
+<li><a href="..\Maths/ProjetsMatheux.html">Projets numériques</a></li>		
         </ul>
     </nav>
 
 <section>
-    <h1>Mon parcours</h1>
+<h1>Mon parcours</h1>
 
-    <div class="year-block">
-        <h2>2023 (3<sup>ème</sup>, Collège Jeanne d'Arc)</h2>
-        <h4>Stage à TSE express médical</h4>
-        <h4>Obtention du brevet des collèges mention très bien</h4>
+<div class="year-block">
+  <h2>2022-2023 (3<sup>ème</sup>, Collège Jeanne d'Arc)</h2>
+
+  <div class="experience-line">
+    <h4>→ Stage à TSE express médical</h4>
+    <button class="btn-pro" data-modal="modal-tse">En savoir plus</button>
+  </div>
+
+  <h4>→ Obtention du brevet des collèges mention très bien</h4><br>
+  <h2>2023-2024 (2<sup>nd</sup>, Lycée général Jeanne d'Arc)</h2>
+    <h4>→ Obtention du code de la route</h4>
+<div class="experience-line">
+  <h4>→ Stage en animation et gestion d’un espace ludique municipal</h4>
+  <button class="btn-pro" data-modal="modal-ludo">En savoir plus</button>
+</div>
+<div class="experience-line">
+  <h4>→ Stage de bénévolat et d’accompagnement humain – Notre-Dame de Lourdes</h4>
+  <button class="btn-pro" data-modal="modal-lourdes">En savoir plus</button>
+</div>
+<h4>→ Participation au concours d'éloquence organisé par le Lycée (quatrième place)  <a href="https://www.instagram.com/p/DIUVqW5MgTq/" style="all: unset; cursor: pointer; color: blue; text-decoration: underline;">Voir l'article</a></h4>
+<br>
+<h2>2024-2025 (1<sup>ère</sup>, Lycée Jeanne d'Arc)</h2>
+<h4>→ Acquisition de la deuxième place au concours d'éloquence organisé par le Lycée <a href="https://www.instagram.com/p/DIUVqW5MgTq/" style="all: unset; cursor: pointer; color: blue; text-decoration: underline;">Voir un extrait</a></h4>
+<h4>→ Co-directeur du club d'échecs au lycée </h4>
+<br>
+<h2>2025-2026 (Tle, Lycée Jeanne d'Arc)</h2>
+<h4>→ Co-directeur du club jeux de sociétés (ancien club d'échecs) </h4>
+<h4>→ Participation au concours d'éloquence régional (à venir, en décembre) </h4>
+
+</div>
+<!-- MODALE : TSE EXPRESS MÉDICAL -->
+<div id="modal-tse" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+
+    <h2>Stage d'observation à TSE Express Médical</h2>
+    <p>
+      Durant ce stage, j’ai découvert le fonctionnement logistique et technique d’une entreprise de transport médical. 
+      J'ai eu la chance d'observer plusieurs services de l'entreprise, principalement la branche informatique, mais aussi commerciale et même dans le transport
+    </p>
+
+    <button class="download-btn">📄 Télécharger le rapport de stage</button>
+
+    <div class="modal-images">
+      <img src="StageTSEmoi.png" alt="Photo 1 du stage">
+      <img src="Stagetse4.png" alt="Photo 2 du stage">
+      <img src="StageTSEmoi3.png" alt="Photo 3 du stage">
     </div>
+  </div>
+</div>
+<!-- Modale 2 ld-->
+<div id="modal-lourdes" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
 
-    <div class="year-block">
-        <h2>2024 (2<sup>nde</sup>, Lycée Jeanne d'Arc)</h2>
+    <h2> Stage de bénévolat et d’accompagnement humain au sanctuaire Notre-Dame de Lourdes</h2>
+    <p>
+   Durant ce stage à Lourdes, j’ai participé bénévolement à l’accompagnement de personnes en situation de handicap, notamment en assurant leur transport après une brève formation. Ce stage a développé le sens du service, l'empathie et la responsabilité.
+    </p>
+	<div class="model-images">
+	<img src="StageLourdes.jpg" alt="Photo 1 du stage" width="50%">
+	</div>
+  </div>
+</div>
 
-     
-            <h3>Mes stages </h3>
-            <h4>Stage dans une ludothèque municipale</h4>
-			<details>
-            <summary><h4>Stage au service</h4></summary>
-			</details>
-        <h3>Autre</h3>
-		<details>
-        <summary><h4>Participation à un concours d'éloquence</h4></summary>
-		<p> Csja</p>
-		</details>
-        <h4>Obtention du code de la route</h4>
-    </div>
+<!-- Modale 3 lrd-->
+<div id="modal-ludo" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+
+    <h2> Stage en animation et gestion d’un espace ludique municipal</h2>
+    <p>
+     Durant ce stage en ludothèque municipale, j’ai assisté l’équipe dans la surveillance et l’animation des enfants, tout en participant à la gestion des jeux de société : tri, vérification de leur intégrité, numérisation et suivi des emprunts via l’application de gestion (codes-barres, base de données, etc.).
+    </p>
+	<div class="model-images">
+	<img src="LDT.jpg" alt="Photo 1 du stage" width="50%">
+	</div>
+  </div>
+</div>
+</div>
 </section>
-
-
 <div class="section" id="competences">
     <h1>Compétences techniques</h1>
-    <h2>Voici un aperçu de mes compétences principales, évaluées selon mon niveau de maîtrise :</h2>
+    <h2>En informatique: </h2>
 
     <div class="competence-table-wrapper">
         <table>
@@ -282,7 +429,7 @@ details:not([open]) > summary::before {
 					<td> Bases solides en python et excellent raisonnement mais encore besoin de documentation pour de très nombreuses bibliothèques</td>
                 </tr>
                 <tr>
-                    <td>Batch / CMD</td>
+                    <td>CMD (batch)</td>
                     <td>Scripts systèmes Windows, sécurité, hashing, automatisations, réseau</td>
                     <td class="level"><div class="Stars stars-5"></div></td>
 					<td> Excellente maitrise du terminal, création de scripts avancés en fonction des besoins, très bon repérage dans la structure du PC, des autorisations, de la sécurité, du hash...</td>
@@ -294,6 +441,33 @@ details:not([open]) > summary::before {
 					<td> Bonne logique pour les bases d'une page web mais encore besoin d'utiliser des IA pour le css et le js avancé
                 </tr>
                 <tr>
+                    <td>Ensemble windows + pack Microsoft</td>
+                    <td>Utilisation des produits Microsoft</td>
+                    <td class="level"><div class="Stars stars-5"></div></td>
+					<td> Maîtrise avancée de l'arborescence Windows et de son registre, mise à bien de nombreuses automatisations, création d'applications, virus, antivirus. Excellente maîtrise des applications natives windows + du pack Microsoft. </td>
+                </tr>
+				<td>Autres systèmes d'exploitations (Mac os, Linux...)</td>
+				<td>Utilisation des Outils Linux, Mac os, gestion d'erreur...</td>
+				<td class="level"><div class="Stars stars-2"></div></td>
+				<td> Utilisation simple de Mac os et de ses outils mais plus de difficultés avec linux en Shell (que je ne maîtrise pas bien) </td>
+            </tbody>
+        </table>
+    </div>
+	<br><br>
+    <h2>Disciplines scolaires : </h2>
+
+ <div class="competence-table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Compétence</th>
+                    <th>Description</th>
+                    <th>Niveau</th>
+					<th>Analyse</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
                     <td>Mathématiques</td>
                     <td>Démonstrations, logique, compréhension, réutilisation</td>
                     <td class="level"><div class="Stars stars-5"></div></td>
@@ -302,11 +476,33 @@ details:not([open]) > summary::before {
 				<td>Français</td>
 				<td>Art oratoire, vocabulaire, réflexion, réthorique</td>
 				<td class="level"><div class="Stars stars-4-5"></div></td>
-				<td> Passion pour la langue française, lecture et participation à des concours d'éloquence</td>
+				<td> Passion pour la langue française, participation à des concours d'éloquence, bonne orthographe</td>
+				</tr>
+				<td>Anglais</td>
+				<td>Écrit et oral</td>
+				<td class="level"><div class="Stars stars-3"></div></td>
+				<td> Niveau moyen (B1) conforme aux attentes de fin du cycle terminale sans avance. Plus de facilités à l'écrit qu'à l'oral</td>
             </tbody>
         </table>
     </div>
 </div>
+</section>
+<section>
+    <h1>Diplômes/certifications :</h1>
+</section>
+<section>
+    <h1>Formations :</h1>
+	<li> <a href="https://www.csja.fr/lycee-general-centre-scolaire-jeanne-darc/lycee-general-jeanne-darc/" style="all: unset; cursor: pointer; color: blue; text-decoration: underline;"> Lycée privé Jeanne d'Arc </a>
+	<a href="https://www.instagram.com/csjaoff/" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" style="all: unset; cursor: pointer; color: blue; text-decoration: underline; width:20px; height:20px;" alt="Instagram">
+  </a>
+  <a href="https://fr.linkedin.com/company/centre-scolaire-jeanne-d-arc" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" style="all: unset; cursor: pointer; color: blue; text-decoration: underline; width:20px; height:20px;" alt="LinkedIn">
+  </a>
+  <a href="https://www.facebook.com/Centre-Scolaire-Jeanne-DArc-100594478160582/?__tn__=%2Cd%2CP-R&eid=ARCrW0H-w71W3pLomlZaIPuBTVP1FrH8m-BDKrvyzlg24Lv3PowMKDqeSljIvJxZLF7ibAQs682bNVfU" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" style="all: unset; cursor: pointer; color: blue; text-decoration: underline; width:20px; height:20px;" alt="Facebook">
+  </a>
+</section>
 
     <script>
         function toggleAccordion(header) {
@@ -318,6 +514,47 @@ details:not([open]) > summary::before {
         window.onload = function () {
         };
     </script>
+<script>
+  // Sélection des éléments
+  const modals = document.querySelectorAll(".modal");
+  const modalButtons = document.querySelectorAll(".btn-pro");
+  const closeButtons = document.querySelectorAll(".close");
+
+  // Ouvrir une modale
+  modalButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const modalId = btn.getAttribute("data-modal");
+      const modal = document.getElementById(modalId);
+      modal.style.display = "block";
+
+      // Bloquer le scroll de la page
+      document.body.classList.add("no-scroll");
+    });
+  });
+
+  // Fermer une modale avec la croix
+  closeButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const modal = btn.closest(".modal");
+      modal.style.display = "none";
+
+      // Réactiver le scroll de la page
+      document.body.classList.remove("no-scroll");
+    });
+  });
+
+  // Fermer la modale en cliquant à l’extérieur
+  window.addEventListener("click", (e) => {
+    modals.forEach((modal) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+        document.body.classList.remove("no-scroll");
+      }
+    });
+  });
+</script>
+
+
 </body>
 </html>
 
