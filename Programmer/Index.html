@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Northwest Territories — Agence I&T</title>
-<meta name="description" content="Brochure sombre, professionnelle, carrousels, galerie cliquable - Territoires du Nord-Ouest">
+<title>Portfolio — Informatique & Projets — I&T</title>
+<meta name="description" content="Portfolio technique : projets, tutoriels, explications sur le fonctionnement des malwares (non-actionable), galerie, contact.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -27,24 +27,19 @@ body{
   font-family:var(--ff);
 background: 
   linear-gradient(180deg,
-    #05060a 0%,              /* très sombre en haut */
-    #0b0f13 30%,             /* légèrement plus clair */
-    #0b0f13 50%,             /* maintien sombre */
-    #0b0f13 60%,             /* maintien sombre */
-    #0b0f13 100%             /* sombre uniforme en bas */
+    #05060a 0%,
+    #0b0f13 30%,
+    #0b0f13 100%
   ),
-  radial-gradient(circle at 20% 40%, rgba(255,150,100,0.08), transparent 70%),  /* halo orange */
-  radial-gradient(circle at 80% 60%, rgba(155,92,255,0.08), transparent 70%),  /* halo violet */
-  radial-gradient(circle at 50% 80%, rgba(0,255,180,0.06), transparent 70%);   /* halo vert */
+  radial-gradient(circle at 20% 40%, rgba(255,150,100,0.04), transparent 70%),
+  radial-gradient(circle at 80% 60%, rgba(155,92,255,0.03), transparent 70%),
+  radial-gradient(circle at 50% 80%, rgba(0,255,180,0.02), transparent 70%);
 background-blend-mode: screen;
 background-attachment: fixed;
-background-size: cover;
-background-repeat: no-repeat;
-
-  color:#e6f7f4;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  line-height:1.45;
+color:#e6f7f4;
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
+line-height:1.45;
 }
 .wrap{max-width:var(--maxw);margin:28px auto;padding:22px}
 header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
@@ -96,13 +91,16 @@ main{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start}
 .carousel{position:relative;overflow:hidden;border-radius:12px;height:500px;}
 .carousel-track{display:flex;transition:transform .6s cubic-bezier(.2,.9,.2,1);height:100%;}
 .carousel-slide{min-width:100%;flex-shrink:0;position:relative;height:100%;}
-.carousel-slide img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  filter:brightness(0.8);
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+  object-position: center center;
+  background-color: #021018; /* fond discret derrière les bandes */
+  display: block;
+  transition: transform 0.5s ease;
 }
+
 .carousel-caption{
   position:absolute;
   top:50%;
@@ -139,6 +137,21 @@ main{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start}
 
 /* Footer */
 footer{margin-top:20px;color:var(--muted);text-align:center;font-size:13px}
+.project {
+  position: relative;
+  padding-bottom: 20px; /* espace pour la barre */
+  margin-bottom: 40px; /* espace entre articles */
+}
+
+.project::after {
+  content: "";
+  display: block;
+  height: 4px; /* épaisseur de la barre */
+  width: 100%;
+  background: linear-gradient(90deg, #f6d365, #fda085); /* dégradé du jaune vers l’orange */
+  border-radius: 2px; /* coins arrondis */
+  margin-top: 20px;
+}
 
 /* Responsive */
 @media (max-width:980px){
@@ -148,57 +161,41 @@ footer{margin-top:20px;color:var(--muted);text-align:center;font-size:13px}
   .carousel{height:300px;}
   .carousel-caption{padding:10px;font-size:14px;}
 }
-.feature {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-  border-radius: 12px;
-  padding: 14px;
-  border: 1px solid rgba(255,255,255,0.03);
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.project-grid {
+  display: block; /* ou flex mais avec flex-direction: column */
+  gap: 20px;      /* espace entre les articles */
 }
 
-.feature-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+.project {
+background: transparent;
+  width: 100%;       /* prend toute la largeur du parent */
+  box-sizing: border-box; /* inclut padding et bordures dans la largeur */
+  padding: 20px;     /* un peu d’espace à l’intérieur */
+  border-radius: 8px;   /* coins arrondis */
+  margin-bottom: 20px;  /* espace entre projets */
+  position: relative;   /* utile si tu ajoutes la barre décorative */
 }
 
-.feature-gallery img {
-  width: calc(25% - 10px);
-  height: 160px;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
 
-.feature-gallery img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-}
-
-.feature-text {
-  text-align: center;
-  color: #d8f7f4;
-}
-
+.code-sample{background:#071017;border-radius:8px;padding:12px;overflow:auto;border:1px solid rgba(255,255,255,0.03);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;font-size:13px;color:#bfeeea}
+.tag{display:inline-block;background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:999px;color:var(--muted);font-weight:600;font-size:12px;margin-right:6px}
+.warning{background:rgba(255,50,50,0.06);border:1px solid rgba(255,50,50,0.06);padding:10px;border-radius:8px;color:#ffd6d6;margin-top:10px}
 </style>
 </head>
 <body>
 <div class="wrap" role="main">
   <header>
-    <div class="logo" aria-hidden="true">I&T</div>
+    <div class="logo" aria-hidden="true">T.aoun</div>
     <div>
-      <h1>Install & Travel— The Canada Tale</h1>
-      <div class="subtitle">Installation · Discovery · Cultural Fusion</div>
+      <h1> — Informatique & Projets</h1>
+      <div class="subtitle">Projets • Tutoriels • Explications techniques</div>
     </div>
-    <nav aria-label="Navigation brochure">
-      <a href="#where">Where</a>
-      <a href="#attractions">Activities</a>
-      <a href="#life">Life</a>
-      <a href="#gallery">#I&T</a>
+    <nav aria-label="Navigation du portfolio">
+      <a href="#projects">Projets</a>
+      <a href="#tutorials">Tutoriels</a>
+      <a href="#malware">Sécurité & virus</a>
+      <a href="#gallery">Galerie</a>
     </nav>
   </header>
 
@@ -213,382 +210,133 @@ footer{margin-top:20px;color:var(--muted);text-align:center;font-size:13px}
         </div>
 
         <div class="carousel-track" id="heroTrack" style="height:100%;display:flex;transition:transform .7s ease">
-          <!-- Slides (replace src with your high-res images) -->
+          <!-- Slides (remplacer src par tes images) -->
           <div class="carousel-slide" data-index="0">
-            <img src="aurora1.jpg" alt="Aurora NWT 1" style="width:100%;height:100%;object-fit:cover;opacity:0.95">
+            <img src="1.png" alt="Code sur écran">
           </div>
           <div class="carousel-slide" data-index="1">
-            <img src="aurora2.jpg" alt="Aurora NWT 2" style="width:100%;height:100%;object-fit:cover;opacity:0.95">
+            <img src="2.png" alt="Serveur & infra">
           </div>
           <div class="carousel-slide" data-index="2">
-            <img src="Animaux1.jpg" alt="Yellowknife" style="width:100%;height:100%;object-fit:cover;opacity:0.95">
-          </div>
-          <div class="carousel-slide" data-index="3">
-            <img src="nahanni1.jpg" alt="Nahanni Park" style="width:100%;height:100%;object-fit:cover;opacity:0.95">
+            <img src="3.png" alt="Collaboration & projets">
           </div>
         </div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const track = document.querySelector(".carousel-track");
-  const slides = Array.from(document.querySelectorAll(".carousel-slide"));
-  const dotsContainer = document.createElement("div");
-  dotsContainer.classList.add("dots");
-  document.querySelector(".hero").appendChild(dotsContainer);
-
-  // Crée les points automatiquement
-  slides.forEach((_, i) => {
-    const dot = document.createElement("div");
-    dot.classList.add("dot");
-    if (i === 0) dot.classList.add("active");
-    dotsContainer.appendChild(dot);
-  });
-
-  const dots = Array.from(dotsContainer.querySelectorAll(".dot"));
-  let index = 0;
-  const delay = 5000; // temps entre chaque défilement (en ms)
-  let isTransitioning = false;
-
-  function updateCarousel() {
-    if (isTransitioning) return;
-    isTransitioning = true;
-    track.style.transition = "transform 0.8s ease";
-    track.style.transform = `translateX(-${index * 100}%)`;
-
-    dots.f<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const track = document.querySelector(".carousel-track");
-  const slides = Array.from(track.querySelectorAll(".carousel-slide"));
-  const hero = document.querySelector(".hero");
-
-  // ✅ Supprime d'éventuels anciens points avant d'en recréer
-  const oldDots = hero.querySelector(".dots");
-  if (oldDots) oldDots.remove();
-
-  // ✅ Crée les bons points
-  const dotsContainer = document.createElement("div");
-  dotsContainer.classList.add("dots");
-  hero.appendChild(dotsContainer);
-
-  slides.forEach((_, i) => {
-    const dot = document.createElement("div");
-    dot.classList.add("dot");
-    if (i === 0) dot.classList.add("active");
-    dotsContainer.appendChild(dot);
-  });
-
-  const dots = Array.from(dotsContainer.querySelectorAll(".dot"));
-  let index = 0;
-  const delay = 5000; // 5s entre les images
-  let isTransitioning = false;
-
-  function updateCarousel() {
-    if (isTransitioning) return;
-    isTransitioning = true;
-    track.style.transition = "transform 0.8s ease";
-    track.style.transform = `translateX(-${index * 100}%)`;
-
-    dots.forEach(dot => dot.classList.remove("active"));
-    dots[index].classList.add("active");
-
-    setTimeout(() => (isTransitioning = false), 850);
-  }
-
-  function nextSlide() {
-    index++;
-    if (index >= slides.length) index = 0;
-    updateCarousel();
-  }
-
-  // 🔁 défilement automatique
-  let autoScroll = setInterval(nextSlide, delay);
-
-  // 🔘 clics sur les points
-  dots.forEach((dot, i) => {
-    dot.addEventListener("click", () => {
-      index = i;
-      updateCarousel();
-      clearInterval(autoScroll);
-      autoScroll = setInterval(nextSlide, delay);
-    });
-  });
-
-  // ◀ ▶ boutons manuels
-  const prevBtn = document.getElementById("prevHero");
-  const nextBtn = document.getElementById("nextHero");
-
-  if (prevBtn && nextBtn) {
-    prevBtn.addEventListener("click", () => {
-      index = index === 0 ? slides.length - 1 : index - 1;
-      updateCarousel();
-      clearInterval(autoScroll);
-      autoScroll = setInterval(nextSlide, delay);
-    });
-    nextBtn.addEventListener("click", () => {
-      index = (index + 1) % slides.length;
-      updateCarousel();
-      clearInterval(autoScroll);
-      autoScroll = setInterval(nextSlide, delay);
-    });
-  }
-});
-</script>
-
-
-
 
         <div class="overlay"></div>
 
         <div class="hero-content">
-          <span class="kicker">Northwest Territories</span>
-          <h2 class="lead">Imagine vast skies, deep lakes, and welcoming communities.</h2>
-          <p class="muted">Located in the heart of Northern Canada, the Northwest Territories offer a rare blend of wilderness, vibrant Indigenous culture, and career opportunities suited for young people.</p>
+          <span class="kicker">Développement & Sécurité</span>
+          <h2 class="lead">Projets réels, tutoriels clairs, et explications techniques responsables.</h2>
+          <p class="muted">Pour montrer mon savoir-faire, je présente ici mes projets (front, back, devops), des tutoriels pédagogiques, et une section pour comprendre comment fonctionnent certains malwares — uniquement à titre explicatif et pour apprendre la sécurité. </p>
           <div style="margin-top:10px">
-            <button class="btn" onclick="window.open('https://www.shutterstock.com/fr/search/northwest-territories-canada?', '_blank')">Show the galery</button>
-            <button class="ghost" onclick="scrollToId('attractions')">Learn more</button>
+            <button class="btn" onclick="scrollToId('projects')">Voir mes projets</button>
+            <button class="ghost" onclick="alert('La page est en création... Ce lien sera bientôt disponible !!!')">Sécurité & virus</button>
           </div>
         </div>
 
         <div class="dots" id="heroDots" aria-hidden="true" style="bottom:18px"></div>
       </section>
 
-      <!-- THREE-COLUMN content -->
-      <div class="content-grid">
-        <section class="card" id="attractions">
-		
-		<br>
-		<br>
-		 <div class="feature">
-          <h2>Landscapes & must-see places</h2>
-          <div class="text-col" style="margin-top:8px">
-            <div class="feature">
-  <div class="feature-gallery">
-    <img src="nahanni1.jpg" alt="Nahanni River">
-    <img src="nahanni2.jpg" alt="Nahanni Valley">
-    <img src="nahanni3.jpg" alt="Nahanni Falls">
-    <img src="nahanni4.jpg" alt="Nahanni Mountains">
-  </div>
-  <div class="feature-text">
-    <h3>Nahanni National Park</h3>
-    <p>
-      Explore one of the most breathtaking UNESCO World Heritage Sites in Canada.
-      Nahanni offers pure wilderness, majestic waterfalls and the spirit of the North at its best.
-    </p>
-  </div>
+      <!-- Projects -->
+      <section class="panel" id="projects" style="margin-top:16px">
+        <div class="section-title">
+          <h2>Projets récents ou en cours</h2>
+          <div><span class="tag">Batch</span><span class="tag">Python</span><span class="tag">Windows</span></div>
+        </div>
+
+        <div class="project-grid">
+          <article class="project" aria-labelledby="p1">
+            <h3 id="p1">1) Application coffre fort</h3>
+            <p class="muted">Une application en cours de developpement, avec mon propre système de hash</p>
+            <p><strong>Stack :</strong> Batch Windows • PowerShell (quelques interopérations) • API Windows • Python (Outils de chiffrement standards) •</p>
+            <div class="code-sample" aria-hidden="true">
+// fonctionnement:<br>
+  - step 1: Création du mot de passe + fonction hash()<br>
+  - step 2: Comparaison du hash() du mot de passe entré avec le hash() du mot de passe initial<br>
+  - step 3: Système de cryptage/décryptage du dossier via des API Windows (icalcs, cipher, attrib...)<br>
+  - name: Deploy to cluster</div>
+            <p style="margin-top:8px"><button class="ghost"
+        type="button"
+        onclick="window.open('https://github.com/timotheaoun/Coffre_fort', '_blank', 'noopener')"
+        aria-label="Ouvrir le dépôt GitHub Coffre_fort">
+  Voir le dépôt
+</button>
+</p>
+          </article>
+		  <article class="project" aria-labelledby="p1">
+            <h3 id="p2">2) Codage de ma page web</h3>
+            <p class="muted"> Publication de mon site internet.</p>
+            <p><strong>Stack :</strong>  •HTML • CSS • JS(avec ia) •Automatisation git (avec ia)</p>
+            <div class="code-sample" aria-hidden="true">
+// arborescence :<br>
+  - branche principale {index.html} : <br><a href="https://timotheaoun.github.io/" style="color: yellow;">https://timotheaoun.github.io/</a><br>
+  - branches secondaires: <a href="https://timotheaoun.github.io/Cv/CV.Html" style="color: blue;">https://timotheaoun.github.io/Cv/CV.Html</a><br>
+  <a href="https://timotheaoun.github.io/maths/ProjetsMatheux.html" style="color: blue;"">https://timotheaoun.github.io/maths/ProjetsMatheux.html</a><br>
+  <a href="https://timotheaoun.github.io/Programmer/index.html" style="color: blue;""> https://timotheaoun.github.io/Programmer/index.html</a><br>
 </div>
-<div class="feature" style="margin-top:10px">
-              <div class="feature">
-  <div class="feature-gallery">
-    <img src="lake1.jpg">
-    <img src="lake2.jpg">
-    <img src="lake3.jpg">
-	<img src="lake4.jpg">
-  </div>
-  <div class="feature-text">
-    <h3>Great Slave Lake</h3>
-	
-  <div class="feature-gallery">
-    <img src="lakee1.jpg">
-    <img src="lakee2.jpg">
-    <img src="lakee3.jpg">
-	<img src="lakee4.jpg">
-  </div>
-   <h3>And Great Bear Lake</h3>
-    <p>
-  Two iconic lakes: vast bodies of water, fishing, boating, bright summers, and frozen winters.
+            <p style="margin-top:8px"><button class="ghost"
+        type="button"
+        onclick="window.open('https://github.com/timotheaoun/timotheaoun.github.io/', '_blank', 'noopener')"
+        aria-label="Ouvrir le dépôt GitHub Coffre_fort">
+  Voir le dépôt
+</button>
+</p>
+          </article>
 
-          </div>
-		  </div>
-    </p>
-	
-   <div class="feature">
-  <div class="feature-gallery">
-    <img src="https://tse4.mm.bing.net/th/id/OIP.35B4AsXz9bQqHsh7C4yCiwHaEK?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3">
-    <img src="https://tse2.mm.bing.net/th/id/OIP.0uc3gnHJ3vnuL-aJ1srgkAHaE8?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3">
-	<img src="https://th.bing.com/th/id/R.f9c6d3008ecbedda4d06e6e0810c39dc?rik=kdN0QBqpCbldwg&riu=http%3a%2f%2fimg.src.ca%2f2015%2f06%2f21%2f635x357%2f150621_1k2gk_autochtones-montreal-journee_sn635.jpg&ehk=slFjoxTGzDRRIKM6nt7FOJ5Z0ls2PwX6GCMpKgIeNu4%3d&risl=&pid=ImgRaw&r=0">
-  </div>
-  <div class="feature-text">
-    <h3>Tuktoyaktuk & Inuvik Region</h3>
-    <p>
-A region rich in indigenous culture, with unique Arctic landscapes, ice roads, and a glimpse into life in the Far North.    </p>
-  </div>
-  
-  <div class="feature-gallery">
-    <img src="https://live.staticflickr.com/8227/29176603704_58b878e2b2_b.jpg">
-    <img src="https://explorenorth.com/nwt/images/464-house_of_horrors-yellowknife-4184.jpg">
-	<img src="https://tse1.mm.bing.net/th/id/OIP.f8vn41YWCju1EVYr7KGE9wAAAA?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3">
-	<img src="https://live.staticflickr.com/65535/48969699781_394ca3fe08_b.jpg">
-	
-  </div>
-  <div class="feature-text">
-    <h3>Old Town & Prince of Wales Northern Heritage Centre(Yellowknife)</h3>
-    <p>
-The historic district of the capital with its old miners' cabins, local shops, and art galleries. Iconic for urban walks in the North and for experiencing the unique atmosphere of Yellowknife. The village is home to the main museum of the Northwest Territories.
-    </p>
-  </div>
-	
-  </div>
-</div>
-
-        </section>
-    <center>
-	      <div class="panel card" style="margin-bottom:14px">
-        <section class="card" id="climate">
-          <h2>Climate & seasons</h2>
-          <p class="text-col">
-            The seasons are marked: long days in summer, dry and cold winters favorable to auroras and winter activities. Life is organized around the seasons.
-          </p>
-        </section>
-      </div>
-      <section class="panel card" id="life" style="margin-top:16px">
-        <h2>Why would a young immigrant choose the Northwest Territories?</h2>
-        <p class="text-col">
-         Firstly, for the proximity to nature and the possibility of an active lifestyle. Secondly, for a welcoming community where one quickly makes friends. Next, there are opportunities in the public sector, tourism, and increasingly in digital or creative activities. Finally, the cultural uniqueness, the strong presence of Indigenous peoples, makes the Territories a place of personal enrichment.
-        </p>
-
-        <h3 style="margin-top:10px;color:var(--accent)">A testimony from Sarah, a young student</h3>
-        <p class="muted">I met my roommate at a winter festival in Yellowknife — two weeks later, we were already planning a canoe trip.</p>
       </section>
-      <section class="panel card" id="life" style="margin-top:16px">
-        <h2>Many integration opportunities, work requests
-</h2>
-<p>Many jobs, welcoming residents, benefits, financial aid...</p>
-</section>
     </div>
-	</div>
-	    </center>
-
 
     <!-- RIGHT: Aside panels -->
     <aside>
-      <div class="panel card" style="margin-bottom:14px">
-        <h3>In the blink of an eye</h3>
-        <p class="muted"><strong>Area:</strong>1,000,000 km² (mostly wilderness)</p>
-        <p class="muted"><strong>Langages:</strong> English, French, Indigenous languages</p>
-        <p class="muted"><strong>Economie:</strong> resources, tourism, services</p>
-        <p class="muted"><strong>Capital:</strong> Yellowknife — cultural and administrative center</p>
+      <div class="panel" style="margin-bottom:14px">
+        <h3>À propos</h3>
+        <p class="muted"><strong>Nom :</strong> Timothé AOUN</p>
+        <p class="muted"><strong>Fonction :</strong> Lycéen</p>
+        <p class="muted"><strong>Contact (pour le dev) :</strong> <a href="mailto:aountimothe.network@gmail.com" style="color:var(--accent)">aountimothe.network@gmail.com</a></p>
+        <p class="muted"><strong>Contact (professionnel):</strong> <a href="mailto:aountimothe.travail@gmail.com" style="color:var(--accent)">aountimothe.travail@gmail.com (pour le dev)</a></p>
+        <p class="muted"><strong>Localisation :</strong> Le Péage de Roussillon, France</p>
       </div>
 
-      <div class="panel card">
-        <h3>More activities</h3>
-        <div class="carousel" id="actCarousel" style="margin-top:8px">
-          <div class="carousel-track" id="actTrack" style="height:220px">
-            <div class="carousel-slide">
-              <img src="https://tse4.mm.bing.net/th/id/OIP.Vt90_HbLWcGS4Ghdb3IqvQHaD_?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Dogsled">
-            </div>
-            <div class="carousel-slide">
-              <img src="https://tse2.mm.bing.net/th/id/OIP.PN4PnGhjlTWv891uDM7fOQAAAA?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Canoe">             
-            </div>
-            <div class="carousel-slide">
- <img src="https://tse3.mm.bing.net/th/id/OIP.KjMQlxrBCRjcS1WzKEF4xQHaE7?cb=12&w=3071&h=2047&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Ice fishing">
-            </div>
-          </div>
-		  <p> Our agency is here to support you and help you integrate. With the 'All-in-One' package, we offer you an integration program in which you will participate in iconic activities of the Northern Territories, discover historical monuments, and explore the culture of the region.
-</p>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:8px;">
-          <button class="ghost" onclick="actPrev()">◀</button>
-          <button class="ghost" onclick="actNext()">▶</button>
+      <div class="panel" style="margin-bottom:14px">
+        <h3>Compétences clés</h3>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
+          <span class="tag">Python</span>
+          <span class="tag">Batch</span>
+          <span class="tag">Sécurité</span>
         </div>
       </div>
 
-      <div class="panel card" style="margin-top:12px">
-        <h3>Quick links</h3>
+      <div class="panel" style="margin-bottom:14px">
+        <h3>Ressources & liens</h3>
         <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
-          <button class="ghost" onclick="scrollToId('attractions')">Attractions</button>
-          <button class="ghost" onclick="scrollToId('life')">Daily life</button>
-          <button class="ghost" onclick="scrollToId('gallery')">#I&D (our Agency)</button>
+          <a class="ghost" href="https://github.com/timotheaoun" target="_blank">GitHub</a>
+          <a class="ghost" href="https://timotheaoun.github.io/" target="_blank">Blog / CV</a>
+          <button class="ghost" onclick="scrollToId('contact')">Contact</button>
         </div>
       </div>
-	  <br>
-	  <br>
-	  <div class="panel card">
-	  <h3>Our agency will offer you, after a 7-day all-expenses-paid stay in various iconic locations, a permanent contract job immediately, for the entire duration of your job search.</h3>
-        <div class="carousel" id="actCarousel" style="margin-top:8px">
-          <div class="carousel-track" id="actTrack" style="height:220px">
-            <div class="carousel-slide">
-			<img src="https://careers.chooseyourcoop.com/wp-content/uploads/2020/06/15.jpg">
-			</div>
-			</div>
-			<p>     Our agency will offer you, after a 7-day all-expenses-paid stay in various iconic locations, a permanent job immediately, for the entire duration of your job search. This job search should not be difficult since you will be accompanied by our commercial relations experts Natael and Hugo, a career advisor, Thomas, and even a banker specializing in helping newcomers settle, Timothé.</p>
-			</div>
-			</div>
-			<br>
-			<br>
-			
-	  <div class="panel card">
-	  <h3>A stable economy, a fresh start</h3>
-        <div class="carousel" id="actCarousel" style="margin-top:8px">
-          <div class="carousel-track" id="actTrack" style="height:220px">
-            <div class="carousel-slide">
-			<img src="https://tse1.mm.bing.net/th/id/OIP.tLiLi2nApPpi23sTmBD0zAHaE8?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3">
-			</div>
-			</div>
-			<p>     The stable economy of our region can be beneficial for you if you are a self-employed entrepreneur. You will receive support and insurance, so don't miss this opportunity: Natural resources, tourism, public services, and growth of remote activities. Ideal for young people looking to start a business or work remotely.
-</p>
-			</div>
-			</div>
-			<br>
-<div class="panel card" style="height:62.5vh; overflow:hidden;">
-  <div class="carousel" id="actCarousel" style="margin-top:8px">
-    <div class="carousel-track" id="actTrack" style="height:60%">
-      <div class="carousel-slide">
-        <a href="https://youtu.be/1BxSVZg0lZo" target="_blank">
-          <iframe 
-            width="100%" 
-            height="100%" 
-            src="https://www.youtube.com/embed/1BxSVZg0lZo" 
-            title="YouTube video" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen
-            style="object-fit:cover;">
-          </iframe>
-        </a>
-      </div>
-    </div>
-	<p> Northwest Territories Road trip</p>
-  </div>
-</div>
-
-	  
+	  <!-- Gallery -->
+      <section class="panel" id="gallery" style="margin-top:16px">
+        <h2>Galerie — Extraits & captures</h2>
+        <div class="gallery-grid" style="margin-top:12px">
+          <img src="1.png" alt="Capture 1">
+          <img src="2.png" alt="Capture 3">
+          <img src="3.png" alt="Capture 4">
+        </div>
+      </section>
     </aside>
   </main>
 
-  <!-- GALLERY SECTION -->
-  <section class="panel card" id="gallery" style="margin-top:20px">
-    <h2>So don't hesitate, seize the opportunity!!!We have helped over 15,000 people, all of whom have found stable employment and a house or an apartment. If you want to be part of these 100% of clients who have achieved their dream, choose<div class="logo" aria-hidden="true">I&T</div>
-</p> 
-    <!-- Thumbs carousel (select image to show main) -->
-    <div style="margin-top:10px">
-      <div class="carousel" id="thumbsCarousel" style="height:260px">
-        <div class="carousel-track" id="thumbsTrack" style="display:flex;transition:transform .6s ease">
-          <!-- multiple slides with several images each (wide carousel) -->
-          <div class="carousel-slide"><img src="https://images.ctfassets.net/bth3mlrehms2/5Q8SdT1Xy9jFmSgCtpWgRP/d0916d27bcd3c512aad9a8cf3a661dfc/Canada__Lac__Balade_en_kayak.jpg?w=1015&h=570&fl=progressive&q=50&fm=jpg" alt=""></div>
-          <div class="carousel-slide"><img src="https://www.ville-de-cuers.com/wp-content/uploads/2024/04/decouvrez-le-canada-en-15-jours-un-circuit-inoubliable-a-travers-les-paysages-epoustouflants.jpg" alt=""></div>
-          <div class="carousel-slide"><img src="https://th.bing.com/th/id/R.f584875314d09d7f8afe0339974726eb?rik=%2ffjxHJF0fQVIJA&riu=http%3a%2f%2fhomesoftherich.net%2fwp-content%2fuploads%2f2017%2f03%2fScreen-Shot-2017-03-30-at-2.53.51-PM.png&ehk=JjKqlHUIgNsvWjnvOk89nMt7dRg2zrtItxw3SmSMPHw%3d&risl=&pid=ImgRaw&r=0" alt=""></div>
-          <div class="carousel-slide"><img src="https://thvnext.bing.com/th/id/OIP.e5M0xYkJw4dbYMG71uIJxwEyDM?o=7&cb=12rm=3&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt=""></div>
-        </div>
-      </div>
-	  
-      <div style="display:flex;gap:8px;margin-top:8px;">
-        <button class="ghost" id="thumbPrev">◀</button>
-        <button class="ghost" id="thumbNext">▶</button>
-      </div>
-    </div>
-  </section>
-
   <footer>
-    <div>© Timothé AOUN, tous droits réservés </div>
-    <div style="margin-top:8px;color:var(--muted)">By <a href="https://timotheaoun.github.io/">Timothé AOUN</a></div>
+    <div>© Timothé AOUN — Portfolio technique</div>
   </footer>
 </div>
 
-<!-- LIGHTBOX + CAROUSEL SCRIPTS -->
+<!-- SCRIPTS (carousel + lightbox + petites interactions) -->
 <script>
-/* ---------- Utility ---------- */
+/* utility scroll */
 function scrollToId(id){ const el = document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
 
-/* ---------- HERO carousel (vanilla) ---------- */
+/* HERO carousel (vanilla) */
 (function(){
   const track = document.getElementById('heroTrack');
   const slides = Array.from(track.children);
@@ -606,7 +354,7 @@ function scrollToId(id){ const el = document.getElementById(id); if(el) el.scrol
   }
 
   function update(){
-    track.style.transform = `translateX(-${idx*100}%)`;
+    track.style.transform = `translateX(-${idx*110+10}%)`;
     // dots
     Array.from(dotsWrap.children).forEach((d,i)=> d.classList.toggle('active', i===idx));
   }
@@ -622,34 +370,9 @@ function scrollToId(id){ const el = document.getElementById(id); if(el) el.scrol
   const hero = document.getElementById('hero');
   hero.addEventListener('mouseenter', ()=> clearInterval(auto));
   hero.addEventListener('mouseleave', ()=> auto = setInterval(next,6000));
-  // expose goTo for external use
-  window.heroGoTo = goTo;
 })();
 
-/* ---------- Activities carousel (small) ---------- */
-(function(){
-  const track = document.getElementById('actTrack');
-  const slides = Array.from(track.children);
-  let i=0;
-  function show(){ track.style.transform = `translateX(-${i*110+8}%)`; }
-  window.actNext = ()=> { i = (i+1)%slides.length; show(); };
-  window.actPrev = ()=> { i = (i-1+slides.length)%slides.length; show(); };
-})();
-
-/* ---------- Thumbs carousel (simple scroll by viewport) ---------- */
-(function(){
-  const track = document.getElementById('thumbsTrack');
-  const slides = Array.from(track.children);
-  let pos = 0;
-  document.getElementById('thumbNext').addEventListener('click', ()=>{
-    pos = Math.min(pos+1, slides.length-1); track.style.transform = `translateX(-${pos*100}%)`;
-  });
-  document.getElementById('thumbPrev').addEventListener('click', ()=>{
-    pos = Math.max(pos-1, 0); track.style.transform = `translateX(-${pos*100}%)`;
-  });
-})();
-
-/* ---------- Gallery lightbox (click to enlarge) ---------- */
+/* Gallery lightbox */
 (function(){
   document.querySelectorAll('.gallery-grid img, .carousel-slide img').forEach(img=>{
     img.addEventListener('click', (e)=>{
@@ -669,7 +392,7 @@ function scrollToId(id){ const el = document.getElementById(id); if(el) el.scrol
   });
 })();
 
-/* ---------- Keyboard accessibility: ESC to close lightbox ---------- */
+/* ESC to close lightbox */
 window.addEventListener('keydown', (e)=>{
   if(e.key === 'Escape'){
     document.querySelectorAll('.lightbox').forEach(lb=> lb.parentElement.removeChild(lb));
