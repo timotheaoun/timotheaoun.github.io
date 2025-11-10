@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programmer</title>
+    <link rel="icon" type="image/icon" href="Icon.ico">
+    <link rel="stylesheet" href="style.css">
+    <style>
+	::selection {
+  background-color: blue;
+  color: white; /* Si vous voulez que le texte sélectionné soit blanc */
+}
+        .salutation-section {
+            position: relative; 
+            min-height: 30vh; 
+            color: #FFD700;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px; 
+            overflow: hidden; 
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 2s ease, transform 2s ease;
+            animation: fadeOut 2s ease forwards;
+            animation-delay: 15s;
+        }
+        .salutation-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover; 
+            background-position: center; 
+            filter: blur(2px); 
+            z-index: -1; 
+        }
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.8) blur(8px);
+        }
+        h1 {
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            animation: fadeIn 5s ease-in-out; 
+        }
+		h2 {
+            color: pink;
+            display: inline-block;
+animation: fadeIn 2s ease-in-out; 
+        }
+				h3 {
+            color: pink;
+			font-size: 19px;
+            display: inline-block;
+animation: fadeIn 2s ease-in-out; 
+        }
+		 .content {
+            position: relative; /* Contenu normal */
+            transition: transform 2s ease-in-out; /* Transition fluide pour l'effet */
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.95); }
+        }
+        .cont {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        button {
+            display: inline-block;
+            padding: 12px 24px;
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+            animation: fadeIn 2s ease-out 2s forwards; 
+        }
+        button:hover {
+            opacity: 0.5;
+            background-color: rgba(0, 0, 9, 0.7);
+            border-color: #00bfff;
+            box-shadow: 0px 4px 8px rgba(0, 191, 255, 0.3), 0 0 10px rgba(0, 191, 255, 0.2);
+            transform: translateY(-2px) scale(1.05);
+        }
+		.img {
+		width: 50% }
+section {
+    padding: 45px;
+    margin: 20px;
+    background-color: hsla(0, 0%, 0%, 0.7); /* Noir avec 70% d'opacité */
+	color: White;
+    border-radius: 10px;
+}
+ #barreHorizontale {
+ position: relative;
+            background-color: hsla(0, 50%, 80%, 0.3);
+            text-align: center;
+            padding: 10px;
+			width: 73.15%;
+			left: 60px;
+			margin-left: 110px;
+        }
+		  .carousel-container {
+            width: 1000px; /* Taille du carré */
+            height: 500px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+			cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        .active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="../cv/CV.html">CV Virtuel</a></li>
+        <li><a href="../Contact/Contact.html">Me contacter</a></li>
+        <li><a href="../Home/Home.html">Accueil</a></li>
+        <li><a href="../Programmer/Programmer.html">L'informatique</a></li>
+    </ul>
+</nav>
+<video autoplay muted loop class="video-background" id="videoBG">
+    <source src="Mod.mp4" type="video/mp4">
+
+    Votre navigateur ne supporte pas les vidéos en arrière-plan.
+</video>
+<script>
+    window.addEventListener('DOMContentLoaded', function() {
+        var salutationText = "    Bienvenue sur ma page web dédiée à l'informatique : Mes projets avec des virus les plus fous, des inventions incroyables, les langages de Programmation, mes ouvrages et surtout... Ce que vous devez ABSOLUMENT SAVOIR, des astuces très pratiques que j'ai eu la chance de découvrir par moi-même ou par internet qui me sont d'une utilité impressionnante aujourd'hui!";
+        typeWriter(salutationText, 0);
+    });
+
+    function typeWriter(text, i) {
+        if (i < text.length) {
+            var currentChar = text.charAt(i);
+            document.getElementById("dynamicSalutation").innerHTML += currentChar;
+            i++;
+            var delay = 30;
+            if (currentChar === ".") { delay = 190; }
+            else if (currentChar === ":") { delay = 290; }
+            else if (currentChar === ",") { delay = 90; }
+            setTimeout(function() { typeWriter(text, i); }, delay);
+        }
+    }
+</script>
+
+
+ <script>
+        // Exécuter l'effet après 15 secondes
+        setTimeout(() => {
+            document.querySelector('.content').style.transform = "translateY(-200px)"; // Translation du contenu
+        }, 16000); // 15 000 ms = 15 secondes
+    </script>
+ <div class="content">
+<div class="salutation-section" style="text-align: center;">
+    <h2 id="dynamicSalutation"></h2>
+</div>
+<div class="container">
+    <h1>Un secteur bien plus vaste qu'on peut le penser</h1>
+    <br>
+    <div class="cont">
+
+    </div>
+	<br>
+	<section class="sect"> 
+<h3> J'ai de nombreuses passions: les maths, la langue française, la psycholgie et... L'informatique. à travers cette page web, j'espère vous transmettre cette passion </h3>
+</div>
+</section>
+<center>
+        <button onclick="Programmation()">Langages de programmation</button>
+		<button>Réparer un ordinateur (sans rien démonter)</button>
+		<button>Virus et faux virus</button>
+	<button onclick="window.location.href = '.\Projets\Menu.html';">Astuces pratiques | Maitrisez tout sur tout</button>
+
+		</center>
+		<br>
+		<br>
+		<center>
+		<div class="carousel-container" id="carousel-tse">
+		<a href="STEM.html">
+        <img class="carousel-image" src="1.png" alt="Découvrez quelque langages de programmation embarquée">
+		</a>
+		<img class="carousel-image" src="2.png" alt="Image 1">
+<img class="carousel-image" src="3.png" alt="Image 1" style="max-height: 450px; width: auto;">
+    </div>
+	</center>
+<script>
+    function initializeCarousel(carouselId) {
+        const container = document.getElementById(carouselId);
+        const images = container.querySelectorAll('.carousel-image');
+        let currentIndex = 0;
+
+        // Assurez-vous que la première image est visible au démarrage
+        images[currentIndex].classList.add('active');
+
+        function changeImage() {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add('active');
+        }
+
+        // Change d'image toutes les 5 secondes
+        setInterval(changeImage, 5000);
+    }
+
+    initializeCarousel('carousel-tse');
+</script>
+
+		<br>
+		<br>
+		<br>
+   <div id="barreHorizontale">
+   <p> L'informatique en trois parties </p>
+   </div>
+ <center> <iframe src="Programmer.pdf" width="1000" height="600"></iframe></center>
+<script>
+        // Cette fonction est appelée lorsque l'on clique sur le bouton
+        function Programmation() {
+            setTimeout(() => {
+                window.location.href = "Lang.html"; // Redirige vers Lang.html
+            }, 100); 
+        }
+;
+    </script>
+		</div>
+</body>
+</html>

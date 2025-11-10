@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Northwest Territories — Agence I&T</title>
+<meta name="description" content="Brochure sombre, professionnelle, carrousels, galerie cliquable - Territoires du Nord-Ouest">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-900:#05060a;
+  --bg-800:#0b0f13;
+  --card:#0f1720;
+  --muted:#9aa6af;
+  --accent:#37e6d9;
+  --accent-2:#6be3ff;
+  --glass: rgba(255,255,255,0.03);
+  --radius:14px;
+  --maxw:1180px;
+  --ff: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --shadow: 0 12px 40px rgba(2,10,14,0.6);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--ff);
+background: 
+  linear-gradient(180deg,
+    #05060a 0%,              /* très sombre en haut */
+    #0b0f13 30%,             /* légèrement plus clair */
+    #0b0f13 50%,             /* maintien sombre */
+    #0b0f13 60%,             /* maintien sombre */
+    #0b0f13 100%             /* sombre uniforme en bas */
+  ),
+  radial-gradient(circle at 20% 40%, rgba(255,150,100,0.08), transparent 70%),  /* halo orange */
+  radial-gradient(circle at 80% 60%, rgba(155,92,255,0.08), transparent 70%),  /* halo violet */
+  radial-gradient(circle at 50% 80%, rgba(0,255,180,0.06), transparent 70%);   /* halo vert */
+background-blend-mode: screen;
+background-attachment: fixed;
+background-size: cover;
+background-repeat: no-repeat;
+
+  color:#e6f7f4;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+}
+.wrap{max-width:var(--maxw);margin:28px auto;padding:22px}
+header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.logo{
+  width:72px;height:72px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  display:flex;align-items:center;justify-content:center;color:#041014;font-weight:800;font-size:20px;box-shadow:var(--shadow)
+}
+h1{margin:0;font-size:24px}
+.subtitle{color:var(--muted);font-size:13px}
+nav{margin-left:auto;display:flex;gap:10px;align-items:center}
+nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px}
+nav a:hover{background:rgba(255,255,255,0.02);color:var(--accent)}
+main{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start}
+.panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:14px;padding:16px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.03)}
+.hero{
+  position:relative;border-radius:12px;overflow:hidden;
+  height:420px;
+  display:flex;align-items:center;justify-content:center;
+  background: #021018;
+}
+.hero .overlay{
+  position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,6,8,0.1) 0%, rgba(2,6,8,0.9) 90%);
+  pointer-events:none;
+}
+.hero-content{
+  position:absolute;
+  z-index:3;
+  text-align:center;
+  max-width:700px;
+  padding:28px;
+  color:#eafffb;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(0,0,0,0.35);
+  border-radius:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+}
+.kicker{display:inline-block;background:rgba(255,255,255,0.03);color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px}
+.lead{font-size:20px;margin-top:6px;margin-bottom:8px}
+.muted{color:var(--muted);font-size:14px}
+.hero-controls{position:absolute;left:18px;top:50%;transform:translateY(-50%);z-index:4;display:flex;gap:8px}
+.hero-controls button{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.04);color:#fff;padding:10px;border-radius:10px;cursor:pointer}
+.dots{position:absolute;right:18px;bottom:18px;display:flex;gap:8px;z-index:4}
+.dot{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,0.12);cursor:pointer}
+.dot.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 6px 20px rgba(0,200,200,0.08)}
+
+/* Carousel Fix */
+.carousel{position:relative;overflow:hidden;border-radius:12px;height:500px;}
+.carousel-track{display:flex;transition:transform .6s cubic-bezier(.2,.9,.2,1);height:100%;}
+.carousel-slide{min-width:100%;flex-shrink:0;position:relative;height:100%;}
+.carousel-slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  filter:brightness(0.8);
+}
+.carousel-caption{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  color:#fff;
+  text-align:center;
+  background:rgba(0,0,0,0.5);
+  padding:20px 25px;
+  border-radius:12px;
+  max-width:700px;
+  transition:all .5s ease;
+}
+.carousel:hover .carousel-caption{background:rgba(0,0,0,0.7);}
+
+/* Thumbnails */
+.thumbs{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.thumbs img{width:120px;height:80px;object-fit:cover;border-radius:8px;cursor:pointer;border:2px solid transparent}
+.thumbs img.selected{border-color:var(--accent)}
+
+/* Gallery */
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.gallery-grid img{width:100%;height:140px;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform .25s ease}
+.gallery-grid img:hover{transform:scale(1.03)}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);z-index:9999;padding:20px}
+.lightbox img{max-width:95%;max-height:90%;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,0.6)}
+.close-light{position:absolute;right:24px;top:18px;color:#fff;background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;cursor:pointer}
+
+/* Buttons */
+.btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021018;padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:9px;border-radius:10px;color:var(--muted);cursor:pointer}
+
+/* Footer */
+footer{margin-top:20px;color:var(--muted);text-align:center;font-size:13px}
+
+/* Responsive */
+@media (max-width:980px){
+  main{grid-template-columns:1fr}
+  .content-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .carousel{height:300px;}
+  .carousel-caption{padding:10px;font-size:14px;}
+}
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+.feature-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.feature-gallery img {
+  width: calc(25% - 10px);
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+.feature-text {
+  text-align: center;
+  color: #d8f7f4;
+}
+
+</style>
+</head>
+<body>
+<div class="wrap" role="main">
+  <header>
+    <div class="logo" aria-hidden="true">I&T</div>
+    <div>
+      <h1>Install & Travel— The Canada Tale</h1>
+      <div class="subtitle">Installation · Discovery · Cultural Fusion</div>
+    </div>
+    <nav aria-label="Navigation brochure">
+      <a href="#where">Where</a>
+      <a href="#attractions">Activities</a>
+      <a href="#life">Life</a>
+      <a href="#gallery">#I&T</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- LEFT: Hero + content -->
+    <div>
+      <!-- HERO carousel -->
+      <section class="panel hero" id="hero">
+        <div class="hero-controls" aria-hidden="true">
+          <button id="prevHero" title="Précédent">◀</button>
+          <button id="nextHero" title="Suivant">▶</button>
+        </div>
+
+        <div class="carousel-track" id="heroTrack" style="height:100%;display:flex;transition:transform .7s ease">
+          <!-- Slides (replace src with your high-res images) -->
+          <div class="carousel-slide" data-index="0">
+            <img src="aurora1.jpg" alt="Aurora NWT 1" style="width:100%;height:100%;object-fit:cover;opacity:0.95">
+          </div>
+          <div class="carousel-slide" data-index="1">
+            <img src="aurora2.jpg" alt="Aurora NWT 2" style="width:100%;height:100%;object-fit:cover;opacity:0.95">
+          </div>
+          <div class="carousel-slide" data-index="2">
+            <img src="Animaux1.jpg" alt="Yellowknife" style="width:100%;height:100%;object-fit:cover;opacity:0.95">
+          </div>
+          <div class="carousel-slide" data-index="3">
+            <img src="nahanni1.jpg" alt="Nahanni Park" style="width:100%;height:100%;object-fit:cover;opacity:0.95">
+          </div>
+        </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const track = document.querySelector(".carousel-track");
+  const slides = Array.from(document.querySelectorAll(".carousel-slide"));
+  const dotsContainer = document.createElement("div");
+  dotsContainer.classList.add("dots");
+  document.querySelector(".hero").appendChild(dotsContainer);
+
+  // Crée les points automatiquement
+  slides.forEach((_, i) => {
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+    if (i === 0) dot.classList.add("active");
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = Array.from(dotsContainer.querySelectorAll(".dot"));
+  let index = 0;
+  const delay = 5000; // temps entre chaque défilement (en ms)
+  let isTransitioning = false;
+
+  function updateCarousel() {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    track.style.transition = "transform 0.8s ease";
+    track.style.transform = `translateX(-${index * 100}%)`;
+
+    dots.f<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const track = document.querySelector(".carousel-track");
+  const slides = Array.from(track.querySelectorAll(".carousel-slide"));
+  const hero = document.querySelector(".hero");
+
+  // ✅ Supprime d'éventuels anciens points avant d'en recréer
+  const oldDots = hero.querySelector(".dots");
+  if (oldDots) oldDots.remove();
+
+  // ✅ Crée les bons points
+  const dotsContainer = document.createElement("div");
+  dotsContainer.classList.add("dots");
+  hero.appendChild(dotsContainer);
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+    if (i === 0) dot.classList.add("active");
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = Array.from(dotsContainer.querySelectorAll(".dot"));
+  let index = 0;
+  const delay = 5000; // 5s entre les images
+  let isTransitioning = false;
+
+  function updateCarousel() {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    track.style.transition = "transform 0.8s ease";
+    track.style.transform = `translateX(-${index * 100}%)`;
+
+    dots.forEach(dot => dot.classList.remove("active"));
+    dots[index].classList.add("active");
+
+    setTimeout(() => (isTransitioning = false), 850);
+  }
+
+  function nextSlide() {
+    index++;
+    if (index >= slides.length) index = 0;
+    updateCarousel();
+  }
+
+  // 🔁 défilement automatique
+  let autoScroll = setInterval(nextSlide, delay);
+
+  // 🔘 clics sur les points
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+      index = i;
+      updateCarousel();
+      clearInterval(autoScroll);
+      autoScroll = setInterval(nextSlide, delay);
+    });
+  });
+
+  // ◀ ▶ boutons manuels
+  const prevBtn = document.getElementById("prevHero");
+  const nextBtn = document.getElementById("nextHero");
+
+  if (prevBtn && nextBtn) {
+    prevBtn.addEventListener("click", () => {
+      index = index === 0 ? slides.length - 1 : index - 1;
+      updateCarousel();
+      clearInterval(autoScroll);
+      autoScroll = setInterval(nextSlide, delay);
+    });
+    nextBtn.addEventListener("click", () => {
+      index = (index + 1) % slides.length;
+      updateCarousel();
+      clearInterval(autoScroll);
+      autoScroll = setInterval(nextSlide, delay);
+    });
+  }
+});
+</script>
+
+
+
+
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+          <span class="kicker">Northwest Territories</span>
+          <h2 class="lead">Imagine vast skies, deep lakes, and welcoming communities.</h2>
+          <p class="muted">Located in the heart of Northern Canada, the Northwest Territories offer a rare blend of wilderness, vibrant Indigenous culture, and career opportunities suited for young people.</p>
+          <div style="margin-top:10px">
+            <button class="btn" onclick="window.open('https://www.shutterstock.com/fr/search/northwest-territories-canada?', '_blank')">Show the galery</button>
+            <button class="ghost" onclick="scrollToId('attractions')">Learn more</button>
+          </div>
+        </div>
+
+        <div class="dots" id="heroDots" aria-hidden="true" style="bottom:18px"></div>
+      </section>
+
+      <!-- THREE-COLUMN content -->
+      <div class="content-grid">
+        <section class="card" id="attractions">
+		
+		<br>
+		<br>
+		 <div class="feature">
+          <h2>Landscapes & must-see places</h2>
+          <div class="text-col" style="margin-top:8px">
+            <div class="feature">
+  <div class="feature-gallery">
+    <img src="nahanni1.jpg" alt="Nahanni River">
+    <img src="nahanni2.jpg" alt="Nahanni Valley">
+    <img src="nahanni3.jpg" alt="Nahanni Falls">
+    <img src="nahanni4.jpg" alt="Nahanni Mountains">
+  </div>
+  <div class="feature-text">
+    <h3>Nahanni National Park</h3>
+    <p>
+      Explore one of the most breathtaking UNESCO World Heritage Sites in Canada.
+      Nahanni offers pure wilderness, majestic waterfalls and the spirit of the North at its best.
+    </p>
+  </div>
+</div>
+<div class="feature" style="margin-top:10px">
+              <div class="feature">
+  <div class="feature-gallery">
+    <img src="lake1.jpg">
+    <img src="lake2.jpg">
+    <img src="lake3.jpg">
+	<img src="lake4.jpg">
+  </div>
+  <div class="feature-text">
+    <h3>Great Slave Lake</h3>
+	
+  <div class="feature-gallery">
+    <img src="lakee1.jpg">
+    <img src="lakee2.jpg">
+    <img src="lakee3.jpg">
+	<img src="lakee4.jpg">
+  </div>
+   <h3>And Great Bear Lake</h3>
+    <p>
+  Two iconic lakes: vast bodies of water, fishing, boating, bright summers, and frozen winters.
+
+          </div>
+		  </div>
+    </p>
+	
+   <div class="feature">
+  <div class="feature-gallery">
+    <img src="https://tse4.mm.bing.net/th/id/OIP.35B4AsXz9bQqHsh7C4yCiwHaEK?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3">
+    <img src="https://tse2.mm.bing.net/th/id/OIP.0uc3gnHJ3vnuL-aJ1srgkAHaE8?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3">
+	<img src="https://th.bing.com/th/id/R.f9c6d3008ecbedda4d06e6e0810c39dc?rik=kdN0QBqpCbldwg&riu=http%3a%2f%2fimg.src.ca%2f2015%2f06%2f21%2f635x357%2f150621_1k2gk_autochtones-montreal-journee_sn635.jpg&ehk=slFjoxTGzDRRIKM6nt7FOJ5Z0ls2PwX6GCMpKgIeNu4%3d&risl=&pid=ImgRaw&r=0">
+  </div>
+  <div class="feature-text">
+    <h3>Tuktoyaktuk & Inuvik Region</h3>
+    <p>
+A region rich in indigenous culture, with unique Arctic landscapes, ice roads, and a glimpse into life in the Far North.    </p>
+  </div>
+  
+  <div class="feature-gallery">
+    <img src="https://live.staticflickr.com/8227/29176603704_58b878e2b2_b.jpg">
+    <img src="https://explorenorth.com/nwt/images/464-house_of_horrors-yellowknife-4184.jpg">
+	<img src="https://tse1.mm.bing.net/th/id/OIP.f8vn41YWCju1EVYr7KGE9wAAAA?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3">
+	<img src="https://live.staticflickr.com/65535/48969699781_394ca3fe08_b.jpg">
+	
+  </div>
+  <div class="feature-text">
+    <h3>Old Town & Prince of Wales Northern Heritage Centre(Yellowknife)</h3>
+    <p>
+The historic district of the capital with its old miners' cabins, local shops, and art galleries. Iconic for urban walks in the North and for experiencing the unique atmosphere of Yellowknife. The village is home to the main museum of the Northwest Territories.
+    </p>
+  </div>
+	
+  </div>
+</div>
+
+        </section>
+    <center>
+	      <div class="panel card" style="margin-bottom:14px">
+        <section class="card" id="climate">
+          <h2>Climate & seasons</h2>
+          <p class="text-col">
+            The seasons are marked: long days in summer, dry and cold winters favorable to auroras and winter activities. Life is organized around the seasons.
+          </p>
+        </section>
+      </div>
+      <section class="panel card" id="life" style="margin-top:16px">
+        <h2>Why would a young immigrant choose the Northwest Territories?</h2>
+        <p class="text-col">
+         Firstly, for the proximity to nature and the possibility of an active lifestyle. Secondly, for a welcoming community where one quickly makes friends. Next, there are opportunities in the public sector, tourism, and increasingly in digital or creative activities. Finally, the cultural uniqueness, the strong presence of Indigenous peoples, makes the Territories a place of personal enrichment.
+        </p>
+
+        <h3 style="margin-top:10px;color:var(--accent)">A testimony from Sarah, a young student</h3>
+        <p class="muted">I met my roommate at a winter festival in Yellowknife — two weeks later, we were already planning a canoe trip.</p>
+      </section>
+      <section class="panel card" id="life" style="margin-top:16px">
+        <h2>Many integration opportunities, work requests
+</h2>
+<p>Many jobs, welcoming residents, benefits, financial aid...</p>
+</section>
+    </div>
+	</div>
+	    </center>
+
+
+    <!-- RIGHT: Aside panels -->
+    <aside>
+      <div class="panel card" style="margin-bottom:14px">
+        <h3>In the blink of an eye</h3>
+        <p class="muted"><strong>Area:</strong>1,000,000 km² (mostly wilderness)</p>
+        <p class="muted"><strong>Langages:</strong> English, French, Indigenous languages</p>
+        <p class="muted"><strong>Economie:</strong> resources, tourism, services</p>
+        <p class="muted"><strong>Capital:</strong> Yellowknife — cultural and administrative center</p>
+      </div>
+
+      <div class="panel card">
+        <h3>More activities</h3>
+        <div class="carousel" id="actCarousel" style="margin-top:8px">
+          <div class="carousel-track" id="actTrack" style="height:220px">
+            <div class="carousel-slide">
+              <img src="https://tse4.mm.bing.net/th/id/OIP.Vt90_HbLWcGS4Ghdb3IqvQHaD_?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Dogsled">
+            </div>
+            <div class="carousel-slide">
+              <img src="https://tse2.mm.bing.net/th/id/OIP.PN4PnGhjlTWv891uDM7fOQAAAA?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Canoe">             
+            </div>
+            <div class="carousel-slide">
+ <img src="https://tse3.mm.bing.net/th/id/OIP.KjMQlxrBCRjcS1WzKEF4xQHaE7?cb=12&w=3071&h=2047&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Ice fishing">
+            </div>
+          </div>
+		  <p> Our agency is here to support you and help you integrate. With the 'All-in-One' package, we offer you an integration program in which you will participate in iconic activities of the Northern Territories, discover historical monuments, and explore the culture of the region.
+</p>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px;">
+          <button class="ghost" onclick="actPrev()">◀</button>
+          <button class="ghost" onclick="actNext()">▶</button>
+        </div>
+      </div>
+
+      <div class="panel card" style="margin-top:12px">
+        <h3>Quick links</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+          <button class="ghost" onclick="scrollToId('attractions')">Attractions</button>
+          <button class="ghost" onclick="scrollToId('life')">Daily life</button>
+          <button class="ghost" onclick="scrollToId('gallery')">#I&D (our Agency)</button>
+        </div>
+      </div>
+	  <br>
+	  <br>
+	  <div class="panel card">
+	  <h3>Our agency will offer you, after a 7-day all-expenses-paid stay in various iconic locations, a permanent contract job immediately, for the entire duration of your job search.</h3>
+        <div class="carousel" id="actCarousel" style="margin-top:8px">
+          <div class="carousel-track" id="actTrack" style="height:220px">
+            <div class="carousel-slide">
+			<img src="https://careers.chooseyourcoop.com/wp-content/uploads/2020/06/15.jpg">
+			</div>
+			</div>
+			<p>     Our agency will offer you, after a 7-day all-expenses-paid stay in various iconic locations, a permanent job immediately, for the entire duration of your job search. This job search should not be difficult since you will be accompanied by our commercial relations experts Natael and Hugo, a career advisor, Thomas, and even a banker specializing in helping newcomers settle, Timothé.</p>
+			</div>
+			</div>
+			<br>
+			<br>
+			
+	  <div class="panel card">
+	  <h3>A stable economy, a fresh start</h3>
+        <div class="carousel" id="actCarousel" style="margin-top:8px">
+          <div class="carousel-track" id="actTrack" style="height:220px">
+            <div class="carousel-slide">
+			<img src="https://tse1.mm.bing.net/th/id/OIP.tLiLi2nApPpi23sTmBD0zAHaE8?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3">
+			</div>
+			</div>
+			<p>     The stable economy of our region can be beneficial for you if you are a self-employed entrepreneur. You will receive support and insurance, so don't miss this opportunity: Natural resources, tourism, public services, and growth of remote activities. Ideal for young people looking to start a business or work remotely.
+</p>
+			</div>
+			</div>
+			<br>
+<div class="panel card" style="height:62.5vh; overflow:hidden;">
+  <div class="carousel" id="actCarousel" style="margin-top:8px">
+    <div class="carousel-track" id="actTrack" style="height:60%">
+      <div class="carousel-slide">
+        <a href="https://youtu.be/1BxSVZg0lZo" target="_blank">
+          <iframe 
+            width="100%" 
+            height="100%" 
+            src="https://www.youtube.com/embed/1BxSVZg0lZo" 
+            title="YouTube video" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen
+            style="object-fit:cover;">
+          </iframe>
+        </a>
+      </div>
+    </div>
+	<p> Northwest Territories Road trip</p>
+  </div>
+</div>
+
+	  
+    </aside>
+  </main>
+
+  <!-- GALLERY SECTION -->
+  <section class="panel card" id="gallery" style="margin-top:20px">
+    <h2>So don't hesitate, seize the opportunity!!!We have helped over 15,000 people, all of whom have found stable employment and a house or an apartment. If you want to be part of these 100% of clients who have achieved their dream, choose<div class="logo" aria-hidden="true">I&T</div>
+</p> 
+    <!-- Thumbs carousel (select image to show main) -->
+    <div style="margin-top:10px">
+      <div class="carousel" id="thumbsCarousel" style="height:260px">
+        <div class="carousel-track" id="thumbsTrack" style="display:flex;transition:transform .6s ease">
+          <!-- multiple slides with several images each (wide carousel) -->
+          <div class="carousel-slide"><img src="https://images.ctfassets.net/bth3mlrehms2/5Q8SdT1Xy9jFmSgCtpWgRP/d0916d27bcd3c512aad9a8cf3a661dfc/Canada__Lac__Balade_en_kayak.jpg?w=1015&h=570&fl=progressive&q=50&fm=jpg" alt=""></div>
+          <div class="carousel-slide"><img src="https://www.ville-de-cuers.com/wp-content/uploads/2024/04/decouvrez-le-canada-en-15-jours-un-circuit-inoubliable-a-travers-les-paysages-epoustouflants.jpg" alt=""></div>
+          <div class="carousel-slide"><img src="https://th.bing.com/th/id/R.f584875314d09d7f8afe0339974726eb?rik=%2ffjxHJF0fQVIJA&riu=http%3a%2f%2fhomesoftherich.net%2fwp-content%2fuploads%2f2017%2f03%2fScreen-Shot-2017-03-30-at-2.53.51-PM.png&ehk=JjKqlHUIgNsvWjnvOk89nMt7dRg2zrtItxw3SmSMPHw%3d&risl=&pid=ImgRaw&r=0" alt=""></div>
+          <div class="carousel-slide"><img src="https://thvnext.bing.com/th/id/OIP.e5M0xYkJw4dbYMG71uIJxwEyDM?o=7&cb=12rm=3&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt=""></div>
+        </div>
+      </div>
+	  
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <button class="ghost" id="thumbPrev">◀</button>
+        <button class="ghost" id="thumbNext">▶</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>© Timothé AOUN, tous droits réservés </div>
+    <div style="margin-top:8px;color:var(--muted)">By <a href="https://timotheaoun.github.io/">Timothé AOUN</a></div>
+  </footer>
+</div>
+
+<!-- LIGHTBOX + CAROUSEL SCRIPTS -->
+<script>
+/* ---------- Utility ---------- */
+function scrollToId(id){ const el = document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+
+/* ---------- HERO carousel (vanilla) ---------- */
+(function(){
+  const track = document.getElementById('heroTrack');
+  const slides = Array.from(track.children);
+  const dotsWrap = document.getElementById('heroDots');
+  let idx = 0;
+  const len = slides.length;
+
+  // create dots
+  for(let i=0;i<len;i++){
+    const d = document.createElement('div');
+    d.className='dot'+(i===0?' active':'');
+    d.dataset.index = i;
+    d.addEventListener('click', ()=> { goTo(i); });
+    dotsWrap.appendChild(d);
+  }
+
+  function update(){
+    track.style.transform = `translateX(-${idx*100}%)`;
+    // dots
+    Array.from(dotsWrap.children).forEach((d,i)=> d.classList.toggle('active', i===idx));
+  }
+  function next(){ idx = (idx+1)%len; update(); }
+  function prev(){ idx = (idx-1+len)%len; update(); }
+  document.getElementById('nextHero').addEventListener('click', next);
+  document.getElementById('prevHero').addEventListener('click', prev);
+  function goTo(i){ idx = i%len; update(); }
+
+  // autoplay
+  let auto = setInterval(next, 6000);
+  // pause on hover
+  const hero = document.getElementById('hero');
+  hero.addEventListener('mouseenter', ()=> clearInterval(auto));
+  hero.addEventListener('mouseleave', ()=> auto = setInterval(next,6000));
+  // expose goTo for external use
+  window.heroGoTo = goTo;
+})();
+
+/* ---------- Activities carousel (small) ---------- */
+(function(){
+  const track = document.getElementById('actTrack');
+  const slides = Array.from(track.children);
+  let i=0;
+  function show(){ track.style.transform = `translateX(-${i*110+8}%)`; }
+  window.actNext = ()=> { i = (i+1)%slides.length; show(); };
+  window.actPrev = ()=> { i = (i-1+slides.length)%slides.length; show(); };
+})();
+
+/* ---------- Thumbs carousel (simple scroll by viewport) ---------- */
+(function(){
+  const track = document.getElementById('thumbsTrack');
+  const slides = Array.from(track.children);
+  let pos = 0;
+  document.getElementById('thumbNext').addEventListener('click', ()=>{
+    pos = Math.min(pos+1, slides.length-1); track.style.transform = `translateX(-${pos*100}%)`;
+  });
+  document.getElementById('thumbPrev').addEventListener('click', ()=>{
+    pos = Math.max(pos-1, 0); track.style.transform = `translateX(-${pos*100}%)`;
+  });
+})();
+
+/* ---------- Gallery lightbox (click to enlarge) ---------- */
+(function(){
+  document.querySelectorAll('.gallery-grid img, .carousel-slide img').forEach(img=>{
+    img.addEventListener('click', (e)=>{
+      const src = img.src;
+      const lb = document.createElement('div');
+      lb.className = 'lightbox';
+      const big = document.createElement('img');
+      big.src = src;
+      const close = document.createElement('div');
+      close.className='close-light'; close.innerHTML='✕';
+      close.addEventListener('click', ()=> document.body.removeChild(lb));
+      lb.appendChild(big);
+      lb.appendChild(close);
+      lb.addEventListener('click', (ev)=> { if(ev.target === lb) document.body.removeChild(lb); });
+      document.body.appendChild(lb);
+    });
+  });
+})();
+
+/* ---------- Keyboard accessibility: ESC to close lightbox ---------- */
+window.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape'){
+    document.querySelectorAll('.lightbox').forEach(lb=> lb.parentElement.removeChild(lb));
+  }
+});
+</script>
+</body>
+</html>

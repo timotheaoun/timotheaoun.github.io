@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faux virus</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+		#background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+		BB {
+		background-color: background: linear-gradient(to bottom, orange, red);
+		Color: white;
+}
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Télécharger le virus Monstre</h1>
+		<h2> Téléchargez les deux fichiers. Ensuite, ouvrez 'Lanceur.pptc', autorisez les macros et vous verrez temporairement des monstres à l'écran... </h2>
+<button onclick="downloadFile1()">Télécharger Lanceur .pptc</button>
+<button onclick="downloadFile2()">Télécharger zm.docx</button>
+<p> </p>
+</div>
+<script>
+    function downloadFile1() {
+        var link = document.createElement("a");
+        link.href = "file:///F:/Site/FV/Monstre/Lanceur.pptc";
+        link.download = "Lanceur.pptc";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);  
+    }
+
+    function downloadFile2() {
+        var link = document.createElement("a");
+        link.href = "file:///F:/Site/FV/Monstre/zm.docx";
+        link.download = "Informations.docx";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);  
+    }
+
+    </script>
+<p> </p>
+</div>
+</body>
+</html>

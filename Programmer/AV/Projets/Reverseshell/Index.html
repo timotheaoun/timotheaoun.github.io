@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Input</title>
+    <style>
+        /* Thème sombre général */
+        body {
+            background: linear-gradient(135deg, #1e1e2f, #27293d);
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        form {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            animation: popIn 0.5s ease-out;
+        }
+
+        textarea {
+            background-color: #000000;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 1em;
+            font-family: 'Courier New', Courier, monospace;
+            resize: none;
+            outline: none;
+            box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.5);
+            transition: all 0.3s ease-in-out;
+        }
+
+        textarea:focus {
+            border-color: #00aaff;
+            box-shadow: inset 0 0 15px rgba(0, 170, 255, 0.5), 0 0 15px rgba(0, 170, 255, 0.7);
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff7eb3, #ff758c);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 10px 5px 0 5px;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #ff658c, #ff3c7a);
+            box-shadow: 0 5px 15px rgba(255, 100, 140, 0.6);
+        }
+
+        button:active {
+            transform: scale(1);
+        }
+
+        /* Zone de sortie */
+        #output {
+            margin-top: 20px;
+            color: #00ff00;
+            font-size: 1.2em;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            width: 80%;
+            box-sizing: border-box;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+    <script>
+        function remplacerCommande(commande) {
+            const textarea = document.querySelector('textarea[name="command"]');
+            textarea.value = commande; // Remplace entièrement la commande
+        }
+
+        function demanderMessage() {
+            const message = prompt("Entrez votre message :");
+            if (message) {
+                const textarea = document.querySelector('textarea[name="command"]');
+                textarea.value = `Message=${message}`; 
+            }
+        }
+
+        // Fonction pour mettre à jour le contenu de la zone output
+        function updateOutput() {
+            fetch('/output')
+                .then(response => response.text())
+                .then(data => {
+                    const outputDiv = document.getElementById('output');
+                    outputDiv.textContent = data;
+                })
+                .catch(err => console.error("Erreur lors de la mise à jour :", err));
+        }
+
+        // Actualisation toutes les 2 secondes
+        setInterval(updateOutput, 2000);
+    </script>
+</head>
+<body>
+    <form method="POST" action="/">
+        <h1>Entrez une commande</h1>
+        <textarea name="command" rows="4" cols="50" placeholder="Entrez une commande ici"></textarea><br>
+        <button type="button" onclick="remplacerCommande('shutdown /p')">Éteindre le PC</button>
+        <button type="button" onclick="demanderMessage()">Parler</button>
+        <button type="button" onclick="remplacerCommande('')">Cls</button>
+        <button type="submit">Envoyer</button>
+    </form>
+    <div id="output">Attente des données...</div>
+</body>
+</html>

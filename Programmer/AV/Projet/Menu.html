@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astuces</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+            left: -200px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+            transition: transform 0.4s ease-in-out;
+            cursor: pointer;
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            position: relative; 
+            top: -250px;
+            left: 500px;
+            color: pink;
+        }
+
+        .content p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .image {
+            width: 200px;
+            height: 200px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1> Bienvenue Noé, que voulez-vous briquer? </h1>
+    
+    <!-- Div cliquable -->
+    <div class="container" id="projetsLego" onclick="window.location.href='.\html\inspect.html';">
+        <img src="Html.jpg" id="hoverImage" class="image" alt="Image">
+        <section class="content">
+            <p>L'outil inspecter, les injections, des astuces en HTML</p>
+        </section>
+    </div>
+    
+    <div class="container" id="panoramic">
+        <img src="Panoramic.jpeg" class="image" alt="Image">
+        <section class="content">
+            <p>Des astuces du quotidien en informatique</p>
+        </section>
+    </div>
+    
+    <div class="container" id="boutique">
+        <img src="Boutique.jpeg" class="image" alt="Image">
+        <section class="content">
+            <p>Trics and hacks</p>
+        </section>
+    </div>
+
+</body>
+</html>

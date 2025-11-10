@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image en Arrière-Plan</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: background-image 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <script>
+	let currentImage = `a.jpg?${new Date().getTime()}`;
+        function preloadImage(url, callback) {
+            const img = new Image();
+            img.onload = () => callback(url);
+            img.src = url;
+        }
+        function updateBackground() {
+            const newImage = `a.jpg?${new Date().getTime()}`;
+            preloadImage(newImage, (url) => {
+                document.body.style.backgroundImage = `url('${url}')`;
+            });
+        }
+
+        // Actualisation de l'image toutes les 2 secondes
+        setInterval(updateBackground, 2000);
+        updateBackground();
+
+        // Fonction pour envoyer les données via POST
+        function sendMouseData(x, y, action) {
+            fetch("/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `x=${x}&y=${y}&action=${action}`,
+            })
+            .then((response) => response.text())
+            .then((text) => console.log("Réponse du serveur:", text))
+            .catch((error) => console.error("Erreur:", error));
+        }
+
+        // Gestion des clics gauche et droit
+        document.addEventListener("click", (event) => {
+            const x = event.clientX;
+            const y = event.clientY;
+            sendMouseData(x, y, "left_click");
+        });
+
+        document.addEventListener("contextmenu", (event) => {
+            event.preventDefault(); // Empêche l'ouverture du menu contextuel
+            const x = event.clientX;
+            const y = event.clientY;
+            sendMouseData(x, y, "right_click");
+        });
+
+        // Gestion des doubles clics
+        document.addEventListener("dblclick", (event) => {
+            const x = event.clientX;
+            const y = event.clientY;
+            sendMouseData(x, y, "double_click");
+        });
+    </script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #222;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #overlay {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background: #28a745;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+		.video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -10000;
+            filter: brightness(0.4) blur(8px);
+        }
+		        /* Style de la barre d'options */
+        .navbar {
+            position: fixed; /* Reste visible en haut de la page */
+            top: 0;
+            left: 0;
+            width: 100%; /* Prend toute la largeur */
+            background: rgba(0, 0, 0, 0.8); /* Fond sombre semi-transparent */
+            display: flex; /* Disposition horizontale */
+            justify-content: space-around; /* Espacement égal entre les options */
+            align-items: center; /* Centrer verticalement les éléments */
+            padding: 10px 0; /* Espacement vertical */
+            z-index: 1000; /* Toujours au-dessus des autres éléments */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Ombre élégante */
+        }
+
+        /* Style des liens dans la barre */
+        .navbar a {
+            color: white; /* Couleur du texte */
+            text-decoration: none; /* Pas de soulignement */
+            padding: 10px 50px; /* Espacement autour des liens */
+            border-radius: 5px; /* Coins arrondis */
+            transition: background 0.3s ease; /* Transition douce */
+        }
+
+        /* Effet au survol */
+        .navbar a:hover {
+            background: #444; /* Fond légèrement plus clair au survol */
+        }
+
+        /* Pour simuler un contenu long */
+        .content {
+            margin-top: 60px; /* Laisser de l'espace sous la barre */
+            padding: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="overlay">
+        <h1>[PC] Connecté à cet appareil</h1>
+        <p>Nous vous recommendons d'activer le plein écran pour une expérience plus optimale</p>
+        <button id="fullscreenButton" onclick="toggleFullscreen()">Activer le Plein Écran</button>
+    </div>
+
+    <script>
+        // Fonction pour activer le mode plein écran et cacher le bouton
+        function toggleFullscreen() {
+            const element = document.documentElement; // Prendre tout le document pour le plein écran
+            const button = document.getElementById('fullscreenButton'); // Bouton
+
+            // Activer le plein écran
+            if (!document.fullscreenElement) {
+                element.requestFullscreen()
+                    .then(() => {
+                        // Une fois en plein écran, cacher le bouton et l'overlay
+                        button.style.display = 'none';
+                        document.getElementById('overlay').style.display = 'none';
+                    })
+                    .catch(err => {
+                        alert(`Erreur : ${err.message}`);
+                    });
+            }
+        }
+		
+    </script>
+<button id="toggleButton">Outils</button>
+<div class="navbar" id="navbar">
+    <a href="#home"><mark>Mode PC distant</mark></a>
+    <a href="#about">Reverse shell</a>
+    <a href="#services">Arrêter la liaison</a>
+    <a href="#contact" id="downloadBackground">Capture D'écran</a>
+</div>
+
+	<script>
+function downloadBackgroundImage() {
+    const backgroundImageUrl = document.body.style.backgroundImage;
+    if (backgroundImageUrl) {
+        const imageUrl = backgroundImageUrl.slice(4, -1).replace(/"/g, "");
+        const link = document.createElement('a');
+        link.href = imageUrl; 
+        link.download = 'background.jpg'; 
+        link.click();
+    } else {
+        alert("Aucune image de fond disponible pour le téléchargement.");
+    }
+}
+
+// Ajouter un événement pour télécharger l'image lorsqu'on clique sur le lien #contact
+document.getElementById('downloadBackground').addEventListener('click', downloadBackgroundImage);
+
+// Mettre à jour le lien "Capture D'écran" pour rendre visible le bouton de téléchargement
+document.querySelector('.navbar a[href="#contact"]').addEventListener('click', function(event) {
+    event.preventDefault(); // Empêche l'action par défaut du lien
+    document.getElementById('downloadBackground').style.display = 'inline-block'; // Afficher le bouton de téléchargement
+});
+</script>
+<script>
+document.getElementById('toggleButton').addEventListener('click', function() {
+    const navbar = document.getElementById('navbar');
+    // Vérifie l'état de la navbar et inverse sa visibilité
+    if (navbar.style.display === "none" || navbar.style.display === "") {
+        navbar.style.display = "block"; // Affiche la navbar
+    } else {
+        navbar.style.display = "none"; // Cache la navbar
+    }
+});
+</script>
+
+</body>
+</html>

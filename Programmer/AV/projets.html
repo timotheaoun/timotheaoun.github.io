@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes Projets</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0d1117;
+      color: #c9d1d9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #58a6ff;
+    }
+    .project-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .folder, .file {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #30363d;
+      border-radius: 1px;
+      background-color: #161b22;
+      cursor: pointer;
+    }
+    .folder:hover, .file:hover {
+      background-color: #21262d;
+    }
+    .folder .folder-name, .file .file-name {
+      display: flex;
+      align-items: center;
+    }
+    .folder .icon, .file .icon {
+      margin-right: 10px;
+      color: #8b949e;
+    }
+    .folder .folder-content {
+      margin-left: 20px;
+      margin-top: 10px;
+      display: none;
+    }
+    .folder.open .folder-content {
+      display: block;
+    }
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background-color: #161b22;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80%;
+      overflow-y: auto;
+      color: #c9d1d9;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #30363d;
+      padding-bottom: 10px;
+    }
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+    .modal-header .close {
+      cursor: pointer;
+      font-size: 1.5em;
+      color: #c9d1d9;
+    }
+    .code-content {
+      margin-top: 20px;
+      background-color: #0d1117;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid #30363d;
+      font-family: "Courier New", monospace;
+      font-size: 0.9em;
+      color: #58a6ff;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+<h1>Mes Projets</h1>
+<div class="project-container">
+  <div class="folder">
+    <div class="folder-name" onclick="toggleFolder(this)">
+      <span class="icon">📁</span>
+      Contrôler un PC à distance
+    </div>
+    <div class="folder-content">
+      <div class="folder">
+        <div class="folder-name" onclick="toggleFolder(this)">
+          <span class="icon">📁</span>
+          Contrôle click spy
+        </div>
+        <div class="folder-content">
+          <div class="file" data-code="./Projets/control/Index.html">
+            <span class="icon">📄</span>
+            Index.Html
+          </div>
+          <div class="file" data-code="./Projets/control/Lanceur.bat">
+            <span class="icon">📄</span>
+            Lanceur.bat
+          </div>
+		  <div class="file" data-code="./Projets/control/QRCodepy.py">
+            <span class="icon">📄</span>
+            QrCodePy.py
+          </div>
+		  <div class="file" data-code="./Projets/control/Ranson.hta">
+            <span class="icon">📄</span>
+            Ranson.hta
+          </div>
+        </div>
+		</div>
+		
+		<div class="folder">
+		 <div class="folder-name" onclick="toggleFolder(this)">
+          <span class="icon">📁</span>
+          Reverse shell
+        </div>
+		<div class="folder-content">
+          <div class="file" data-code="./Projets/Reverseshell/Index.html">
+            <span class="icon">📄</span>
+            Index.Html
+          </div>
+          <div class="file" data-code="./Projets/Reverseshell/Lanceur.bat">
+            <span class="icon">📄</span>
+            Lanceur.bat
+          </div>
+		  <div class="file" data-code="./Projets/Reverseshell/QRCodepy.py">
+            <span class="icon">📄</span>
+            QrCodePy.py
+          </div>
+		  <div class="file" data-code="./Projets/Reverseshell/Ranson.hta">
+            <span class="icon">📄</span>
+            Ranson.hta
+          </div>
+        </div>
+		
+		
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="codeModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Nom du fichier</h2>
+      <span class="close" onclick="closeModal()">&times;</span>
+    </div>
+    <div class="code-content" id="modalCode">
+    </div>
+  </div>
+</div>
+
+<script>
+  // Fonction pour basculer l'état d'un dossier
+  function toggleFolder(folderElement) {
+    const content = folderElement.nextElementSibling;
+    if (content && content.classList.contains('folder-content')) {
+      const isHidden = content.style.display === 'none' || !content.style.display;
+      content.style.display = isHidden ? 'block' : 'none';
+      const icon = folderElement.querySelector('.icon');
+      icon.textContent = isHidden ? '📂' : '📁';
+    }
+  }
+
+  // Initialisation : masquer tous les sous-dossiers au chargement
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.folder-content').forEach(folderContent => {
+      folderContent.style.display = 'none';
+    });
+  });
+
+  document.querySelectorAll('.file').forEach(file => {
+    file.addEventListener('click', async event => {
+      event.stopPropagation(); // Empêcher l'ouverture/fermeture des dossiers
+      const filePath = file.dataset.code;
+      const title = file.textContent.trim();
+
+      try {
+        const response = await fetch(filePath);
+        if (!response.ok) {
+          throw new Error('Impossible de charger le fichier.');
+        }
+        const code = await response.text();
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalCode').textContent = code;
+        document.getElementById('codeModal').style.display = 'flex';
+      } catch (error) {
+        document.getElementById('modalTitle').textContent = 'Erreur';
+        document.getElementById('modalCode').textContent = error.message;
+        document.getElementById('codeModal').style.display = 'flex';
+      }
+    });
+  });
+
+  // Fermer la fenêtre modale
+  function closeModal() {
+    document.getElementById('codeModal').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>

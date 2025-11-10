@@ -1,0 +1,102 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    margin: 0;
+}
+
+header {
+    background-color: pink;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+header p {
+    font-size: 1.2em;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px;
+}
+
+article {
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+    /* Ajoute un dégradé du haut vers le bas */
+    background: #333;
+}
+article:hover {
+    padding: 35px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), 0 0 50px rgba(255, 255, 255, 0.5);
+    background: #222;
+}
+
+
+
+article h2 {
+    color: #00bfff;
+}
+
+article p {
+    margin-top: 10px;
+}
+
+article a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #00bfff;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+article a:hover {
+    background-color: #0080ff;
+}
+
+footer {
+    background-color: black;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+/* Sélectionne la barre de défilement en général */
+::-webkit-scrollbar {
+    width: 12px; /* Largeur de la barre de défilement */
+}
+
+/* Style de la poignée (la partie que vous faites glisser) */
+::-webkit-scrollbar-thumb {
+    background-color: #3498db; /* Couleur de la poignée */
+    border-radius: 6px; /* Coins arrondis de la poignée */
+}
+
+/* Style de la piste (la zone où la poignée se déplace) */
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Couleur de la piste */
+}
+
+/* Active le style sur les navigateurs qui prennent en charge les propriétés de défilement personnalisées */
+html {
+    scrollbar-color: #3498db #f1f1f1; /* Couleur de la poignée et de la piste */
+    scrollbar-width: thin; /* Largeur de la barre de défilement */
+}
+ img {
+           margin-top: -100px;
+	   margin-left: 200px;
+        }

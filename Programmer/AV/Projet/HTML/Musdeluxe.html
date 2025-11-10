@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Music Player</title>
+    <style>
+body {
+ transform: scale(1);
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(145deg, #121212, #1f1f1f);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    transition: background 0.5s ease-in-out; /* Transition ajoutée pour un changement fluide */
+}
+
+body::before {
+    content: "";
+    position: fixed; /* L'image reste en arrière-plan même en cas de défilement */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, #1f1f1f, #121212), url('coverBG.jpg');
+    background-blend-mode: overlay; /* Superpose le dégradé et l'image */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.9; /* Rend l'arrière-plan plus discret */
+    filter: blur(3px); /* Ajoute un flou */
+    z-index: -1; /* Assure que l'image reste derrière tout le contenu */
+}
+
+        .player {
+            width: 400px;
+            background: #181818;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+			
+			
+        }
+.player img {
+    width: 100%;
+	align-self: center;
+    border-radius: 10px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 10px #1db954, 0 0 15px #1db954, 0 0 20px #1db954;
+    animation: neonGlow 3s infinite alternate;
+}
+
+/* Encadrement néon animé */
+@keyframes neonGlow {
+    0% {
+        box-shadow: 0 0 10px #1db954, 0 0 20px #1db954, 0 0 40px #1db954;
+    }
+    50% {
+        box-shadow: 0 0 20px #f44336, 0 0 40px #f44336, 0 0 60px #f44336;
+    }
+    100% {
+        box-shadow: 0 0 10px #1db954, 0 0 20px #1db954, 0 0 40px #1db954;
+    }
+}
+
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .controls button {
+            background: #282828;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .controls button:hover {
+            background: #3a3a3a;
+            transform: scale(1.1);
+        }
+        .progress-container {
+            margin-top: 20px;
+            background: #333;
+            height: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+        }
+ .progress-bar {
+            height: 5px;
+            width: 0%;
+            background: linear-gradient(90deg, #1db954, #f44336); /* Couleur de dégradé par défaut */
+            border-radius: 5px;
+            transition: width 0.1s ease-in-out; /* Transition pour un effet fluide */
+        }
+		.marquee {
+    overflow: hidden; /* Cache le texte qui dépasse */
+    white-space: nowrap; /* Empêche le retour à la ligne */
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 5px; /* Optionnel : ajoute une bordure arrondie */
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour une meilleure visibilité */
+}
+
+/* Animation de défilement */
+.marquee span {
+    display: inline-block;
+    animation: scrollTitle 10s linear infinite;
+    padding-left: 100%; /* Commence à l'extérieur du conteneur */
+}
+
+/* Définition de l'animation */
+@keyframes scrollTitle {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+   .durations {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 14px;
+            color: white;
+        }
+
+        .left-time {
+            margin-left: 5px;
+        }
+
+        .right-time {
+            margin-right: 5px;
+        }    /* Conteneur de l'input */
+    .url-input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+		top: -2%;
+		left: 35%;
+		position: absolute;
+    }
+
+    /* Style de l'input */
+    #audio-url {
+        width: 400px; /* Plus large */
+        height: 50px; /* Un peu plus haut */
+        padding: 10px;
+        margin-right: 15px;
+        background-color: #2e2e2e; /* Fond sombre */
+        border: 2px solid #444; /* Bordure sombre */
+        border-radius: 30px; /* Coins arrondis */
+        color: white; /* Texte en blanc */
+        font-size: 16px;
+        font-family: 'Arial', sans-serif;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre douce */
+        transition: all 0.3s ease-in-out; /* Transition douce lors du focus */
+    }
+
+    /* Effet au focus sur l'input */
+    #audio-url:focus {
+        border-color: #7a7a7a; /* Changer la couleur de la bordure au focus */
+        background-color: #333; /* Fond légèrement plus foncé */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Ombre plus marquée */
+        outline: none; /* Enlever le contour par défaut */
+    }
+
+    /* Style du bouton */
+    #set-audio {
+        padding: 15px 30px; /* Plus large, plus long */
+        background-color: #5a5a5a; /* Fond gris */
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre douce */
+        transition: all 0.3s ease-in-out; /* Transition douce pour le bouton */
+    }
+
+    /* Effet au survol du bouton */
+    #set-audio:hover {
+        background-color: #8a8a8a; /* Légère augmentation de la luminosité au survol */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Ombre plus marquée */
+    }
+
+    /* Effet lorsque le bouton est cliqué */
+    #set-audio:active {
+        background-color: #444; /* Fond plus sombre au clic */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombre réduite */
+    }
+</style>
+
+    </style>
+        <div class="url-input">
+            <input type="text" id="audio-url" placeholder="Entrez une URL de musique (vulnérabilité js activée)" />
+            <button id="set-audio">Jouer</button>
+        </div>
+		</head>
+<body>
+   <div class="player">
+        <img src="cover.jpg" alt="Album Cover">
+        
+        <!-- Texte défilant -->
+        <div class="marquee">
+            <span id="song-title"><h2>https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3 | Musique libre de droits</h2></span>
+        </div>
+        
+        <div class="progress-container" id="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        
+        <!-- Durées écoulée et restante avec mise en forme CSS -->
+        <div class="durations">
+            <span id="current-time" class="left-time">00:00</span> 
+            <span id="duration-time" class="right-time">⏳</span>
+        </div>
+        
+        <div id="loading-spinner" class="spinner"></div>
+        
+        <div class="controls">
+            <button id="prev"><</button>
+            <button id="play">▶</button>
+            <button id="next">></button>
+        </div>
+           </div>
+       
+
+ 
+
+    <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <script>
+        const playBtn = document.getElementById('play');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        const audio = document.getElementById('audio');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const setAudioBtn = document.getElementById('set-audio');
+        const audioUrlInput = document.getElementById('audio-url');
+        const songTitle = document.getElementById('song-title');
+        
+        const currentTimeElem = document.getElementById('current-time');
+        const durationTimeElem = document.getElementById('duration-time');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        
+        let currentSongNumber = 1;
+
+        // Fonction pour formater le temps en minute:seconde
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Fonction pour mettre à jour la source audio et le titre
+        function updateAudio(newNumber) {
+            currentSongNumber = Math.max(1, newNumber); // Empêche les numéros négatifs ou 0
+            const newUrl = `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${currentSongNumber}.mp3`;
+            audio.src = newUrl;
+            songTitle.innerHTML = `<h2>${newUrl}</h2>`;
+            audio.play();
+            playBtn.textContent = '⏸';
+        }
+
+        // Gestion du bouton précédent
+        prevBtn.addEventListener('click', () => {
+            updateAudio(currentSongNumber - 1);
+        });
+
+        // Gestion du bouton suivant
+        nextBtn.addEventListener('click', () => {
+            updateAudio(currentSongNumber + 1);
+        });
+
+        // Gestion du bouton de lecture/pause
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = '⏸';
+            } else {
+                audio.pause();
+                playBtn.textContent = '▶';
+            }
+        });
+
+        // Mise à jour de la barre de progression et des durées
+        audio.addEventListener('timeupdate', () => {
+            const progressPercent = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            // Affichage de la durée écoulée
+            currentTimeElem.textContent = formatTime(audio.currentTime);
+
+            // Si la durée est encore NaN, afficher le cercle de chargement
+            if (isNaN(audio.duration)) {
+                durationTimeElem.innerHTML = "⏳";
+                loadingSpinner.style.display = 'block'; // Afficher le cercle de chargement pendant que la durée n'est pas définie
+            } else {
+                // Affichage du temps restant
+                durationTimeElem.innerHTML = formatTime(audio.duration - audio.currentTime);
+                loadingSpinner.style.display = 'none'; // Masquer le cercle de chargement une fois la durée prête
+            }
+        });
+
+        // Afficher le cercle de chargement jusqu'à ce que la durée soit définie
+        audio.addEventListener('loadedmetadata', () => {
+            loadingSpinner.style.display = 'none'; // Cacher le cercle de chargement quand l'audio est prêt
+        });
+
+        // Changer la position de lecture en cliquant sur la barre de progression
+        progressContainer.addEventListener('click', (e) => {
+            const width = progressContainer.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audio.duration;
+            audio.currentTime = (clickX / width) * duration;
+        });
+
+        // Mettre à jour la source audio depuis l'URL saisie
+        setAudioBtn.addEventListener('click', () => {
+            const newUrl = audioUrlInput.value.trim();
+            if (newUrl) {
+                const match = newUrl.match(/SoundHelix-Song-(\d+)/);
+                if (match) {
+                    currentSongNumber = parseInt(match[1]);
+                }
+                audio.src = newUrl;
+                audio.play();
+                playBtn.textContent = '⏸';
+                songTitle.innerHTML = `<h2>${newUrl}</h2>`;
+            } else {
+                alert("Veuillez entrer une URL valide.");
+            }
+        });
+    </script>
+<style>
+    .durations {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-size: 14px;
+        color: white;
+    }
+
+    .left-time {
+        margin-left: 5px;
+    }
+
+    .right-time {
+        margin-right: 5px;
+    }
+
+    /* Style pour le cercle de chargement */
+    #loading-spinner {
+        cursor: wait;
+        position: absolute;
+        top: 71.7%;
+        left: 48.1%;
+        width: 49.8px;
+        height: 49.8px;
+        border: 5px solid red; /* Bordure de départ */
+        border-top: 5px solid purple; /* Bordure de départ */
+        border-radius: 50%;
+        animation: spin 0.3s linear infinite, gradient 0.8s ease infinite;
+        display: none; /* Cacher le cercle par défaut */
+    }
+
+    /* Animation de rotation du cercle */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Animation de dégradé progressif des bordures */
+    @keyframes gradient {
+        0% {
+            border-top-color: red;
+            border-top-color: purple;
+        }
+        25% {
+           
+            border-left-color: purple;
+        }
+        50% {
+            border-top-color: blue;
+
+        }
+        75% {
+            border-top-color: pink;
+   
+        }
+        100% {
+            border-top-color: purple;
+
+        }
+    }
+</style>
+
+</body>

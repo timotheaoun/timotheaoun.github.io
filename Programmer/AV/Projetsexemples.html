@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Parcours de Timothé AOUN</title>
+  <style>
+  Sel {
+  background-color: red;
+  color: White;
+}
+/* Largeur de la barre de défilement */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Dégradé de couleur pour la piste de défilement */
+::-webkit-scrollbar-track {
+    background: linear-gradient(to bottom,#3498db, #a3e4d7, #ffffff, #f7dc6f, #f39c12, #d35400, #c0392b);
+}
+ 
+/* Couleur de la poignée de défilement */
+::-webkit-scrollbar-thumb {
+    background: red;
+}
+
+/* Couleur de la poignée de défilement au survol */
+::-webkit-scrollbar-thumb:hover {
+    background: black;
+    width: 12px;
+} 
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, purple, #3498db, #a3e4d7, white, #a3e4d7, purple, black);
+            margin: 0;
+            padding: 0;
+        }
+header {
+    background: linear-gradient(to right, purple, #3498db, #a3e4d7, white, #a3e4d7, purple, black);
+    color: Black;
+    text-align: center;
+    padding: 20px;
+}
+        h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+        p {
+            font-size: 18px;
+            margin: 0;
+        }
+        section {
+            margin: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            position: absolute;
+            top: 75px;
+            right: 400px;
+            max-width: 70px;
+            height: auto;
+        }
+        h2 {
+            font-size: 24px;
+            margin-top: 0;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        nav {
+                background: linear-gradient(to right, black, #333, grey, black);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+        }
+.button {
+  display: inline-block;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.button:hover {
+  background-color: #e9e9e9;
+}
+   }
+		Console {
+		background-color: Black;
+		Color: White;
+		}
+		 .commands-output {
+          color: white;
+          background-color: black;
+          padding: 5px;
+    margin: 0px 0px 30px 0px;
+          outline: 5px solid #BBB;
+
+          }
+	    #commands-output {
+
+          margin: 0px 0px 30px 0px;
+
+          }
+
+          .command-output {
+
+          background-color: #000;
+
+          color: #C0C0C0;
+
+          padding: 5px;
+
+          outline: 5px solid #BBB;
+
+          }
+		    #commands-output {
+
+          margin: 0px 0px 30px 0px;
+
+          }
+
+          .commands-output {
+
+          background-color: #000;
+          padding: 5px;
+    margin: 0px 0px 30px 0px;
+          outline: 5px solid #BBB;
+
+          }
+	#commands-shell {
+    margin: 0px 0px 30px 0px;
+}
+
+   .text {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 200px; /* Hauteur de la console */
+      background-color: #000;
+      color: #C0C0C0;
+      padding: 5px;
+      outline: 5px solid #BBB;
+      font-family: monospace; /* Police de type console */
+      overflow-y: auto; /* Ajout de barre de défilement si nécessaire */
+    }
+
+.command-shell {
+    background-color: #012456; /* Bleu foncé de l'interface de PowerShell */
+    color: #FFFFFF; /* Texte en blanc */
+    padding: 5px;
+    outline: 5px solid #3B8CC4; /* Bordure bleue de PowerShell */
+}
+
+    </style>
+<body>
+ <p>  </p>
+ <p>  </p>
+<h2>                                Voici quelques projets et choses assez simple à faire en Batch et leur équivalent en Powershell...</h2>
+ <p>  </p>
+    <section>
+
+        <h2><u> 1- Afficher ses mots de passe wifi (Batch et Powershell)</u></h2>
+<p>BATCH ↓</p>
+<p>  </p>
+<div class="console">
+<textarea class="command-output" cols="90" rows="11" readonly="false" spellcheck="false">
+                Echo off
+                Del temp.txt
+                netsh wlan show interfaces | findstr "Profil" > temp.txt
+                set /p "a=" &lt; temp.txt
+                del temp.txt
+                set prof= %a:~28,50%
+                netsh wlan show profile name="%prof: =%" key=clear | findstr "cl" &gt;temp.txt
+                set /p "a=" &lt; temp.txt
+                set pa= %a:~35,100%
+                Del Temp.txt
+                Echo "%pa: =%" | clip
+                exit
+</textarea>
+</div>
+<p>   </p>
+<p>POWERSHELL ↓</p>
+<p>  </p>
+<div id="commands-shell">
+<textarea class="command-shell" cols="50" rows="10" readonly="true" spellcheck="false">
+# Suppression du fichier temporaire
+Remove-Item -Path temp.txt -Force -ErrorAction SilentlyContinue
+
+# Obtention du nom du profil Wi-Fi actif
+$profileName = (netsh wlan show interfaces | Sel-String "Profil").ToString() -replace ".*:\s*(.*)", '$1'
+
+# Obtention du mot de passe du profil Wi-Fi
+$wifiKey = (netsh wlan show profile name="$profileName" key=clear | Sel-String "Key Content").ToString() -replace ".*:\s*(.*)", '$1'
+
+# Copie du mot de passe dans le presse-papiers
+$wifiKey | Set-Clipboard
+</textarea>
+</div>
+<p>  </p>
+<li> Ces programmes récupèrent le profil sur lequel l'ordinateur est connecté actuellement. Ensuite, il stocke son nom dan sun fichier temporaire, le récupère en variable et le filtre. Il interroge ensuite l'ordinateur sur le mot de passe du profil stocké en variable et le copie sur le presse-papier </li>
+</section>
+<section>
+        <h2><u> 2- Projet basique: Vérification de l'existence d'un fichier et ouverture avec le bloc-notes:</u></h2>
+<p>BATCH ↓</p>
+<p>   </p>
+<div class="console">
+<textarea class="command-output" cols="90" rows="11" readonly="false" spellcheck="false">
+@echo off
+set /p "file=Entrez le nom du fichier : "
+if exist "%file%" (
+    notepad "%file%"
+) else (
+    echo Le fichier n'existe pas.
+    pause
+)
+
+</textarea>
+</div>
+<p>   </p>
+<p>POWERSHELL ↓</p>
+<p>  </p>
+<div id="commands-shell">
+<textarea class="command-shell" cols="50" rows="10" readonly="true" spellcheck="false">
+$file = Read-Host -Prompt "Entrez le chemin du fichier"
+
+if (Test-Path $file -PathType Leaf) {
+    notepad $file
+} else {
+    Write-Host "Le fichier n'existe pas."
+    Read-Host -Prompt "Appuyez sur Entrée pour continuer..."
+}
+</textarea>
+</div>
+</section>
+ <p>  </p>
+<h2>                                Maintenant, voici d'autres astuces pratiques dans la vie quotidienne...</h2>
+<section>
+<p> </p> 
+<p> CREER UN QR CODE A PARTIR D'UN LIEN ↓</p>
+<p>  </p>  
+<div class="console">
+<textarea class="command-output" cols="40" rows="8" readonly="false" spellcheck="false">
+curl qrenco.de -d "text=google.com" -o test.txt
+Echo ceci est un lien vers google.com >>test.txt
+Start test.txt
+</textarea>
+</div>
+<p> Ces lignes de code Batch redirigent le Qr code vers une sortie 'test.txt'. Si vous voulez simplement le voir affiché sur une fenêtre, composer <Sel>'Windows'</Sel> + <Sel>'r'</Sel>, entrez <Sel>'Cmd'</Sel> puis entrez <Sel><mark>'curl qrenco.de/Votre_site'</Sel></mark></p>
+</body>
+</body>
+</html>
