@@ -9,11 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-
-/* ------------------------------ */
-/*          GLOBAL STYLE          */
-/* ------------------------------ */
-
+html {
+  scroll-behavior: smooth;
+  }
 :root {
     --neon1: #00ffcc;
     --neon2: #ff00d6;
@@ -222,7 +220,7 @@ nav ul li a:hover {
 .bnt-glass-fancy {
   position: relative;
   display: inline-block;
-  padding: 10px 20px;
+  padding: 30px 50px;
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.15);
   background: rgba(255,255,255,0.05);
@@ -381,6 +379,30 @@ footer {
     }
 }
 
+.neon-separator {
+    width: 100%;               /* prend toute la largeur */
+    height: 4px;               /* épaisseur du trait */
+    margin: 50px 0;            /* espace au-dessus et en dessous */
+    background: #0ff;          /* couleur principale du néon */
+    box-shadow: 0 0 10px #0ff, 
+                0 0 20px #0ff, 
+                0 0 30px #0ff, 
+                0 0 40px #0ff;
+    border-radius: 2px;        /* bords arrondis */
+}
+@keyframes neonPulse {
+    0%, 100% {
+        box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #0ff, 0 0 20px #0ff;
+    }
+    50% {
+        box-shadow: 0 0 15px #0ff, 0 0 25px #0ff, 0 0 35px #0ff, 0 0 45px #0ff;
+    }
+}
+
+.neon-separator {
+    animation: neonPulse 2s infinite alternate;
+}
+
 </style>
 
 <script>
@@ -398,9 +420,8 @@ function toggleMenu() {
     <nav>
         <ul id="menu">
             <li><a href="#">Accueil</a></li>
-            <li><a href="#skills">Compétences</a></li>
             <li><a href="#projects">Projets</a></li>
-            <li><a href="#about">À propos</a></li>
+            <li><a href="#about">Tutoriels</a></li>
         </ul>
     </nav>
     <div class="burger" onclick="toggleMenu()">☰</div>
@@ -410,7 +431,7 @@ function toggleMenu() {
 <section class="hero">
     <h1>Portfolio informatique</h1>
     <p>Pour montrer mon savoir-faire, je présente ici mes projets (front, back, devops) et des tutoriels pédagogiques,</p>
-    <button class="btn-neon">Voir mes projets</button>
+<button class="btn-neon" onclick="window.location.assign('https://timotheaoun.github.io/Programmer/indexbis1.html')">Voir mes projets</button>
 </section>
 
 <!-- PROJETS -->
@@ -421,8 +442,8 @@ function toggleMenu() {
             <h3>Coffre-fort</h3>
 			<i>Application 🟢</i>
             <p>Système de protection et gestion sécurisée de fichiers, avec chiffrement et interface simple.</p>
-			<button class="btn-glass" onclick="window.open('https://github.com/timotheaoun/Coffre_fort')">Voir le dépôt github</button>
-			<button class="btn-glass" onclick="window.open('https://timotheaoun.github.io/Programmer/indexbis1.html#Coffrefort') >Plus de détails</button>
+			<button class="btn-glass" onclick="window.location.assign('https://github.com/timotheaoun/Coffre_fort')">Voir le dépôt github</button>
+			<button class="btn-glass" onclick="window.location.assign('https://timotheaoun.github.io/Programmer/indexbis1.html#Coffrefort')">Plus de détails</button>
         </div>
 				<div class="project-card">
             <h3>Contrôle depuis le téléphone</h3>
@@ -484,11 +505,16 @@ function toggleMenu() {
         </div>
 		
 </div>
+<br><br>
+<h3><center>Mes scripts/applis vous intéressent ? Certains ne sont pas sur github? Contactez-moi à l'adresse suivante: <a href="mailto:aoutimothe.network@gmail.com">aountimothe.network@gmail.com</a> Il se pourrait que vous ayez une petite surprise</center></h3>
 </section>
+<div class="neon-separator"></div>
 <section id="about">
     <h2>Tutoriels</h2>
     <p style="max-width:700px;margin:auto;text-align:center;">
 Aussi bien que l'on découvre la théorie par la pratique, on se perfectionne dans la théorie par l'enseignement! Ici, seront bientôt disponibles des tutoriels/explications sur des notions d'informatique des plus rudimentaires aux plus techniques...</p>
+<br>
+<br>
 <button class="bnt-glass-fancy">
   <span class="bnt-glass-text">Fonctionnement des virus informatique</span>
 </button>
