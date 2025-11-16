@@ -1,403 +1,506 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Portfolio — Informatique & Projets — I&T</title>
-<meta name="description" content="Portfolio technique : projets, tutoriels, explications sur le fonctionnement des malwares (non-actionable), galerie, contact.">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio - Développeur</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-:root{
-  --bg-900:#05060a;
-  --bg-800:#0b0f13;
-  --card:#0f1720;
-  --muted:#9aa6af;
-  --accent:#37e6d9;
-  --accent-2:#6be3ff;
-  --glass: rgba(255,255,255,0.03);
-  --radius:14px;
-  --maxw:1180px;
-  --ff: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  --shadow: 0 12px 40px rgba(2,10,14,0.6);
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family:var(--ff);
-background: 
-  linear-gradient(180deg,
-    #05060a 0%,
-    #0b0f13 30%,
-    #0b0f13 100%
-  ),
-  radial-gradient(circle at 20% 40%, rgba(255,150,100,0.04), transparent 70%),
-  radial-gradient(circle at 80% 60%, rgba(155,92,255,0.03), transparent 70%),
-  radial-gradient(circle at 50% 80%, rgba(0,255,180,0.02), transparent 70%);
-background-blend-mode: screen;
-background-attachment: fixed;
-color:#e6f7f4;
--webkit-font-smoothing:antialiased;
--moz-osx-font-smoothing:grayscale;
-line-height:1.45;
-}
-.wrap{max-width:var(--maxw);margin:28px auto;padding:22px}
-header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
-.logo{
-  width:72px;height:72px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
-  display:flex;align-items:center;justify-content:center;color:#041014;font-weight:800;font-size:20px;box-shadow:var(--shadow)
-}
-h1{margin:0;font-size:24px}
-.subtitle{color:var(--muted);font-size:13px}
-nav{margin-left:auto;display:flex;gap:10px;align-items:center}
-nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px}
-nav a:hover{background:rgba(255,255,255,0.02);color:var(--accent)}
-main{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start}
-.panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:14px;padding:16px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.03)}
-.hero{
-  position:relative;border-radius:12px;overflow:hidden;
-  height:420px;
-  display:flex;align-items:center;justify-content:center;
-  background: #021018;
-}
-.hero .overlay{
-  position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,6,8,0.1) 0%, rgba(2,6,8,0.9) 90%);
-  pointer-events:none;
-}
-.hero-content{
-  position:absolute;
-  z-index:3;
-  text-align:center;
-  max-width:700px;
-  padding:28px;
-  color:#eafffb;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:rgba(0,0,0,0.35);
-  border-radius:12px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.4);
-}
-.kicker{display:inline-block;background:rgba(255,255,255,0.03);color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px}
-.lead{font-size:20px;margin-top:6px;margin-bottom:8px}
-.muted{color:var(--muted);font-size:14px}
-.hero-controls{position:absolute;left:18px;top:50%;transform:translateY(-50%);z-index:4;display:flex;gap:8px}
-.hero-controls button{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.04);color:#fff;padding:10px;border-radius:10px;cursor:pointer}
-.dots{position:absolute;right:18px;bottom:18px;display:flex;gap:8px;z-index:4}
-.dot{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,0.12);cursor:pointer}
-.dot.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 6px 20px rgba(0,200,200,0.08)}
 
-/* Carousel Fix */
-.carousel{position:relative;overflow:hidden;border-radius:12px;height:500px;}
-.carousel-track{display:flex;transition:transform .6s cubic-bezier(.2,.9,.2,1);height:100%;}
-.carousel-slide{min-width:100%;flex-shrink:0;position:relative;height:100%;}
-.carousel-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; 
-  object-position: center center;
-  background-color: #021018; /* fond discret derrière les bandes */
-  display: block;
-  transition: transform 0.5s ease;
+/* ------------------------------ */
+/*          GLOBAL STYLE          */
+/* ------------------------------ */
+
+:root {
+    --neon1: #00ffcc;
+    --neon2: #ff00d6;
+    --neon3: #7cff00;
+    --bg-dark: #0a0a0a;
+    --text-light: #e8e8e8;
 }
 
-.carousel-caption{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  color:#fff;
-  text-align:center;
-  background:rgba(0,0,0,0.5);
-  padding:20px 25px;
-  border-radius:12px;
-  max-width:700px;
-  transition:all .5s ease;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-.carousel:hover .carousel-caption{background:rgba(0,0,0,0.7);}
 
-/* Thumbnails */
-.thumbs{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.thumbs img{width:120px;height:80px;object-fit:cover;border-radius:8px;cursor:pointer;border:2px solid transparent}
-.thumbs img.selected{border-color:var(--accent)}
+body {
+    background: var(--bg-dark);
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-light);
+    line-height: 1.6;
+}
 
-/* Gallery */
-.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
-.gallery-grid img{width:100%;height:140px;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform .25s ease}
-.gallery-grid img:hover{transform:scale(1.03)}
+/* ------------------------------ */
+/*       NAVIGATION MOBILE        */
+/* ------------------------------ */
 
-/* Lightbox */
-.lightbox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);z-index:9999;padding:20px}
-.lightbox img{max-width:95%;max-height:90%;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,0.6)}
-.close-light{position:absolute;right:24px;top:18px;color:#fff;background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;cursor:pointer}
+header {
+    width: 100%;
+    background: #000;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--neon1);
+    box-shadow: 0 0 12px var(--neon1);
+}
 
-/* Buttons */
-.btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021018;padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
-.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:9px;border-radius:10px;color:var(--muted);cursor:pointer}
+.logo {
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.4rem;
+    color: var(--neon1);
+    text-shadow: 0 0 10px var(--neon1);
+}
 
-/* Footer */
-footer{margin-top:20px;color:var(--muted);text-align:center;font-size:13px}
-.project {
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: 500;
+    transition: .2s;
+}
+
+nav ul li a:hover {
+    color: var(--neon1);
+    text-shadow: 0 0 8px var(--neon1);
+}
+
+/* MENU BURGER MOBILE */
+.burger {
+    display: none;
+    cursor: pointer;
+    font-size: 2rem;
+    color: var(--neon1);
+}
+
+/* ------------------------------ */
+/*          HERO NEON             */
+/* ------------------------------ */
+
+.hero {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(130deg, var(--neon1), var(--neon2), var(--neon3));
+    background-size: 300% 300%;
+    animation: gradientMove 12s infinite alternate;
+}
+
+@keyframes gradientMove {
+    from { background-position: 0%; }
+    to { background-position: 100%; }
+}
+
+.hero h1 {
+    font-family: "Orbitron";
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 15px #fff;
+}
+
+.hero p {
+    max-width: 600px;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.btn-neon {
+    padding: 1rem 2rem;
+    border: none;
+    background: var(--bg-dark);
+    border: 2px solid var(--neon1);
+    color: var(--neon1);
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: .25s;
+    box-shadow: 0 0 10px var(--neon1);
+}
+
+.btn-neon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px var(--neon1), 0 0 40px var(--neon1);
+}
+/* ---------- BOUTON GLASS (plus petit, coordonné au néon) ---------- */
+/* Requiert : --neon1, --neon2, --bg-dark, --text-light */
+
+.btn-glass {
+  /* taille réduite par rapport à .btn-neon */
+  padding: 0.48rem 0.9rem;               /* plus compact */
+  font-size: clamp(0.9rem, 1vw, 1rem);  /* reste lisible sur mobile */
+  line-height: 1;
+  color: var(--text-light);
+  background: rgba(255,255,255,0.03);   /* glass subtle */
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
   position: relative;
-  padding-bottom: 20px; /* espace pour la barre */
-  margin-bottom: 40px; /* espace entre articles */
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms, backdrop-filter 220ms;
+  backdrop-filter: blur(6px);          /* effet glass */
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.45); /* légère profondeur */
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.project::after {
+/* Néon bord animé via pseudo-élément (finesse + brillant) */
+.btn-glass::before {
   content: "";
-  display: block;
-  height: 4px; /* épaisseur de la barre */
-  width: 100%;
-  background: linear-gradient(90deg, #f6d365, #fda085); /* dégradé du jaune vers l’orange */
-  border-radius: 2px; /* coins arrondis */
-  margin-top: 20px;
-}
-
-/* Responsive */
-@media (max-width:980px){
-  main{grid-template-columns:1fr}
-  .content-grid{grid-template-columns:1fr}
-  .gallery-grid{grid-template-columns:repeat(2,1fr)}
-  .carousel{height:300px;}
-  .carousel-caption{padding:10px;font-size:14px;}
-}
-.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.project-grid {
-  display: block; /* ou flex mais avec flex-direction: column */
-  gap: 20px;      /* espace entre les articles */
-}
-
-.project {
-background: transparent;
-  width: 100%;       /* prend toute la largeur du parent */
-  box-sizing: border-box; /* inclut padding et bordures dans la largeur */
-  padding: 20px;     /* un peu d’espace à l’intérieur */
-  border-radius: 8px;   /* coins arrondis */
-  margin-bottom: 20px;  /* espace entre projets */
-  position: relative;   /* utile si tu ajoutes la barre décorative */
+  position: absolute;
+  inset: -1px;                     /* dépasse légèrement pour faire une bordure */
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(0,255,204,0.12), rgba(255,0,214,0.12));
+  /* blur + blend pour un glow doux */
+  filter: blur(8px);
+  opacity: 0.9;
+  transition: opacity 220ms, transform 220ms;
+  transform: scale(0.98);
+  border-radius: 11px;
 }
 
 
-.code-sample{background:#071017;border-radius:8px;padding:12px;overflow:auto;border:1px solid rgba(255,255,255,0.03);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;font-size:13px;color:#bfeeea}
-.tag{display:inline-block;background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:999px;color:var(--muted);font-weight:600;font-size:12px;margin-right:6px}
-.warning{background:rgba(255,50,50,0.06);border:1px solid rgba(255,50,50,0.06);padding:10px;border-radius:8px;color:#ffd6d6;margin-top:10px}
+
+/* petit accent néon gauche (optionnel : icône ou pastille) */
+.btn-glass .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--neon1), var(--neon2));
+  box-shadow: 0 0 10px var(--neon1), 0 0 18px var(--neon2);
+  flex: 0 0 auto;
+}
+
+/* Focus accessibility */
+.btn-glass:focus {
+  outline: 2px solid rgba(0,255,204,0.16);
+  outline-offset: 3px;
+  box-shadow: 0 0 30px rgba(0,255,204,0.08);
+}
+
+/* Désactivé */
+.btn-glass:disabled,
+.btn-glass[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Respecter 'prefers-reduced-motion' */
+@media (prefers-reduced-motion: reduce) {
+  .btn-glass,
+  .btn-glass::before,
+  .btn-glass:hover {
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+/* Bouton glass style amélioré */
+.bnt-glass-fancy {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: #37e6d9; /* accent principal */
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(55,230,217,0.35);
+}
+
+/* Effet au survol sur le fond */
+.bnt-glass-fancy:hover {
+  background: rgba(55,230,217,0.1);
+  box-shadow: 0 8px 30px rgba(55,230,217,0.5);
+}
+
+/* Contenu animé */
+.bnt-glass-fancy .bnt-glass-text {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Animation subtile au survol */
+.bnt-glass-fancy:hover .bnt-glass-text {
+  transform: translateY(-2px) scale(1.05);
+  color: #6be3ff; /* accent secondaire */
+}
+
+/* Option : un effet de lumière subtile sur hover */
+.bnt-glass-fancy::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at top left, rgba(255,255,255,0.15), transparent 70%);
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+}
+
+.bnt-glass-fancy:hover::before {
+  transform: rotate(45deg) scale(1);
+}
+
+/* ------------------------------ */
+/*          SECTIONS              */
+/* ------------------------------ */
+
+section {
+    padding: 4rem 2rem;
+}
+
+h2 {
+    font-family: "Orbitron";
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--neon1);
+    text-shadow: 0 0 12px var(--neon1);
+}
+
+/* ------------------------------ */
+/*        COMPETENCES             */
+/* ------------------------------ */
+
+.skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.skill-card {
+    padding: 2rem;
+    text-align: center;
+    background: #111;
+    border: 2px solid var(--neon2);
+    border-radius: 10px;
+    transition: .3s;
+    box-shadow: 0 0 12px var(--neon2);
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px var(--neon2), 0 0 30px var(--neon2);
+}
+
+/* ------------------------------ */
+/*            PROJETS             */
+/* ------------------------------ */
+
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: #111;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 2px solid var(--neon3);
+    box-shadow: 0 0 12px var(--neon3);
+    transition: .3s;
+}
+
+.project-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px var(--neon3), 0 0 40px var(--neon3);
+}
+
+/* ------------------------------ */
+/*            FOOTER              */
+/* ------------------------------ */
+
+footer {
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid var(--neon1);
+    box-shadow: 0 0 12px var(--neon1);
+    background: #000;
+}
+
+/* ------------------------------ */
+/*       MOBILE RESPONSIVE        */
+/* ------------------------------ */
+
+@media(max-width: 768px) {
+    nav ul {
+        display: none;
+        flex-direction: column;
+        background: #000;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        padding: 1rem 2rem;
+        border: 1px solid var(--neon1);
+        box-shadow: 0 0 10px var(--neon1);
+    }
+
+    nav ul.open {
+        display: flex;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
+
 </style>
+
+<script>
+// Menu mobile
+function toggleMenu() {
+    document.getElementById("menu").classList.toggle("open");
+}
+</script>
+
 </head>
 <body>
-<div class="wrap" role="main">
-  <header>
-    <div class="logo" aria-hidden="true">T.aoun</div>
-    <div>
-      <h1> — Informatique & Projets</h1>
-      <div class="subtitle">Projets • Tutoriels • Explications techniques</div>
-    </div>
-    <nav aria-label="Navigation du portfolio">
-      <a href="#projects">Projets</a>
-      <a href="#tutorials">Tutoriels</a>
-      <a href="#malware">Sécurité & virus</a>
-      <a href="#gallery">Galerie</a>
+
+<header>
+    <div class="logo">Timothé – Dev</div>
+    <nav>
+        <ul id="menu">
+            <li><a href="#">Accueil</a></li>
+            <li><a href="#skills">Compétences</a></li>
+            <li><a href="#projects">Projets</a></li>
+            <li><a href="#about">À propos</a></li>
+        </ul>
     </nav>
-  </header>
+    <div class="burger" onclick="toggleMenu()">☰</div>
+</header>
 
-  <main>
-    <!-- LEFT: Hero + content -->
-    <div>
-      <!-- HERO carousel -->
-      <section class="panel hero" id="hero">
-        <div class="hero-controls" aria-hidden="true">
-          <button id="prevHero" title="Précédent">◀</button>
-          <button id="nextHero" title="Suivant">▶</button>
+<!-- HERO -->
+<section class="hero">
+    <h1>Portfolio informatique</h1>
+    <p>Pour montrer mon savoir-faire, je présente ici mes projets (front, back, devops) et des tutoriels pédagogiques,</p>
+    <button class="btn-neon">Voir mes projets</button>
+</section>
+
+<!-- PROJETS -->
+<section id="projects">
+    <h2>Projets</h2>
+    <div class="projects">
+        <div class="project-card">
+            <h3>Coffre-fort</h3>
+			<i>Application 🟢</i>
+            <p>Système de protection et gestion sécurisée de fichiers, avec chiffrement et interface simple.</p>
+			<button class="btn-glass" onclick="window.open('https://github.com/timotheaoun/Coffre_fort')">Voir le dépôt github</button>
+			<button class="btn-glass" onclick="window.open('https://timotheaoun.github.io/Programmer/indexbis1.html#Coffrefort') >Plus de détails</button>
         </div>
-
-        <div class="carousel-track" id="heroTrack" style="height:100%;display:flex;transition:transform .7s ease">
-          <!-- Slides (remplacer src par tes images) -->
-          <div class="carousel-slide" data-index="0">
-            <img src="1.png" alt="Code sur écran">
-          </div>
-          <div class="carousel-slide" data-index="1">
-            <img src="2.png" alt="Serveur & infra">
-          </div>
-          <div class="carousel-slide" data-index="2">
-            <img src="3.png" alt="Collaboration & projets">
-          </div>
+				<div class="project-card">
+            <h3>Contrôle depuis le téléphone</h3>
+			<i>Application 🟢</i> 
+			<p>Similaire à un reverse shell mais à usage local via localhost, l'appli permet un accès distant au terminal en arrière plan d'un ordinateur</p>
         </div>
-
-        <div class="overlay"></div>
-
-        <div class="hero-content">
-          <span class="kicker">Développement & Sécurité</span>
-          <h2 class="lead">Projets réels, tutoriels clairs, et explications techniques responsables.</h2>
-          <p class="muted">Pour montrer mon savoir-faire, je présente ici mes projets (front, back, devops), des tutoriels pédagogiques, et une section pour comprendre comment fonctionnent certains malwares — uniquement à titre explicatif et pour apprendre la sécurité. </p>
-          <div style="margin-top:10px">
-            <button class="btn" onclick="scrollToId('projects')">Voir mes projets</button>
-            <button class="ghost" onclick="alert('La page est en création... Ce lien sera bientôt disponible !!!')">Sécurité & virus</button>
-          </div>
+        <div class="project-card">
+            <h3>WifiPrinter (.exe)</h3>
+			<i>Application 🟢</i>
+            <p>Application nécessitant une élévation UAC, qui copie dans le presse papier le mot de passe wifi sur lequel l'ordinateur est connecté, et l'affiche dans une boxe</p>
+			<button class="btn-glass">Plus de détails</button>
         </div>
-
-        <div class="dots" id="heroDots" aria-hidden="true" style="bottom:18px"></div>
-      </section>
-
-      <!-- Projects -->
-      <section class="panel" id="projects" style="margin-top:16px">
-        <div class="section-title">
-          <h2>Projets récents ou en cours</h2>
-          <div><span class="tag">Batch</span><span class="tag">Python</span><span class="tag">Windows</span></div>
+        <div class="project-card">
+            <h3>ProtectUSB (.exe)</h3>
+			<i>Application 🟢</i>
+            <p>Application qui protège une clé USB en permettant de récupérer son contenu sans accès physique dans le cas d'un vol par exemple</p>
         </div>
+		        <div class="project-card">
+            <h3>Gestion du temps</h3>
+			<i>Application 🟢</i> 
+			<p>Application qui permet de définir combien de temps vous voulez passer sur votre ordinateur. Une fois le temps écoulé, un écran intrusif s'affiche. Il peut être fermé mais permet de réaliser à l'utilisat</p>
+        </div>
+		        <div class="project-card">
+            <h3>WifiProject</h3>
+			<i>Application 🟢</i> 
+			<p>Application permetant la gestion de fonctions wifi avancées</p>
+        </div>
+		<div class="project-card">
+            <h3>ControlPC</h3>
+			<i>Application 🟢</i> 
+			<p>Extension de 'WifiProject', rajoutant une gestion globale de nombreux paramètres avancés du PC</p>
+        </div>
+<div class="project-card">
+            <h3>Asissant IA</h3>
+			<i>Programme 🔵</i>
+            <p>Un programme qui laisse le contrôle de l'ordinateur à une intelligence artificielle en local (ollama) - projet purement théorique faute d'un PC suffisement puissant</p>
+        </div>
+		<div class="project-card">
+            <h3>Programme interconnectivité</h3>
+			<i>Programme 🔵</i>
+            <p>Lorsqu'on organise un jeu, rien de tel qu'une interconnectivité entre les appareils. Le programme ne fonctionne qu'en local (via localhost)</p>
+        </div>
+		<div class="project-card">
+            <h3>Campagne de sentibilisation</h3>
+			<i>Pack de programmes 🟡</i>
+            <p>Programmes simulant des malwares, ransomwares persistants, vers et spywares sans récoltes de données ni endommagement du PC (tout est remis en ordre après éxécution) ⚠️ uniquement à usage éducatif, pour sentibiliser aux virus informatiques</p>
+        </div>
+				<div class="project-card">
+            <h3>Album photo automatisé</h3>
+			<i>Application hybride 🟢🔵</i>
+            <p>Application avec html au deseign extrènement soigné pour organiser des Album photo</p>
+        </div>
+						<div class="project-card">
+            <h3>Projets mathématiques 🟤</h3>
+			<i>Scripts </i>
+            <p>Explication de notions mathématiques découvertes en codant</p>
+			<button class="btn-glass" onclick="window.open('https://timotheaoun.github.io/maths/ProjetsMatheux.html')">Voir la page</button>
 
-        <div class="project-grid">
-          <article class="project" aria-labelledby="p1">
-            <h3 id="p1">1) Application coffre fort</h3>
-            <p class="muted">Une application en cours de developpement, avec mon propre système de hash</p>
-            <p><strong>Stack :</strong> Batch Windows • PowerShell (quelques interopérations) • API Windows • Python (Outils de chiffrement standards) •</p>
-            <div class="code-sample" aria-hidden="true">
-// fonctionnement:<br>
-  - step 1: Création du mot de passe + fonction hash()<br>
-  - step 2: Comparaison du hash() du mot de passe entré avec le hash() du mot de passe initial<br>
-  - step 3: Système de cryptage/décryptage du dossier via des API Windows (icalcs, cipher, attrib...)<br>
-  - name: Deploy to cluster</div>
-            <p style="margin-top:8px"><button class="ghost"
-        type="button"
-        onclick="window.open('https://github.com/timotheaoun/Coffre_fort', '_blank', 'noopener')"
-        aria-label="Ouvrir le dépôt GitHub Coffre_fort">
-  Voir le dépôt
-</button>
-</p>
-          </article>
-		  <article class="project" aria-labelledby="p1">
-            <h3 id="p2">2) Codage de ma page web</h3>
-            <p class="muted"> Publication de mon site internet.</p>
-            <p><strong>Stack :</strong>  •HTML • CSS • JS(avec ia) •Automatisation git (avec ia)</p>
-            <div class="code-sample" aria-hidden="true">
-// arborescence :<br>
-  - branche principale {index.html} : <br><a href="https://timotheaoun.github.io/" style="color: yellow;">https://timotheaoun.github.io/</a><br>
-  - branches secondaires: <a href="https://timotheaoun.github.io/Cv/CV.Html" style="color: blue;">https://timotheaoun.github.io/Cv/CV.Html</a><br>
-  <a href="https://timotheaoun.github.io/maths/ProjetsMatheux.html" style="color: blue;"">https://timotheaoun.github.io/maths/ProjetsMatheux.html</a><br>
-  <a href="https://timotheaoun.github.io/Programmer/index.html" style="color: blue;""> https://timotheaoun.github.io/Programmer/index.html</a><br>
+        </div>
+		
 </div>
-            <p style="margin-top:8px"><button class="ghost"
-        type="button"
-        onclick="window.open('https://github.com/timotheaoun/timotheaoun.github.io/', '_blank', 'noopener')"
-        aria-label="Ouvrir le dépôt GitHub Coffre_fort">
-  Voir le dépôt
+</section>
+<section id="about">
+    <h2>Tutoriels</h2>
+    <p style="max-width:700px;margin:auto;text-align:center;">
+Aussi bien que l'on découvre la théorie par la pratique, on se perfectionne dans la théorie par l'enseignement! Ici, seront bientôt disponibles des tutoriels/explications sur des notions d'informatique des plus rudimentaires aux plus techniques...</p>
+<button class="bnt-glass-fancy">
+  <span class="bnt-glass-text">Fonctionnement des virus informatique</span>
 </button>
-</p>
-          </article>
+<button class="bnt-glass-fancy">
+  <span class="bnt-glass-text">La fonction hash</span>
+</button>
 
-      </section>
-    </div>
+</section>
 
-    <!-- RIGHT: Aside panels -->
-    <aside>
-      <div class="panel" style="margin-bottom:14px">
-        <h3>À propos</h3>
-        <p class="muted"><strong>Nom :</strong> Timothé AOUN</p>
-        <p class="muted"><strong>Fonction :</strong> Lycéen</p>
-        <p class="muted"><strong>Contact (pour le dev) :</strong> <a href="mailto:aountimothe.network@gmail.com" style="color:var(--accent)">aountimothe.network@gmail.com</a></p>
-        <p class="muted"><strong>Contact (professionnel):</strong> <a href="mailto:aountimothe.travail@gmail.com" style="color:var(--accent)">aountimothe.travail@gmail.com (pour le dev)</a></p>
-        <p class="muted"><strong>Localisation :</strong> Le Péage de Roussillon, France</p>
-      </div>
+<footer>
+    © 2025 – Portfolio Timothé – Tous droits réservés.
+</footer>
 
-      <div class="panel" style="margin-bottom:14px">
-        <h3>Compétences clés</h3>
-        <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
-          <span class="tag">Python</span>
-          <span class="tag">Batch</span>
-          <span class="tag">Sécurité</span>
-        </div>
-      </div>
-
-      <div class="panel" style="margin-bottom:14px">
-        <h3>Ressources & liens</h3>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
-          <a class="ghost" href="https://github.com/timotheaoun" target="_blank">GitHub</a>
-          <a class="ghost" href="https://timotheaoun.github.io/" target="_blank">Blog / CV</a>
-          <button class="ghost" onclick="scrollToId('contact')">Contact</button>
-        </div>
-      </div>
-	  <!-- Gallery -->
-      <section class="panel" id="gallery" style="margin-top:16px">
-        <h2>Galerie — Extraits & captures</h2>
-        <div class="gallery-grid" style="margin-top:12px">
-          <img src="1.png" alt="Capture 1">
-          <img src="2.png" alt="Capture 3">
-          <img src="3.png" alt="Capture 4">
-        </div>
-      </section>
-    </aside>
-  </main>
-
-  <footer>
-    <div>© Timothé AOUN — Portfolio technique</div>
-  </footer>
-</div>
-
-<!-- SCRIPTS (carousel + lightbox + petites interactions) -->
-<script>
-/* utility scroll */
-function scrollToId(id){ const el = document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
-
-/* HERO carousel (vanilla) */
-(function(){
-  const track = document.getElementById('heroTrack');
-  const slides = Array.from(track.children);
-  const dotsWrap = document.getElementById('heroDots');
-  let idx = 0;
-  const len = slides.length;
-
-  // create dots
-  for(let i=0;i<len;i++){
-    const d = document.createElement('div');
-    d.className='dot'+(i===0?' active':'');
-    d.dataset.index = i;
-    d.addEventListener('click', ()=> { goTo(i); });
-    dotsWrap.appendChild(d);
-  }
-
-  function update(){
-    track.style.transform = `translateX(-${idx*110+10}%)`;
-    // dots
-    Array.from(dotsWrap.children).forEach((d,i)=> d.classList.toggle('active', i===idx));
-  }
-  function next(){ idx = (idx+1)%len; update(); }
-  function prev(){ idx = (idx-1+len)%len; update(); }
-  document.getElementById('nextHero').addEventListener('click', next);
-  document.getElementById('prevHero').addEventListener('click', prev);
-  function goTo(i){ idx = i%len; update(); }
-
-  // autoplay
-  let auto = setInterval(next, 6000);
-  // pause on hover
-  const hero = document.getElementById('hero');
-  hero.addEventListener('mouseenter', ()=> clearInterval(auto));
-  hero.addEventListener('mouseleave', ()=> auto = setInterval(next,6000));
-})();
-
-/* Gallery lightbox */
-(function(){
-  document.querySelectorAll('.gallery-grid img, .carousel-slide img').forEach(img=>{
-    img.addEventListener('click', (e)=>{
-      const src = img.src;
-      const lb = document.createElement('div');
-      lb.className = 'lightbox';
-      const big = document.createElement('img');
-      big.src = src;
-      const close = document.createElement('div');
-      close.className='close-light'; close.innerHTML='✕';
-      close.addEventListener('click', ()=> document.body.removeChild(lb));
-      lb.appendChild(big);
-      lb.appendChild(close);
-      lb.addEventListener('click', (ev)=> { if(ev.target === lb) document.body.removeChild(lb); });
-      document.body.appendChild(lb);
-    });
-  });
-})();
-
-/* ESC to close lightbox */
-window.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape'){
-    document.querySelectorAll('.lightbox').forEach(lb=> lb.parentElement.removeChild(lb));
-  }
-});
-</script>
 </body>
 </html>
