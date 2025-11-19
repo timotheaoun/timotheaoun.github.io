@@ -148,7 +148,73 @@ plt.ylabel("Y")
 plt.show()
   </pre>
 </div>
-<p>    Mais nous, on cherche à savoir comment marche maplotlib, c'est pourquoi, nous allons créer une bibliothèque très simple pour tracer une fonction... Et c'est là que tout va se compliquer...
+<p>    Recodons-la... Sans bibliothèques (exceptées <a href="https://docs.python.org/3/library/turtle.html">turtle (bibliothèque graphique)</a> et <a href="https://docs.python.org/3/library/math.html">maths</a>, qui nous facilitera la tâche pour les fonctions trigonométriques essentiellement)</p>
+<p> Mais avant de foncer tête baissée, relevons-la un peu de peur d'aller droit dans le mur. Un grapheur, c'est un outil numérique de traçage. Ici, nous voulons reproduire le fonctionnement d'une calculatrice numworks [Image calculette] 
+<br><br>  Un grapheur ne calcule pas un coefficient directeur d'une fonction, ce serait trop complexe, et rendrait le tracé impossible pour les fonctions non-linéaires! Pour fonctionner, il calcule simplement les valeurs de y soit f(x) pour des valeurs de x calculées avec un interval (par exemple x=0.01; 0.02...). Cet interval est ajustable selon la fonction entrée. Ensuite, il relie ces points. C'est le petit point technique sur lequel nous nous attarderons le plus longtemps.
+<p>Voici comment sera organisé notre programme: </p>
+	<br>→  Un input demandera l'expression d'une fonction à l'utilisateur
+	<br>→  L'axe des abcisse et celui des ordonnées sera tracé, le centre sera défini comme l'origine du repère
+	<br>→  La fonction sera extraite et réorganisée de façon à pouvoir être interprêtée par le script (par exemple transformer 3x+5 en 3*x+5)
+	<br>→  Une boucle partira de xmin jusqu'à xmax en calculant f(x+0.01) avec x=x+0.01
+	<br>→  L'enjeu du script est qu'il devra relier les points: une fois  f(x+0.01) calculé (il faudra bien que le script parte de f(0), et donc qu'il établisse une échelle entre le déplacement de la tortue, c'est-à-dire la longeur 'réelle' des axes, avec leur longeur théorique, 1 unité). Il faudra donc dire au script à combien de degrés s'orienter et de combien avancer pour aller de sa position actuelle à f(x+0.01).
 </div>
+<br>
+<br>
+	<div id="parties" >
+	<h2>Comment relier deux points ?</h2>
+<br>
+<p>    Avant de commencer à coder, nous devons savoir comment relier deux points de coordonnées (Xa, Ya) et (Xb, Yb) avec turtle.
+<p>Le triangle ABO (notons O le point de coordonnées O(Xb; Ya) est rectangle. En effet, les axes X et Y sont perpediculaires. AB
+<figure>
+<img src="Geogebra.png" alt="Projet créé sur géogébra: https://www.geogebra.org">
+ <figcaption>Créé avec GeoGebra – www.geogebra.org</figcaption>
+</figure>
+D'après le théorème de pythagore, la longeur AB est de: 
+
+\[
+AB = \sqrt{\, 
+   \underbrace{(X_b - X_a)^2}_{X_a \text{ pour aller à } X_b} 
+   + 
+   \underbrace{(Y_b - Y_a)^2}_{Y_a \text{ pour aller à } Y_b}
+\,}
+\]
+
+
+
+(sur le dessin, j'ai préféré mettre Xb-Xa et Yb-Ya, ce ne sont pas des longueurs, mais la translation qui transforme A en B (A pour aller à B)
+$$AB=\sqrt{\underbrace{(X_a - X_b)^2}_{\text{(A-B)^2=(B-A)^2}} + \underbrace{(Y_a - Y_b)^2}_{\text{Idem}}}$$ 
+<br>
+Maintenant que nous savons de combien avancer (nous ferons un petit calcul d'échelle dans le script), il faut qu'on sache à combien de degrés s'orienter ! Pour un angle d'un triangle rectangle, les rapports côté opposé/hypoténuse, côté adjacent/hypoténuse et côté opposé/côté adjacent (entre autres), sont des constantes. Ils définissent des fonctions universelles : sinus, cosinus, tangente. On a ensuite créé les fonctions arcsin, arcoss et artan qui sont les primitives de leurs fonctions respectives, artan(tan(a))=a. Pour plus de détails, je vous invite à consulter L'<a href="https://fr.wikipedia.org/wiki/Histoire_des_fonctions_trigonom%C3%A9triques">Histoire des fonctions trigonométriques</a>. En utilisant la fonction tangente(x), on obtient: 
+
+$$\widehat{OAB} = \arctan\!\left( \frac{|Y_a - Y_b|}{|X_a - X_b|} \right)$$
+
+<figure>
+<img src="GeogebraAngle.png" alt="Projet créé sur géogébra: https://www.geogebra.org">
+ <figcaption>Créé avec GeoGebra – www.geogebra.org</figcaption>
+</figure>
+<br>
+Mais l'angle que nous avons calculé n'est pas une orientation. Il ne suffit pas de s'orienter à \(\widehat{OAB}\). En effet, et cela peut paraître assez intuitif comme nous avons fourni les longueurs en valeur absolue, il nous est impossible de distinguer ces deux cas : 
+<img src="Geogebra2.png" alt="Projet créé sur géogébra: https://www.geogebra.org">
+<figcaption>Créé avec GeoGebra – www.geogebra.org</figcaption>
+Géométriquement parlant, les deux triangles \(\widehat{OAB}\) et \(\widehat{OAB'}\) sont identiques. Cependant, dans notre cas, notre tortue devra s'orienter à \(\arctan\!\left(\frac{|Y_a - Y_b|}{|X_a - X_b|}\right)\) pour relier A à B, et à \(-\arctan\!\left(\frac{|Y_a - Y_{b'}|}{|X_a - X_{b'}|}\right)\) pour relier A à B'.
+Regardez par exemple ce que doit faire le hérisson sur scratch:
+<figure>
+<img src="ScratchAngles-.png" width="55%" alt="Projet créé sur scratch: https://scratch.mit.edu/">
+ <figcaption>Créé avec Scratch – scratch.mit.edu </figcaption>
+</figure>
+
+Le petit hérisson part de l'axe des abcisses et pour tracer [AB], avant d'avancer, il doit s'orienter à   \( -\widehat{OAB} \) et non   \( \widehat{OAB} \) tandis que pour tracer [AB'], il doit s'orienter à   \( \widehat{OAB} \) degrés. 
+<figure>
+	<img src="ScratchAngles+.png" width="55%" alt="Projet créé sur scratch: https://scratch.mit.edu/">
+ <figcaption>Créé avec Scratch – scratch.mit.edu </figcaption>
+</figure>
+<br>
+<p>
+Il existe plusieurs cas de symétrie ici.
+[Je vais expliquer]
+ 2d (4) 3d, 4d... : combien de triangles rectangles pareil existent: autant que de quadrants --> 1D 2quadrants = 2 cas, 2d, 4 quadrants...
+ Il faut maintenant le prouver...
+</p>
+
 </body>
 </html>
