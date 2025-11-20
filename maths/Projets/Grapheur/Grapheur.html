@@ -210,11 +210,45 @@ Le petit hérisson part de l'axe des abcisses et pour tracer [AB], avant d'avanc
 </figure>
 <br>
 <p>
-Il existe plusieurs cas de symétrie ici.
-[Je vais expliquer]
- 2d (4) 3d, 4d... : combien de triangles rectangles pareil existent: autant que de quadrants --> 1D 2quadrants = 2 cas, 2d, 4 quadrants...
- Il faut maintenant le prouver...
+Nous travaillons sur du 2D: Un vecteur nommé axe des abcisses coupe perpendiculairement un autre vecteur, l'axe des ordonnées! Cela forme donc quatre quadrants. à partir d'un \(\Delta x \text{( longeur |Xa - Xb|)}\) et d'un \(\Delta y \text{( longeur |Ya - Yb|)}\), on peut remarquer 4 cas possibles de placement de B: 
+<figure>
+<img src="Geogebra4cas.png">
+ <figcaption>Créé avec GeoGebra – www.geogebra.org</figcaption>
+</figure>
+Xb-Xa peut être positif ou négatif, idem pour Ya et Yb. on a donc 2*2 possibilités  soit 4!
+<br>Dans notre cas, nous pourrons nous en sortir avec des conditions vérifiant la position relative des points (2 <code>if</code>) en python. Mais quand nous travaillerons sur la 3D isométrique (futur projet), on ajoutera Zb-Za donc on aura 2*2*2 possibilités!, et 3 <code>if</code> à placer
+<br>Si on se place dans une base à n-dimensions, on aura 2^n possibilités, pour n paramètre à vérifier avec <code>If</code>
+<br>On voit bien que notre méthode n'est pas 'automatisée', le script doit vérifier n solution (n étant le nombre de vecteurs non colinéaires différents dans le plan, c'est-à-dire, la dimension n dans laquelle nous travaillons)
+<br>
+<p>
+  Pour éviter ces \(2^n\) cas et automatiser complètement la direction, on change d’approche : 
+  au lieu de déterminer un angle avec des conditions, on calcule simplement le vecteur 
+  direction \(v = B - A\), puis son vecteur unitaire \(u = \frac{v}{\|v\|}\). Cette méthode 
+  fonctionne en 2D, en 3D, et en nD sans ajouter le moindre <code>if</code>. 
+  En dimension supérieure, il n’existe d’ailleurs plus d’angle unique comme avec 
+  <code>atan2</code>: atan2 est une fonction incluse dans <code>math</code>. Elle sert à obtenir automatiquement l’angle exact d’un point vers un autre en 2D, en tenant compte des signes de dx et dy pour connaître le bon quadrant sans utiliser de conditions (on aurait pu l'utiliser dès le départ, mais il est assez intéressant de comprendre son fonctionnement). Je vous conseille de consulter l'article Wikipédia suivant <a href="https://fr.wikipedia.org/wiki/Atan2">https://fr.wikipedia.org/wiki/Atan2</a>. La direction doit être représentée par un vecteur (ou, en 3D, par une orientation 
+  via matrices de rotation ou quaternions). Cette approche vectorielle est la seule réellement 
+  généralisable pour relier deux points dans un espace de dimension quelconque, nous l'utiliserons dans un prochain projet(voir <a href="">Lien pas encore disponible</a>.
 </p>
 
+
+<figure>
+<img src="Geogebra4cascouleur.png">
+ <figcaption>Créé avec GeoGebra – www.geogebra.org</figcaption>
+</figure>
+</div>
+<br><br>
+	<div id="parties" >
+		<h2>Dans notre cas... </h2>
+<br>
+Dans le cas de notre grapheur, nous n'avons que deux cas à vérifier (si B est en haut ou en bas de A) en effet, il ne pourra pas être à gauche de A étant donné le fait qu'on ajoutera un pas constant positif à x (0.01 par exemple), on a donc simplement (p pour pas, ajustable plus tard en fonction de l'échelle)
+\[
+AB = \sqrt{\, 
+   {(p)^2}
+   + 
+   \underbrace{(Yb - Y_a)^2}_{Y_a \text{ pour aller à } Y_b}
+\,}
+\]
+</p>
 </body>
 </html>
