@@ -203,7 +203,7 @@ Regardez par exemple ce que doit faire le hérisson sur scratch:
  <figcaption>Créé avec Scratch – scratch.mit.edu </figcaption>
 </figure>
 
-Le petit hérisson part de l'axe des abcisses et pour tracer [AB], avant d'avancer, il doit s'orienter à   \( -\widehat{OAB} \) et non   \( \widehat{OAB} \) tandis que pour tracer [AB'], il doit s'orienter à   \( \widehat{OAB} \) degrés. 
+Le petit hérisson part de l'axe des abcisses et pour tracer [AB], avant d'avancer, il doit tourner de   \( -\widehat{OAB} \) et non   \( \widehat{OAB} \) tandis que pour tracer [AB'], il doit tourner de   \( \widehat{OAB} \) degrés. 
 <figure>
 	<img src="ScratchAngles+.png" width="55%" alt="Projet créé sur scratch: https://scratch.mit.edu/">
  <figcaption>Créé avec Scratch – scratch.mit.edu </figcaption>
@@ -217,7 +217,7 @@ Nous travaillons sur du 2D: Un vecteur nommé axe des abcisses coupe perpendicul
 </figure>
 Xb-Xa peut être positif ou négatif, idem pour Ya et Yb. on a donc 2*2 possibilités  soit 4!
 <br>Dans notre cas, nous pourrons nous en sortir avec des conditions vérifiant la position relative des points (2 <code>if</code>) en python. Mais quand nous travaillerons sur la 3D isométrique (futur projet), on ajoutera Zb-Za donc on aura 2*2*2 possibilités!, et 3 <code>if</code> à placer
-<br>Si on se place dans une base à n-dimensions, on aura 2^n possibilités, pour n paramètre à vérifier avec <code>If</code>
+<br>Si on se place dans une base à n-dimensions, on aura 2^n possibilités, pour n paramètres à vérifier avec <code>If</code> (2^n if, et n if indentés)
 <br>On voit bien que notre méthode n'est pas 'automatisée', le script doit vérifier n solution (n étant le nombre de vecteurs non colinéaires différents dans le plan, c'est-à-dire, la dimension n dans laquelle nous travaillons)
 <br>
 <p>
@@ -249,6 +249,66 @@ AB = \sqrt{\,
    \underbrace{(Yb - Y_a)^2}_{Y_a \text{ pour aller à } Y_b}
 \,}
 \]
-</p>
+Mais, pour mieux comprendre, généralisons: 
+<figure>
+<img src="Geogebraangles2.png">
+ <figcaption>Créé avec GeoGebra – www.geogebra.org</figcaption>
+</figure>
+If faut tourner de:  
+<br><span class="crayon bleu">artan(|Ya-Yb|/|Xa-Xb|)</span> si Xb &gt; Xa et Yb &lt; Ya
+<br><span class="crayon rouge">artan(|Ya-Yb|/|Xa-Xb|) + 90</span> si Xb &lt; Xa et Yb &lt; Ya
+<br><span class="crayon aqua">artan(|Ya-Yb|/|Xa-Xb|) + 180 = -artan(|Ya-Yb|/|Xa-Xb|) - 180</span> si Xb &lt; Xa et Yb &gt; Ya
+<br><span class="crayon vert">artan(|Ya-Yb|/|Xa-Xb|) + 270 = -artan(|Ya-Yb|/|Xa-Xb|) - 90</span> si Xb &gt; Xa et Yb &gt; Ya<br>
+En python, cela donnerait:
+<br>
+<br>
+<div class="code-container" role="region" aria-label="Bloc de code Python">
+  <div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
+  </div>
+  <pre class="code-content" id="code-block">
+import math
+##Définir dans le script au préalable Ya; Yb; Xa; Xb
+if Xb > Xa:
+    if Yb > Ya:
+            value=float(math.atan(((Ya-Yb)**2)**0.5/abs(Xa-Xb))) ## sqrt(x^2) = abs(x). Voici deux cas possibles de valeur absolue
+        else:
+            value=float(-math.atan(((Ya-Yb)**2)**0.5/abs(Xa-Xb))) 
+    else:
+        if Yb > Ya:
+            value=float(-math.atan(((Ya-Yb)**2)**0.5/abs(Xa-Xb)-90)) 
+        else:
+            value=float(-math.atan(((Ya-Yb)**2)**0.5/abs(Xa-Xb))-180) 
+tourner = turtle.Turtle()
+tourner.right(value*180/pi) ##De radians à degrés (on peut aussi utiliser math.degree(value))
+  </pre>
+</div>
+<br> Et avec la fonction <code>atan2(xb-xa, yb-ya)</code>: <div class="code-container" role="region" aria-label="Bloc de code Python">
+  <div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
+  </div>
+  <pre class="code-content" id="code-block">
+import math
+dx = Xb - Xa ## d pour delta Δ (variation)
+dy = Yb - Ya
+value = math.atan2(dy, dx)
+tourner = turtle.Turtle()
+tourner.right(value*180/pi)
+  </pre>
+</div>
+<br>
+Maintenant que nous avons toutes les clés en main, il ne nous reste plus qu'à coder notre grapheur... 
+</div>
+<br><br>
+<div id="Code">
+<center><h2>Codons cela maintenant !</h2></center>
+</div>
+<br>
 </body>
 </html>
