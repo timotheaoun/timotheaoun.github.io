@@ -9,6 +9,9 @@
  <meta name="keywords" content="grapheur python, créer un grapheur, python sans bibliothèques, comment faire un grapheur en python, sans bibliothèque, afficher graphique python, python graphique simple, Timothé AOUN">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Timothé AOUN">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
   <style>
   a {
   text-decoration: none;
@@ -118,10 +121,6 @@
 
   </style>
 </head>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
 <body>
   <div class="container">
     <h1>Créer un grapheur en python sans bibliothèques ?</h1>
@@ -149,7 +148,7 @@ plt.show()
   </pre>
 </div>
 <p>    Recodons-la... Sans bibliothèques (exceptées <a href="https://docs.python.org/3/library/turtle.html">turtle (bibliothèque graphique)</a> et <a href="https://docs.python.org/3/library/math.html">maths</a>, qui nous facilitera la tâche pour les fonctions trigonométriques essentiellement)</p>
-<p> Mais avant de foncer tête baissée, relevons-la un peu de peur d'aller droit dans le mur. Un grapheur, c'est un outil numérique de traçage. Ici, nous voulons reproduire le fonctionnement d'une calculatrice numworks [Image calculette] 
+<p> Mais avant de foncer tête baissée, relevons-la un peu de peur d'aller droit dans le mur. Un grapheur, c'est un outil numérique de traçage. Ici, nous voulons reproduire le fonctionnement d'une calculatrice numworks
 <br><br>  Un grapheur ne calcule pas un coefficient directeur d'une fonction, ce serait trop complexe, et rendrait le tracé impossible pour les fonctions non-linéaires! Pour fonctionner, il calcule simplement les valeurs de y soit f(x) pour des valeurs de x calculées avec un interval (par exemple x=0.01; 0.02...). Cet interval est ajustable selon la fonction entrée. Ensuite, il relie ces points. C'est le petit point technique sur lequel nous nous attarderons le plus longtemps.
 <p>Voici comment sera organisé notre programme: </p>
 	<br>→  Un input demandera l'expression d'une fonction à l'utilisateur
@@ -308,7 +307,168 @@ Maintenant que nous avons toutes les clés en main, il ne nous reste plus qu'à 
 <br><br>
 <div id="Code">
 <center><h2>Codons cela maintenant !</h2></center>
+<br>
+<code>Turle</code> possède une fonction native: goto(x, y) qui permet d'éviter la comparaison et le passage par atan2
+<br>
+<div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
+  </div>
+  <pre class="code-content" id="code-block">
+import turtle
+import math
+turtle.setworldcoordinates(-300, -300, 300, 300)
+turtle.speed(0)
+turtle.showturtle()
+turtle.bgcolor("black")
+turtle.title("Grapheur basique | Timothé")
+turtle.pensize(3)
+turtle.goto(0, 0)
+turtle.penup()
+turtle.color("red")
+turtle.goto(-300, 0)
+turtle.pendown()
+turtle.goto(300, 0)
+turtle.penup()
+turtle.goto(0, -300) 
+turtle.pendown()
+turtle.goto(0, 300)
+turtle.penup()
+turtle.goto(-300,0)
+def Grapheur() :
+    a=str(input("Entrez une fonction"))
+    def f(x):
+        return eval(a, {"__builtins__": None}, {"x": x, "math": math, **math.__dict__})
+    x=-300
+    y=0
+    y=float(f(x))
+    
+    #Il faut vérifier ymax et ymin pour l'échelle (approximativement)
+    ymax=0
+    ymin=0
+    yabs=0
+    while x !=300 :
+        x = x+10 
+        y=f(x)
+        if ymin > y:
+            ymin=y
+        elif ymax < y: 
+            ymax=y
+    print ("ymax est probablement ", ymax, " et ymin est probablement", ymin)
+    if abs(ymin) > abs(ymax):
+        yabs=ymin
+    else :
+        yabs=ymax
+    #Sur un segment de 300 unités, yabs doit rentrer (tout pile + 10 pour ne pas frôler. On a donc une équation ymax*echelle=300-10
+    echelle=290/ymax
+    
+    x=-300
+    y=f(x)
+    turtle.goto(x, y*echelle)
+    turtle.pendown()
+    turtle.color("blue")
+    while x != 300:
+        x=x+10
+        y=f(x)
+        turtle.goto(x, y*echelle)
+Grapheur()
+turtle.done()
+  </pre>
+Il a donc juste été question de créer un système d'échelle: Calculer la valeur la plus haute (ou basse) de y dans le domaine [-300; 300] et faire en sorte que cette valeur * l'échelle soit égale à 290 (pour ne pas frôler le graphique). Cela a fait une équation simple: echelle=290/yabs
+<br>
+Cependant, pour rajouter de l'enjeu (et que ce que j'ai expliqué en terme de direction), nous ferons dans le prochain projet un codage d'un jeu vidéo en 2D sans <code>math</code>
+<div id="Code">
+<center><h2>Codons cela maintenant !</h2></center>
+<br>
+<code>Turle</code> possède une fonction native: goto(x, y) qui permet d'éviter la comparaison et le passage par atan2
+<br>
+<div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
+  </div>
+  <pre class="code-content" id="code-block">
+import turtle
+import math
+turtle.setworldcoordinates(-300, -300, 300, 300)
+turtle.speed(0)
+turtle.showturtle()
+turtle.bgcolor("black")
+turtle.title("Grapheur basique | Timothé")
+turtle.pensize(3)
+turtle.goto(0, 0)
+turtle.penup()
+turtle.color("red")
+turtle.goto(-300, 0) #nous n'utiliserons pas cette fonction pour le tracé graphique (que des turle.forward)
+turtle.pendown()
+turtle.goto(300, 0)
+turtle.penup()
+turtle.goto(0, -300) #nous n'utiliserons pas cette fonction pour le tracé graphique (que des turle.forward)
+turtle.pendown()
+turtle.goto(0, 300) #nous n'utiliserons pas cette fonction pour le tracé graphique (que des turle.forward)
+turtle.penup()
+turtle.goto(-300,0)
+def goto(x, y, oldy):
+    turtle.setheading(0)
+    AB = (100 + abs(oldy - y)**2)**0.5
+    Angle = math.atan(abs(oldy - y) / 10)
+
+    if y > oldy:
+        turtle.left(math.degrees(Angle))
+    else:
+        turtle.right(math.degrees(Angle))
+    turtle.forward(AB)
+
+def Grapheur() :
+    a=str(input("Entrez une fonction"))
+    def f(x):
+        return eval(a, {"__builtins__": None}, {"x": x, "math": math, **math.__dict__})
+    x=-300
+    y=float(f(x))
+    oldy=y
+    
+    #Il faut vérifier ymax et ymin pour l'échelle (approximativement)
+    ymax=0
+    ymin=0
+    yabs=0
+    while x !=300 :
+        x = x+10 
+        y=f(x)
+        if ymin > y:
+            ymin=y
+        elif ymax < y: 
+            ymax=y
+    print ("ymax est probablement ", ymax, " et ymin est probablement", ymin)
+    if abs(ymin) > abs(ymax):
+        yabs=ymin
+    else :
+        yabs=ymax
+    #Sur un segment de 300 unités, yabs doit rentrer (tout pile + 10 pour ne pas frôler. On a donc une équation ymax*echelle=300-10
+    echelle=290/ymax
+    
+    x=-300
+    y=f(x)
+    turtle.pendown()
+    turtle.color("blue")
+    turtle.penup()
+    turtle.goto(x, y * echelle)
+    turtle.pendown()
+    while x != 300:
+        oldy=y
+        x=x+10
+        y=f(x)
+        goto(x, y * echelle, oldy * echelle)
+Grapheur()
+turtle.done()
+</pre>
 </div>
 <br>
+<br>
+<div id="Thend">
+Et voilà, notre script fonctionne à merveille !!!
+</div>
 </body>
 </html>

@@ -1,82 +1,72 @@
 import turtle
 import math
-
-# --- Paramètres du quadrillage ---
-step = 50  # distance entre les lignes du quadrillage
-size = 500  # taille du plan
-
-# --- Initialisation de la fenêtre ---
-turtle.setup(size + 100, size + 100)
+turtle.setworldcoordinates(-300, -300, 300, 300)
 turtle.speed(0)
-turtle.hideturtle()
-turtle.bgcolor("white")
-turtle.title("Grapheur - Sans biblis")
+turtle.showturtle()
+turtle.bgcolor("black")
+turtle.title("Grapheur basique | Timothé")
+turtle.pensize(3)
+turtle.goto(0, 0)
+turtle.penup()
+turtle.color("red")
+turtle.goto(-300, 0) #nous n'utiliserons pas cette fonction pour le tracé graphique (que des turle.forward)
+turtle.pendown()
+turtle.goto(300, 0)
+turtle.penup()
+turtle.goto(0, -300) #nous n'utiliserons pas cette fonction pour le tracé graphique (que des turle.forward)
+turtle.pendown()
+turtle.goto(0, 300) #nous n'utiliserons pas cette fonction pour le tracé graphique (que des turle.forward)
+turtle.penup()
+turtle.goto(-300,0)
+def goto(x, y, oldy):
+    turtle.setheading(0)
+    AB = (100 + abs(oldy - y)**2)**0.5
+    Angle = math.atan(abs(oldy - y) / 10)
 
-# --- Quadrillage ---
-def draw_grid():
-    turtle.pencolor("lightgray")
-    for x in range(-size // 2, size // 2 + 1, step):
-        turtle.penup()
-        turtle.goto(x, -size // 2)
-        turtle.pendown()
-        turtle.goto(x, size // 2)
-    for y in range(-size // 2, size // 2 + 1, step):
-        turtle.penup()
-        turtle.goto(-size // 2, y)
-        turtle.pendown()
-        turtle.goto(size // 2, y)
+    if y > oldy:
+        turtle.left(math.degrees(Angle))
+    else:
+        turtle.right(math.degrees(Angle))
+    turtle.forward(AB)
 
-    # Axes
-    turtle.pencolor("black")
-    turtle.penup()
-    turtle.goto(-size // 2, 0)
+def Grapheur() :
+    a=str(input("Entrez une fonction"))
+    def f(x):
+        return eval(a, {"__builtins__": None}, {"x": x, "math": math, **math.__dict__})
+    x=-300
+    y=float(f(x))
+    oldy=y
+    
+    #Il faut vérifier ymax et ymin pour l'échelle (approximativement)
+    ymax=0
+    ymin=0
+    yabs=0
+    while x !=300 :
+        x = x+10 
+        y=f(x)
+        if ymin > y:
+            ymin=y
+        elif ymax < y: 
+            ymax=y
+    print ("ymax est probablement ", ymax, " et ymin est probablement", ymin)
+    if abs(ymin) > abs(ymax):
+        yabs=ymin
+    else :
+        yabs=ymax
+    #Sur un segment de 300 unités, yabs doit rentrer (tout pile + 10 pour ne pas frôler. On a donc une équation ymax*echelle=300-10
+    echelle=290/ymax
+    
+    x=-300
+    y=f(x)
     turtle.pendown()
-    turtle.goto(size // 2, 0)
+    turtle.color("blue")
     turtle.penup()
-    turtle.goto(0, -size // 2)
+    turtle.goto(x, y * echelle)
     turtle.pendown()
-    turtle.goto(0, size // 2)
-
-# --- Coordonnées de départ ---
-X0, Y0 = 0, 0  # touche l'axe des ordonnées et l'axe des abcisses (donc en gors axe de symétrie)
-draw_grid()
-def Fonction(x):
-    return 2 * x + 5
-    
-xmin=-25
-xmax=25
-xa=xmin
-ya=Fonction(xa)
-turtle.goto(xa, ya)
-
-def avancer_et_orienter(xb, yb, xa, ya):
-    AB=math.sqrt((xa-xb)**2+(ya-yb)**2)
-    Orientation=math.acos((xb-xa)/AB)
-    angle_degres = math.degrees(Orientation)  # Conversion en degrés (fois pi/180)
-    if yb > ya:
-        Orientation=360-Orientation #En théorie, on pourrait juste mettre un - mais je préfère les angles positifs
-    turtle.setheading(Orientation)
-    turtle.pendown()     
-    turtle.forward(AB)   
-    turtle.penup()  
-    turtle.setheading(90)
-
-Compteur=math.sqrt((xmin)**2)+math.sqrt((xmax)**2)
-Compt=0
-while Compt!=Compteur:
-    xb=xa+1/10
-    yb=Fonction(xb)
-    avancer_et_orienter(xb, yb, xa, ya)
-    xa=xb
-    ya=yb
-
-
-
-
-
-
-
-    
-    
-    
+    while x != 300:
+        oldy=y
+        x=x+10
+        y=f(x)
+        goto(x, y * echelle, oldy * echelle)
+Grapheur()
 turtle.done()
