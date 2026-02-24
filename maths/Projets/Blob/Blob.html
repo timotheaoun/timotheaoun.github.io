@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Déplacer un objet | panique vectorielle</title>
+  <link rel="stylesheet" href="../../Style.css">
+
+  <meta name="description" content="Comment créer un grapheure python sans utiliser de bibliothèques ? (mise à part maths et turtle) | Timothé AOUN">
+  <meta name="keywords" content="grapheur python, créer un grapheur, python sans bibliothèques, comment faire un grapheur en python, sans bibliothèque, afficher graphique python, python graphique simple, Timothé AOUN">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Timothé AOUN">
+
+  <style>
+li {
+  list-style-position: inside;
+}
+    a { text-decoration: none; color: green; }
+    a:hover { text-decoration: underline; color: orange; }
+    code1 { background-color: rgb(50, 10, 40); color: #444; }
+    .commentaire { flex: 1; font-family: Arial, sans-serif; font-size: 16px; color: #333; background: transparent; padding: 10px; border-left: 2px solid #888; }
+
+    .crayon { display: inline-block; padding: 0.2em 0.4em; position: relative; z-index: 0; color: #000; }
+    .crayon::before { content:''; position:absolute; top:0.1em; left:0; right:0; bottom:0.1em; z-index:-1; transform: rotate(-1deg); filter: blur(0.7px); opacity:.8; border-radius:8px; }
+    .crayon.vert::before { background: repeating-linear-gradient(45deg,#4caf50,#4caf50 2px,#388e3c 3px,#4caf50 4px); }
+    .crayon.bleu::before { background: repeating-linear-gradient(-45deg,#2196f3,#2196f3 2px,#1565c0 3px,#2196f3 4px); }
+    .crayon.rouge::before { background: repeating-linear-gradient(60deg,#f44336,#f44336 2px,#c62828 3px,#f44336 4px); }
+    .crayon.aqua::before { background: repeating-linear-gradient(-60deg,#00ffff,#00ffff 2px,#00cccc 3px,#00ffff 4px); }
+
+    .mark2 {
+      background-color: transparent; color: inherit; padding: 0 2px; display: inline-block;
+      background-image: linear-gradient(90deg, rgba(255,200,150,.6), rgba(255,150,150,.7), rgba(200,150,255,.8));
+      background-repeat: no-repeat; background-size: 100% 100%; background-position: 0 10%; border-radius: 5px;
+    }
+    .dots::after { content: ""; animation: dotsAnim 1.2s steps(4,end) infinite; }
+    @keyframes dotsAnim {
+      0%{content:""} 25%{content:"."} 50%{content:".."} 75%{content:"..."} 100%{content:""}
+    }
+
+    .hero {
+      position: relative;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      overflow: hidden;
+      background-color:  #0a0014;      
+      isolation: isolate;          
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("../../Images/blobs.png") center center / cover no-repeat;
+      filter: blur(6px);
+      transform: scale(1.08);      /* évite les bords vides causés par le blur */
+      z-index: 0;                  /* derrière le contenu */
+    }
+    .hero::after { /* léger voile pour améliorer le contraste du texte */
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.35));
+      z-index: 0;
+    }
+    .hero__content {
+      position: relative;
+      z-index: 1; /* au-dessus de l'image floutée */
+      padding: 0 1rem;
+    }
+    .hero h1 { margin: 0; font-size: clamp(1.8rem, 3vw + 1rem, 3rem); }
+    .hero .meta { margin-top: .5rem; opacity: .85; font-size: .95rem; }
+  .giflike {
+  width: 60%;
+  height: auto;
+  display: block;
+  pointer-events: none;   
+  object-fit: cover;      
+  border-radius: 8px;     
+}
+
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    function copyCode() {
+      const code = document.getElementById('code-block')?.innerText || '';
+      navigator.clipboard.writeText(code).catch(()=>{});
+    }
+  </script>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <h1>Le théorème du blob</h1>
+      <div class="meta">Rédigé 24/02/2026</div>
+    </div>
+  </header>
+  <main style="padding: 1rem;">
+  
+<div id="Intro">
+<h3><center> Introduction</center></h3>
+<p>Et si la taille d'un blob de 1cm était élevée au carré toutes les heures ? Voilà la question un peu étrange et futile d'aspect que je me posai il y a quelques années de cela, après avoir lu une revue scientifique dédiée à cet animal... ou plutôt à ce myxomycète. Je ne pouvais pas imaginer qu'une simple erreure de rigueur de ma part allait transformer ma question en véritable paradoxe (trivial certes, mais intéressant puisqu'il me fit comprendre un peu mieux la logique des conventions de mesure)
+<p> Alors allons-y, répondons à cette question en fonçant tête baissée:
+<li> 00:00, le blob mesure 1cm
+<li> 01:00, On élève sa taille au carré soit 1^2cm donc 1cm
+<li> 02:00, On élève encore sa taille au carré soit 1^2cm donc encore 1cm
+<li> n, On aura une taille de 1^n cm et donc toujours 1cm
+<p> Peut-être commençez-vous à comprendre ce qui pose problème, mais ne nous arrêtons pas là: 
+<p> On peut considérer que 1cm=10mm donc
+<li> 00:00, le blob mesure 10mm
+<li> 00:01, le blob mesure 100mm
+<li> 00:02, le blob mesure 10000mm soit 1000cm
+<li> n, On aura une taille de 10^n mm soit 10^(n-1)cm
+<p> Cela pose un paradoxe ! Mais poursuivons de plus belle:
+<p> On peut considérer que 1cm=100µm donc
+<li> 00:00, le blob mesure 100µm
+<li> 00:01, le blob mesure 10000µm<li> n, On aura une taille de 10^n mm soit 10^(n-1)cm
+<li> 00:02, le blob mesure 100000000mm soit 10000000mm ou encore 1000000cm
+<li> n, On aura une taille de 100^n µm soit 10^(n-2)cm
+<p> On peut généraliser pour expliciter le problème en prenant une unité arbitraire, disons U, telle que 1cm=10^x U. à l'évolution n, on aurait donc (10^x)^n U soit (10^x)^n/(10^x)cm donc (10^(xn-1))cm. En gros, on obtient 1cm=(10^x-1)cm.
+</div>
+<br>
+<div id="parties">
+  <h3 style="text-align:center;">Pourquoi cela ne fonctionne-t-il pas ?</h3>
+
+  <p>Quand on joue avec les maths, il faut toujours essayer de les visualiser et d’en comprendre la logique — c’est, selon moi, l’essence même de cette discipline. Multiplier des symboles sans interroger ce qu’ils représentent réellement conduit presque toujours à une illusion.</p>
+
+  <p>Ici, l’illusion naît d’une confusion extrêmement subtile : nous avons élevé <strong>le nombre</strong> au carré, mais pas <strong>la grandeur</strong>.</p>
+
+  <p>Reprenons proprement. Lorsque l’on écrit :</p>
+  <p><code>1 cm</code></p>
+  <p>on manipule en réalité deux choses distinctes :</p>
+  <ul>
+    <li>un <strong>nombre</strong> (1)</li>
+    <li>une <strong>unité</strong> (cm)</li>
+  </ul>
+  <p>Or une grandeur physique n’est pas un simple nombre : c’est un nombre <em>attaché à une dimension</em>. Si l’on élève réellement la taille au carré, on doit écrire :</p>
+  <p><code>(1 cm)^2 = 1 cm^2</code></p>
+  <p>Ce n’est plus une longueur. C’est une <strong>surface</strong>.</p>
+  <p>À l’heure suivante :</p>
+  <p><code>(1 cm^2)^2 = 1 cm^4</code></p>
+  <p>Puis :</p>
+  <p><code>1 cm^8</code></p>
+  <p>Et ainsi de suite. On n’obtient donc pas une longueur qui reste constante. On obtient une grandeur dont la <strong>dimension double à chaque étape</strong>.</p>
+
+</div>
+</body>
+</html>
