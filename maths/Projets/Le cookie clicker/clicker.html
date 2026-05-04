@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Le théorême du blob | redémontrons la conversion</title>
+  <link rel="stylesheet" href="../../Style.css">
+
+  <meta name="description" content="Comment créer un grapheure python sans utiliser de bibliothèques ? (mise à part maths et turtle) | Timothé AOUN">
+  <meta name="keywords" content="grapheur python, créer un grapheur, python sans bibliothèques, comment faire un grapheur en python, sans bibliothèque, afficher graphique python, python graphique simple, Timothé AOUN">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Timothé AOUN">
+
+  <style>
+li {
+  list-style-position: inside;
+}
+    a { text-decoration: none; color: green; }
+    a:hover { text-decoration: underline; color: orange; }
+    code1 { background-color: rgb(50, 10, 40); color: #444; }
+    .commentaire { flex: 1; font-family: Arial, sans-serif; font-size: 16px; color: #333; background: transparent; padding: 10px; border-left: 2px solid #888; }
+
+    .crayon { display: inline-block; padding: 0.2em 0.4em; position: relative; z-index: 0; color: #000; }
+    .crayon::before { content:''; position:absolute; top:0.1em; left:0; right:0; bottom:0.1em; z-index:-1; transform: rotate(-1deg); filter: blur(0.7px); opacity:.8; border-radius:8px; }
+    .crayon.vert::before { background: repeating-linear-gradient(45deg,#4caf50,#4caf50 2px,#388e3c 3px,#4caf50 4px); }
+    .crayon.bleu::before { background: repeating-linear-gradient(-45deg,#2196f3,#2196f3 2px,#1565c0 3px,#2196f3 4px); }
+    .crayon.rouge::before { background: repeating-linear-gradient(60deg,#f44336,#f44336 2px,#c62828 3px,#f44336 4px); }
+    .crayon.aqua::before { background: repeating-linear-gradient(-60deg,#00ffff,#00ffff 2px,#00cccc 3px,#00ffff 4px); }
+
+    .mark2 {
+      background-color: transparent; color: inherit; padding: 0 2px; display: inline-block;
+      background-image: linear-gradient(90deg, rgba(255,200,150,.6), rgba(255,150,150,.7), rgba(200,150,255,.8));
+      background-repeat: no-repeat; background-size: 100% 100%; background-position: 0 10%; border-radius: 5px;
+    }
+    .dots::after { content: ""; animation: dotsAnim 1.2s steps(4,end) infinite; }
+    @keyframes dotsAnim {
+      0%{content:""} 25%{content:"."} 50%{content:".."} 75%{content:"..."} 100%{content:""}
+    }
+
+    .hero {
+      position: relative;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      overflow: hidden;
+      background-color:  #0a0014;      
+      isolation: isolate;          
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("../../Images/blobs.png") center center / cover no-repeat;
+      filter: blur(6px);
+      transform: scale(1.08);      /* évite les bords vides causés par le blur */
+      z-index: 0;                  /* derrière le contenu */
+    }
+    .hero::after { /* léger voile pour améliorer le contraste du texte */
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.35));
+      z-index: 0;
+    }
+    .hero__content {
+      position: relative;
+      z-index: 1; /* au-dessus de l'image floutée */
+      padding: 0 1rem;
+    }
+    .hero h1 { margin: 0; font-size: clamp(1.8rem, 3vw + 1rem, 3rem); }
+    .hero .meta { margin-top: .5rem; opacity: .85; font-size: .95rem; }
+  .giflike {
+  width: 60%;
+  height: auto;
+  display: block;
+  pointer-events: none;   
+  object-fit: cover;      
+  border-radius: 8px;     
+}
+  table {
+    border-collapse: collapse;
+    margin: 20px;
+  }
+
+  th, td {
+    border: 1px solid black;
+    width: 80px;
+    height: 60px;
+    text-align: center;
+    position: relative;
+	background-color: rgb(250, 200, 250);
+  }
+
+  /* Case diagonale */
+  .diagonal {
+    background-color: red;
+  }
+
+  .diag-top {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 12px;
+  }
+
+  .diag-bottom {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-size: 12px;
+  }
+
+  th {
+    background-color: red;
+  }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    function copyCode() {
+      const code = document.getElementById('code-block')?.innerText || '';
+      navigator.clipboard.writeText(code).catch(()=>{});
+    }
+  </script>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <h1>Le théorème du blob</h1>
+      <div class="meta">Rédigé 24/02/2026</div>
+    </div>
+  </header>
+  <main style="padding: 1rem;">
+  
+<div id="Intro">
+<h3><center> Introduction</center></h3>
+<i><p>Préférez-vous avoir 100 000 000€ sur votre compte en banque ou un unique euro, mais le montant que votre compte est élevé au carré chaque seconde ?(on ignore toute entrée d'argent)."
+<p>Si vous avez choisi les 100 000 000€, bravo, vous êtes officiellement multimiliardaires, et si vous avez fait le choix de prendre la deuxième option... Vous n'aurez qu'un ridicule petit euro. En effet, avec un montant de 1€ élevé au carré chaque seconde, votre fortune n'évolura pas car 1^2 restera toujour 1! à moins que...
+</i>
+<br>
+<p>Je me suis posé cette question en essayant de vulgariser les suites géométriques à mon petit frère, et c'est alors que m'est venu un véritable paradoxe d'aspect : Avec 1€ sur votre compte en banque, et une élévation au carré du montant chaque seconde, vous n'aurez effectivement aucun changement car 1 puissance n'importe que nombre donnera toujours 1. Mais là où ça devient intéressant, c'est si nous considérons qu'un euro est 100 centimes au bout de 5 secondes, la montant attendrait donc 100^10centimes soit 100^8 euros. Cela voudrait dire que 1€=100^8€ ce qui est bien évidemment faux 
+<table>
+  <tr>
+    <th class="diagonal">
+      <span class="diag-top">Évolution</span>
+      <span class="diag-bottom">Unité</span>
+    </th>
+    <th>t=0</th>
+    <th>t=1</th>
+    <th>t=2</th>
+    <th>t=3</th>
+    <th>t=4</th>
+    <th>t=5</th>
+  </tr>
+
+  <tr>
+    <th>€</th>
+    <td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td>
+  </tr>
+
+  <tr>
+    <th>Centimes</th>
+    <td>100</td><td>100^2</td><td>100^4</td><td>100^6</td><td>100^8</td><td>100^10</td>
+  </tr>
+</table>
+</div>
+<br>
+<div id="parties">
+<h3><center> Le secret de la conversion</center></h3>
+<p>Dire que 1€ au carré donne 1€ n'est pas vraiement correct, et pour mieux comprendre, je vous propose une autre histoire:</p>
+<p>1 blob de 1cm voit sa taille élevée au carré chaque seconde. On pourrait poser le même paradoxe qu'antérieurement et dire que 1cm=10mm mais au peut aussi réfléchir: Quand on élève quelque chose au carré, on multiplie cette chose par elle même. 1cm au carré n'est pas égal à 1*1cm mais 1cm*1cm. On change d'unité et arrivons à un carré de 1cm par 1cm que nous appellerons 1 centimètre carré. Pour ne pas provoquer le paradoxe que nous avons obtenus, il faut définir 1cm^2=(10^2)mm^2=(1000^2)μm^2... On peut même généraliser en disant que 1cm^n (n dimensions)=(10^n)mm^n 
+<p>Si nous revenons à notre problème d'euros, 1€ au carré ne donne pas 1*1€ mais bien 1€*1€ soit 1€^2. Or, cela supprime le paradoxe (qui n'en est donc pas un) : on peut définir 1€^2=(100^2)centimes^2. Cependant, contrairement aux mesures, des euros carré n'ont pas de sens, et ce paradoxe nous montre que mettre des unités de comptage au carré n'a pas vraiment de sens.
+</html>
