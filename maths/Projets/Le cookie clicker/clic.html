@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Clicker Math</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+    font-family: Arial;
+    background: #111;
+    color: white;
+    margin: 0;
+}
+
+/* layout */
+#container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+#left {
+    width: 50%;
+}
+
+#right {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    padding: 12px;
+    margin: 8px;
+    cursor: pointer;
+}
+
+canvas {
+    background: white;
+}
+</style>
+</head>
+
+<body>
+
+<div id="container">
+
+<div id="left">
+<h1>🍪 Clicker Math</h1>
+
+<p>Cookies : <span id="cookies">0</span></p>
+<p>Cookies/sec (f') : <span id="auto">0</span></p>
+<p>+ f'/sec (f'') : <span id="d1">0</span></p>
+<p>+ f''/sec (f''') : <span id="d2">0</span></p>
+
+<button onclick="clickCookie()">Cliquer (+1)</button>
+
+<h2>Améliorations</h2>
+
+<button onclick="buyAuto()">+1 cookie/sec (50)</button><br>
+<button onclick="buyD1()">+1 f' / sec (500)</button><br>
+<button onclick="buyD2()">+1 f'' / sec (50000)</button>
+</div>
+
+<div id="right">
+<canvas id="graph" width="500" height="300"></canvas>
+</div>
+
+</div>
+
+<script>
+let cookies = 0;
+let auto = 0; // f'
+let d1 = 0;   // f''
+let d2 = 0;   // f'''
+
+let timer = 0;
+
+// GRAPH
+let ctx = document.getElementById("graph").getContext("2d");
+
+let chart = new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: [],
+        datasets: [
+            {
+                label: "Cookies",
+                data: [],
+                borderColor: "blue",
+                borderWidth: 2,
+                fill: false
+            },
+            {
+                label: "Cookies/sec",
+                data: [],
+                borderColor: "red",
+                borderWidth: 2,
+                fill: false
+            },
+            {
+                label: "Cookies/sec²",
+                data: [],
+                borderColor: "green",
+                borderWidth: 2,
+                fill: false
+            }
+        ]
+    },
+    options: {
+        animation: false,
+        responsive: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+function updateUI() {
+    document.getElementById("cookies").textContent = Math.floor(cookies);
+    document.getElementById("auto").textContent = auto;
+    document.getElementById("d1").textContent = d1;
+    document.getElementById("d2").textContent = d2;
+}
+
+function clickCookie() {
+    cookies += 1;
+    updateUI();
+}
+
+function buyAuto() {
+    if (cookies >= 50) {
+        cookies -= 50;
+        auto += 1;
+        updateUI();
+    }
+}
+
+function buyD1() {
+    if (cookies >= 500) {
+        cookies -= 500;
+        d1 += 1;
+        updateUI();
+    }
+}
+
+function buyD2() {
+    if (cookies >= 50000) {
+        cookies -= 50000;
+        d2 += 1;
+        updateUI();
+    }
+}
+
+// BOUCLE PRINCIPALE
+setInterval(() => {
+    timer++;
+
+    // production
+    cookies += auto;
+
+    // propagation chaque seconde
+    auto += d1;
+    d1 += d2;
+
+    // update graph
+    chart.data.labels.push("");
+
+    chart.data.datasets[0].data.push(cookies); // bleu
+    chart.data.datasets[1].data.push(auto);    // rouge
+    chart.data.datasets[2].data.push(d1);      // vert
+
+    if (chart.data.labels.length > 50) {
+        chart.data.labels.shift();
+        chart.data.datasets.forEach(d => d.data.shift());
+    }
+
+    chart.update();
+
+    updateUI();
+}, 1000);
+
+updateUI();
+</script>
+
+</body>
+</html>
