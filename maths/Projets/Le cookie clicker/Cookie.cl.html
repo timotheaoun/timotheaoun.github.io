@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Le théorême du blob | redémontrons la conversion</title>
+  <title>L'usine à cookies</title>
   <link rel="stylesheet" href="../../Style.css">
 
   <meta name="description" content="Comment créer un grapheure python sans utiliser de bibliothèques ? (mise à part maths et turtle) | Timothé AOUN">
@@ -12,9 +12,6 @@
   <meta name="author" content="Timothé AOUN">
 
   <style>
-li {
-  list-style-position: inside;
-}
     a { text-decoration: none; color: green; }
     a:hover { text-decoration: underline; color: orange; }
     code1 { background-color: rgb(50, 10, 40); color: #444; }
@@ -46,14 +43,14 @@ li {
       text-align: center;
       color: #fff;
       overflow: hidden;
-      background-color:  #0a0014;      
-      isolation: isolate;          
+      background-color:  #0a0014;      /* couleur de secours visible si l'image manque */
+      isolation: isolate;          /* garantit que ::before reste derrière le contenu */
     }
     .hero::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: url("../../Images/blobs.png") center center / cover no-repeat;
+      background: url("../../Images/Cookie.PNG") center center / cover no-repeat; /* chemin de ton image */
       filter: blur(6px);
       transform: scale(1.08);      /* évite les bords vides causés par le blur */
       z-index: 0;                  /* derrière le contenu */
@@ -79,42 +76,7 @@ li {
   object-fit: cover;      
   border-radius: 8px;     
 }
-  table {
-    border-collapse: collapse;
-    margin: 20px;
-  }
 
-  th, td {
-    border: 1px solid black;
-    width: 80px;
-    height: 60px;
-    text-align: center;
-    position: relative;
-	background-color: rgb(250, 200, 250);
-  }
-
-  /* Case diagonale */
-  .diagonal {
-    background-color: red;
-  }
-
-  .diag-top {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 12px;
-  }
-
-  .diag-bottom {
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    font-size: 12px;
-  }
-
-  th {
-    background-color: red;
-  }
   </style>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -129,48 +91,28 @@ li {
 <body>
   <header class="hero">
     <div class="hero__content">
-      <h1>Le théorème du blob</h1>
-      <div class="meta">Rédigé 24/02/2026</div>
+      <h1>L'usine à cookies</h1>
+      <div class="meta">Rédigé 04/05/2026</div>
     </div>
   </header>
   <main style="padding: 1rem;">
   
 <div id="Intro">
-<h3><center> Introduction</center></h3>
-<i><p>Préférez-vous avoir 100 000 000€ sur votre compte en banque ou un unique euro, mais le montant que votre compte est élevé au carré chaque seconde ?(on ignore toute entrée d'argent)."
-<p>Si vous avez choisi les 100 000 000€, bravo, vous êtes officiellement multimiliardaires, et si vous avez fait le choix de prendre la deuxième option... Vous n'aurez qu'un ridicule petit euro. En effet, avec un montant de 1€ élevé au carré chaque seconde, votre fortune n'évolura pas car 1^2 restera toujour 1! à moins que...
-</i>
+<center><h3> Introduction</h3></center>
+<p> Je vous propose de jouer un instant à ce jeu assez addictif(je me suis inspiré du célèbre jeu cookie clicker)
+<p>Ps: n'hésitez pas à inspecter la page afin d'accéder à la console js, vous pourrez alors ajuster à votre guise votre nombre de cookies (cookies) et même votre nombre de cookies par seconde, par seconde (d2)
+<iframe src="clic.html" style="width:100%; height:100vh; border:none;"></iframe></div>
 <br>
-<p>Je me suis posé cette question en essayant de vulgariser les suites géométriques à mon petit frère, et c'est alors que m'est venu un véritable paradoxe d'aspect : Avec 1€ sur votre compte en banque, et une élévation au carré du montant chaque seconde, vous n'aurez effectivement aucun changement car 1 puissance n'importe que nombre donnera toujours 1. Mais là où ça devient intéressant, c'est si nous considérons qu'un euro est 100 centimes au bout de 5 secondes, la montant attendrait donc 100^10centimes soit 100^8 euros. Cela voudrait dire que 1€=100^8€ ce qui est bien évidemment faux 
-<table>
-  <tr>
-    <th class="diagonal">
-      <span class="diag-top">Évolution</span>
-      <span class="diag-bottom">Unité</span>
-    </th>
-    <th>t=0</th>
-    <th>t=1</th>
-    <th>t=2</th>
-    <th>t=3</th>
-    <th>t=4</th>
-    <th>t=5</th>
-  </tr>
-
-  <tr>
-    <th>€</th>
-    <td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td>
-  </tr>
-
-  <tr>
-    <th>Centimes</th>
-    <td>100</td><td>100^2</td><td>100^4</td><td>100^6</td><td>100^8</td><td>100^10</td>
-  </tr>
-</table>
-</div>
 <br>
 <div id="parties">
-<h3><center> Le secret de la conversion</center></h3>
-<p>Dire que 1€ au carré donne 1€ n'est pas vraiement correct, et pour mieux comprendre, je vous propose une autre histoire:</p>
-<p>1 blob de 1cm voit sa taille élevée au carré chaque seconde. On pourrait poser le même paradoxe qu'antérieurement et dire que 1cm=10mm mais au peut aussi réfléchir: Quand on élève quelque chose au carré, on multiplie cette chose par elle même. 1cm au carré n'est pas égal à 1*1cm mais 1cm*1cm. On change d'unité et arrivons à un carré de 1cm par 1cm que nous appellerons 1 centimètre carré. Pour ne pas provoquer le paradoxe que nous avons obtenus, il faut définir 1cm^2=(10^2)mm^2=(1000^2)μm^2... On peut même généraliser en disant que 1cm^n (n dimensions)=(10^n)mm^n 
-<p>Si nous revenons à notre problème d'euros, 1€ au carré ne donne pas 1*1€ mais bien 1€*1€ soit 1€^2. Or, cela supprime le paradoxe (qui n'en est donc pas un) : on peut définir 1€^2=(100^2)centimes^2. Cependant, contrairement aux mesures, des euros carré n'ont pas de sens, et ce paradoxe nous montre que mettre des unités de comptage au carré n'a pas vraiment de sens.
+<h3> Au début du jeu</h3>
+<p> Si vous avez tenté l'expérience, vous constaterez la chose suivante: dès que vous 
+</p>
+<br>
+</div>
+<br>
+<div id="Theend">
+<center><h3>Des variantes du jeu</h3></center>
+<p> Maintenant, essayez d'avoir le plus de cookies possible une fois un temps t écoulé (il faut acheter suffisemment de productions de cookies sans être ruiné au temps 0)
+</body>
 </html>
