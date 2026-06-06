@@ -1,0 +1,64 @@
+text: Chapitre 1: Suites arithmétiques
+wait: 1000
+text: Observe cette production de cookies:
+show: cookies
+wait: 3000
+text: Pour le moment, rien de bien intéressant, il reste toujours le même
+text: regardons pourquoi:
+show: cps
+wait: 1000
+text: changeons cela en produisant 1 cookie par seconde:
+cps = 1
+wait: 2000
+textwait: Notons le nombre de cookies total à la seconde s C(s)  (🔜 appuyer sur une touche pour continuer)
+textwait: à la seconde s+1, il y aura 1 cookie produit de plus, ainsi, C(s+1)=C(s)+1, et donc C(s+1)-C(s)=1     🔜
+textwait: Ce qui est intéressant, c'est qu'on peut prédire le nombre de cookies qu'il y aura dans 7 secondes par exemple     🔜
+text: Il y en aura 7 de plus que le nombre actuel donc C(p)+7
+wait: 1500
+textwait: On peut également déduire le nombre de cookies par secondes à partir de l'évolution du nombre de cookies      🔜
+hide: cps
+cps = 2
+wait: 6000
+textwait: par exemple là, il y en avait 2 par seconde    🔜
+show: cps
+wait: 1000
+textwait: Il suffit de faire la différence de la valeur des cookies à deux secondes consécutives     🔜
+showimg: 1.jpg
+textwait: C(s+1)-C(s) donne logiquement combien on a ajouté à C(s) pour aller à C(s+1)     🔜
+textwait: si on défini x comme le temps et y le nombre de cookies à ce temps, on peut tracer un graphique    🔜
+hideimg: 1.jpg
+showimg: 2.jpg
+wait: 7000
+hideimg: 2.jpg
+showimg: 3.jpg
+textwait: Pour l'instant, notre production de cookies suit une production linéaire de pente 2 et d'ordonnée à l'origine (nombre initial) 10   🔜
+textwait: La définition d'une pente est: "de combien je monte quand j'avance de 1"   🔜
+textwait: Si je monte dy quand j'avance de dx, alors quand j'avance de 1 (donc dx divisé par dx), je monte proportionnellement de dy/dx     🔜
+textwait: Dans notre cas, la pente est constante: notre nombre de cookies croît à la même vitesse    🔜
+textwait: Changeons cela: notre pente ne sera plus constante et obéira à une fonction…     🔜
+hideimg: 3.jpg
+
+
+text: Chapitre 2: Somme arithmétique
+wait: 1000
+cookies = 0
+cps = 0
+show: cpss
+text: Cette fois, ajoutons 1 cookie par seconde chaque seconde
+cpss=1
+wait: 1234
+textwait: On constate que le nombre de cookies augmente de plus en plus vite  🔜
+textwait: Autrement dit, la pente augmente, et elle augmente à une vitesse constante: +1 à chaque seconde   🔜
+textwait: Dans s secondes, le nombre de cookies par seconde sera égal à 1+1+1...s donc à s+ le nombre actuel  🔜
+textwait: notons C' le nombre de cookies par seconde:   🔜
+textwait: Dans s seconde C'(s)=1s + C(actuel)  🔜
+textwait: Or, C(s+1)=C(s)+C'(s)  🔜
+textwait: Autrement dit, C(s+1)=C(s)+1*s 🔜
+textwait: Le nombre de cookies qu'on aura dans 5 secondes sera égal au nombre de cookies actuel +  C'(s)+1 + C'(s)+2 + C'(s+3)… +  C'(s+5)
+textwait: Cela ressemble à la définition de l'intégrale (que nous verrons plus tard), qui dit que le nombre total de cookies produits entre le temps a et b est égal au nombre de cookies qu'on avait à b donc C(b) - le nombre de cookies qu'on avait à a donc C(a)  🔜
+textwait: Dans s seconde, on aura C(s)+C'(s)(1+2+3+4....+s)    🔜
+textwait: Or, pour calculer 1+2+3...+s, on peut prendre la valeur moyenne de la suite (le milieu), qu'on multipliera par le nombre de fois qu'on a additionné: 1+2+3...+s = (1+s)/2 * s-1
+textwait: Donc dans s seconde, on aura produit (s+1)(s-1)/2 cookies, on aura donc (s+1)(s-1)/2 cookies + le nombre actuel soit C(s)+(s**2 -1)/2   🔜
+
+text: Chapitre 3: Suite géométrique
+

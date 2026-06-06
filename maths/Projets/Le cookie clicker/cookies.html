@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+
+<style>
+body{
+    margin:0;
+    background:#111;
+    color:white;
+    font-family:Arial;
+}
+
+/* Stats */
+#cookies, #cps, #cpss{
+    position:absolute;
+    left:20px;
+    font-size:28px;
+}
+
+#cookies{ top:20px; }
+#cps{ top:60px; }
+#cpss{ top:100px; }
+
+/* Dialogue */
+#dialogueBox{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    min-height:120px;
+    background:rgba(0,0,0,0.7);
+    padding:20px;
+    box-sizing:border-box;
+    font-size:28px;
+}
+
+#dialogueText{
+    white-space:pre-wrap;
+}
+
+#sceneImg{
+    position:absolute;
+    top:120px;
+    left:50%;
+    transform:translateX(-50%);
+    max-width:60%;
+    max-height:60%;
+}
+
+.hidden{
+    display:none;
+} 
+</style>
+</head>
+
+<body>
+<img id="sceneImg" class="hidden" />
+<div id="cookies" class="hidden">Cookies : <span id="cookieVal">0</span></div>
+<div id="cps" class="hidden">Cookies par seconde <span id="cpsVal">0</span></div>
+<div id="cpss" class="hidden">Cookies par seconde, par seconde <span id="cpssVal">0</span></div>
+
+<div id="dialogueBox">
+    <div id="dialogueText"></div>
+</div>
+
+<script>
+
+// =======================
+// VARIABLES
+// =======================
+
+let vars = {
+    cookies: 0,
+    cps: 0,
+	cpss: 0
+};
+
+// =======================
+// UI UPDATE
+// =======================
+
+function updateUI(){
+    document.getElementById("cookieVal").textContent = Math.floor(vars.cookies);
+    document.getElementById("cpsVal").textContent = Math.floor(vars.cps);
+	document.getElementById("cpssVal").textContent = Math.floor(vars.cpss);
+}
+
+// =======================
+// UTILS
+// =======================
+
+function sleep(ms){
+    return new Promise(r => setTimeout(r, ms));
+}
+
+// =======================
+// TEXT TYPEWRITER
+// =======================
+
+async function typeText(text){
+    const el = document.getElementById("dialogueText");
+    el.textContent = "";
+
+    for(let c of text){
+        el.textContent += c;
+        await sleep(30);
+    }
+}
+
+// =======================
+// IMAGE SYSTEM
+// =======================
+
+function showImage(src){
+    const img = document.getElementById("sceneImg");
+
+    if(!img) return;
+
+    img.src = src;
+    img.classList.remove("hidden");
+}
+
+function hideImage(){
+    const img = document.getElementById("sceneImg");
+
+    if(!img) return;
+
+    img.classList.add("hidden");
+}
+
+// =======================
+// SAFE EVAL (mini moteur)
+// =======================
+
+function evalExpr(expr){
+
+    for(let v in vars){
+        expr = expr.replaceAll(v, vars[v]);
+    }
+
+    return Function('"use strict"; return (' + expr + ')')();
+}
+
+// =======================
+// EXECUTION LIGNE
+// =======================
+
+async function runLine(line){
+
+    line = line.trim();
+    if(line === "") return;
+	if (line.startsWith("textwait:")) {
+    let txt = line.replace("textwait:", "").trim();
+    await typeText(txt);
+    await waitForKey();
+    return;
+}
+    // =======================
+    // WAIT
+    // =======================
+
+    if(line.startsWith("wait:")){
+        let t = parseInt(line.split(":")[1]);
+        await sleep(t);
+        return;
+    }
+
+    // =======================
+    // TEXT
+    // =======================
+
+    if(line.startsWith("text:")){
+        let txt = line.replace("text:", "").trim();
+        await typeText(txt);
+        return;
+    }
+
+    // =======================
+    // SHOW / HIDE ELEMENTS
+    // =======================
+
+    if(line.startsWith("show:")){
+        const el = document.getElementById(line.split(":")[1].trim());
+        if(el) el.classList.remove("hidden");
+        return;
+    }
+
+    if(line.startsWith("hide:")){
+        const el = document.getElementById(line.split(":")[1].trim());
+        if(el) el.classList.add("hidden");
+        return;
+    }
+
+    // =======================
+    // IMAGE COMMANDS
+    // =======================
+
+    if(line.startsWith("showimg:")){
+        let src = line.replace("showimg:", "").trim();
+        showImage(src);
+        return;
+    }
+
+    if(line.startsWith("hideimg")){
+        hideImage();
+        return;
+    }
+// textwait
+	function waitForKey() {
+		return new Promise(resolve => {
+			function handler(e) {
+				document.removeEventListener("keydown", handler);
+				document.removeEventListener("click", handler);
+				resolve();
+			}
+	
+			document.addEventListener("keydown", handler);
+			document.addEventListener("click", handler);
+		});
+	}
+    // =======================
+    // ASSIGNATION
+    // =======================
+
+    if(line.includes("=") && !line.includes("==")){
+
+        let [left, right] = line.split("=");
+
+        left = left.trim();
+        right = right.trim();
+
+        vars[left] = evalExpr(right);
+
+        updateUI();
+        return;
+    }
+
+    // =======================
+    // EXPRESSIONS DIRECTES
+    // =======================
+
+    if(line.includes("+") || line.includes("-") || line.includes("*") || line.includes("/")){
+        evalExpr(line);
+        updateUI();
+        return;
+    }
+}
+
+// =======================
+// SCRIPT ENGINE
+// =======================
+
+async function runScript(){
+
+    try{
+        const res = await fetch("instructions.txt");
+        const text = await res.text();
+
+        const lines = text.split("\n");
+
+        for(let l of lines){
+            await runLine(l);
+        }
+
+    }catch(e){
+        console.error("Erreur script:", e);
+    }
+}
+
+// =======================
+// LOOP AUTOMATIQUE
+// =======================
+
+setInterval(() => {
+	vars.cookies += vars.cps;
+	vars.cps += vars.cpss;
+    updateUI();
+}, 1000);
+
+// =======================
+// START
+// =======================
+
+updateUI();
+runScript();
+
+</script>
+
+</body>
+</html>
