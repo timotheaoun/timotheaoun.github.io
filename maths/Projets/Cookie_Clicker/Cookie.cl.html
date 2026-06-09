@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>L'usine à cookies</title>
+  <link rel="stylesheet" href="../../Style.css">
+
+  <meta name="description" content="Comment créer un grapheure python sans utiliser de bibliothèques ? (mise à part maths et turtle) | Timothé AOUN">
+  <meta name="keywords" content="grapheur python, créer un grapheur, python sans bibliothèques, comment faire un grapheur en python, sans bibliothèque, afficher graphique python, python graphique simple, Timothé AOUN">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Timothé AOUN">
+
+  <style>
+    a { text-decoration: none; color: green; }
+    a:hover { text-decoration: underline; color: orange; }
+    code1 { background-color: rgb(50, 10, 40); color: #444; }
+    .commentaire { flex: 1; font-family: Arial, sans-serif; font-size: 16px; color: #333; background: transparent; padding: 10px; border-left: 2px solid #888; }
+
+    .crayon { display: inline-block; padding: 0.2em 0.4em; position: relative; z-index: 0; color: #000; }
+    .crayon::before { content:''; position:absolute; top:0.1em; left:0; right:0; bottom:0.1em; z-index:-1; transform: rotate(-1deg); filter: blur(0.7px); opacity:.8; border-radius:8px; }
+    .crayon.vert::before { background: repeating-linear-gradient(45deg,#4caf50,#4caf50 2px,#388e3c 3px,#4caf50 4px); }
+    .crayon.bleu::before { background: repeating-linear-gradient(-45deg,#2196f3,#2196f3 2px,#1565c0 3px,#2196f3 4px); }
+    .crayon.rouge::before { background: repeating-linear-gradient(60deg,#f44336,#f44336 2px,#c62828 3px,#f44336 4px); }
+    .crayon.aqua::before { background: repeating-linear-gradient(-60deg,#00ffff,#00ffff 2px,#00cccc 3px,#00ffff 4px); }
+
+    .mark2 {
+      background-color: transparent; color: inherit; padding: 0 2px; display: inline-block;
+      background-image: linear-gradient(90deg, rgba(255,200,150,.6), rgba(255,150,150,.7), rgba(200,150,255,.8));
+      background-repeat: no-repeat; background-size: 100% 100%; background-position: 0 10%; border-radius: 5px;
+    }
+    .dots::after { content: ""; animation: dotsAnim 1.2s steps(4,end) infinite; }
+    @keyframes dotsAnim {
+      0%{content:""} 25%{content:"."} 50%{content:".."} 75%{content:"..."} 100%{content:""}
+    }
+
+    .hero {
+      position: relative;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      overflow: hidden;
+      background-color:  #0a0014;      /* couleur de secours visible si l'image manque */
+      isolation: isolate;          /* garantit que ::before reste derrière le contenu */
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("../../Images/Cookie.PNG") center center / cover no-repeat; /* chemin de ton image */
+      filter: blur(6px);
+      transform: scale(1.08);      /* évite les bords vides causés par le blur */
+      z-index: 0;                  /* derrière le contenu */
+    }
+    .hero::after { /* léger voile pour améliorer le contraste du texte */
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.35));
+      z-index: 0;
+    }
+    .hero__content {
+      position: relative;
+      z-index: 1; /* au-dessus de l'image floutée */
+      padding: 0 1rem;
+    }
+    .hero h1 { margin: 0; font-size: clamp(1.8rem, 3vw + 1rem, 3rem); }
+    .hero .meta { margin-top: .5rem; opacity: .85; font-size: .95rem; }
+  .giflike {
+  width: 60%;
+  height: auto;
+  display: block;
+  pointer-events: none;   
+  object-fit: cover;      
+  border-radius: 8px;     
+}
+
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    function copyCode() {
+      const code = document.getElementById('code-block')?.innerText || '';
+      navigator.clipboard.writeText(code).catch(()=>{});
+    }
+  </script>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <h1>L'usine à cookies</h1>
+      <div class="meta">Rédigé 04/05/2026</div>
+    </div>
+  </header>
+  <main style="padding: 1rem;">
+  
+<div id="Intro">
+<center><h3>Introduction</h3></center>
+<p> Quelle chose quantifiable aimez-vous ? Moi, j'aime les cookies 🍪, et je vous propose de (re)découvrir tout le programme de lycée en partant d'une simple usine à cookies...
+<p>Si vous voulez vous mettre dans le thème, vous pouvez commencer par jouer à <a href="clic.html">ce jeu</a>que j'ai codé en m'inspirant de cookie clicker
+<p>Sinon, commençons tout de suite (et c'est la cas de dire)... 
+</div><br><br>
+<div id="parties">
+<center><h3>Partie 1: Suites, fonctions, primitives et dérrivées</h3></center>
+<p>Imaginons qu'une machine produise 1 cookie par seconde.
+<p>On va noter C(n) le nombre de cookies que l'on a à la seconde n. Autrement dit, C(n) est la somme des cookies produits par la machine additionnés au nombre de cookies que l'on avait au départ. Cela s'écrit comme cela: 
+$$
+C(n)=C(0)+\sum_{i=0}^{n-1}\ C'(i)
+$$
+<br>Si on a 1 cookie par seconde, alors au bout de 2 secondes, on aura 1+1 cookies rapportés par la machine, on aura donc un nombre total de cookies égal au nombre de cookies initial (notons-le C(0) )+2. Au bout de n secondes, on aura 1+1+1+1... n fois donc n cookies produits par la machine, et donc un nombre de cookies total égal à n+C(0). Traçons cela :
