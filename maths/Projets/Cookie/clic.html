@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Cookie Clicker</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: Consolas, monospace; background: #111; color: #eee; margin: 0; padding: 12px; }
+h1 { font-family: elephant, serif; text-align: center; color: #fff; font-size: 20px; margin-bottom: 4px; }
+.subtitle { text-align: center; color: #0f0; font-size: 13px; margin-bottom: 12px; font-family: Consolas, monospace; }
+.terminal { background: #000; border: 2px solid #0f0; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; box-shadow: 0 0 20px rgba(0,255,0,0.3); }
+.terminal h3 { color: #0f0; background: #000; font-size: 14px; margin: 0; font-family: Consolas, monospace; font-weight: normal; }
+@keyframes blink { 50% { opacity: 0; } }
+.cursor { animation: blink 1s infinite; }
+table { width: 100%; border-collapse: collapse; font-size: 11px; }
+th, td { border: 1px solid #444; padding: 5px 7px; vertical-align: middle; }
+th { background: #222; color: #aaa; font-weight: normal; }
+tr th:first-child { background: #1a1a1a; }
+.val { font-size: 15px; font-weight: bold; color: #0f0; text-align: center; }
+.recurrence { font-size: 10px; color: #ccc; line-height: 1.5; }
+.recurrence h4 { margin: 3px 0 0; font-size: 10px; color: #0f0; font-family: Consolas, monospace; }
+.general { font-size: 10px; color: #ccc; }
+.chart-cell { padding: 4px; }
+canvas.mini { display: block; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+button { padding: 7px 12px; font-size: 12px; font-family: Consolas, monospace; border: none; border-radius: 4px; cursor: pointer; color: #000; font-weight: bold; }
+.btn-add { background: rgb(80,255,80); }
+.btn-add:hover { background: rgb(60,220,60); }
+.btn-auto { background: rgb(255,80,80); }
+.btn-auto:hover { background: rgb(255,60,60); }
+</style>
+</head>
+<body>
+
+<h1>🍪 Cookie Clicker</h1>
+<div class="subtitle" id="title_display">Pour commencer, produisez des cookies</div>
+
+<div class="terminal">
+  <h3><span id="text_display">Hello</span><span class="cursor">█</span></h3>
+</div>
+
+<table>
+<thead>
+<tr>
+  <th></th>
+  <th>Valeur</th>
+  <th>Relation de récurrence</th>
+  <th>Forme générale</th>
+  <th>Graphique (30s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <th>C(s) – cookies</th>
+  <td class="val"><span id="cookies">0</span></td>
+  <td class="recurrence">
+    On ajoute <span class="cps_d">0</span>/s<br>
+    <h4>C(s+1) = C(s) + <span class="cps_d">0</span></h4>
+  </td>
+  <td class="general">
+    C(s) = <span class="cpsss_d">0</span>s³ + <span class="cpss_d">0</span>s² + <span class="cps_d">0</span>s + <span class="c0_d">0</span>
+  </td>
+  <td class="chart-cell"><canvas id="g0" class="mini" width="160" height="70" role="img" aria-label="Graphique cookies"></canvas></td>
+</tr>
+<tr>
+  <th>C'(s) – cps</th>
+  <td class="val"><span id="cps">0</span></td>
+  <td class="recurrence">
+    On ajoute <span class="cpss_d">0</span>/s<br>
+    <h4>C'(s+1) = C'(s) + <span class="cpss_d">0</span></h4>
+  </td>
+  <td class="general">
+    C'(s) = <span class="cpsss_d">0</span>s² + <span class="cpss_d">0</span>s + <span class="cps0_d">0</span>
+  </td>
+  <td class="chart-cell"><canvas id="g1" class="mini" width="160" height="70" role="img" aria-label="Graphique cps"></canvas></td>
+</tr>
+<tr>
+  <th>C''(s) – cpss</th>
+  <td class="val"><span id="cpss">0</span></td>
+  <td class="recurrence">
+    On ajoute <span class="cpsss_d">0</span>/s<br>
+    <h4>C''(s+1) = C''(s) + <span class="cpsss_d">0</span></h4>
+  </td>
+  <td class="general">
+    C''(s) = <span class="cpsss_d">0</span>s + <span class="cpss0_d">0</span>
+  </td>
+  <td class="chart-cell"><canvas id="g2" class="mini" width="160" height="70" role="img" aria-label="Graphique cpss"></canvas></td>
+</tr>
+<tr>
+  <th>C'''(s) – cpsss</th>
+  <td class="val"><span id="cpsss">0</span></td>
+  <td class="recurrence">
+    Constante (pas d'achat prévu)<br>
+    <h4>C'''(s+1) = C'''(s)</h4>
+  </td>
+  <td class="general">
+    C'''(s) = <span class="cpsss_d">0</span>
+  </td>
+  <td class="chart-cell"><canvas id="g3" class="mini" width="160" height="70" role="img" aria-label="Graphique cpsss"></canvas></td>
+</tr>
+</tbody>
+</table>
+
+<div class="btn-row">
+  <button class="btn-add" onclick="clickCookie()">Produire 1 cookie 🍪</button>
+  <button class="btn-add" onclick="buy('cps')">Acheter producteur (25🍪)</button>
+  <button class="btn-add" onclick="buy('cpss')">Acheter usine (100🍪)</button>
+  <button class="btn-add" onclick="buy('cpsss')">Acheter pays (500🍪)</button>
+</div>
+<div class="btn-row">
+  <button class="btn-auto" onclick="auto()">Clique 1 fois par seconde sur le bouton le plus rentable</button>
+</div>
+
+<script>
+let cookies = 0, cps = 0, cpss = 0, cpsss = 0;
+let msg = { cps1: false, cps2: false, cpss1: false, cpsss1: false, hint: false };
+const HIST = 30;
+let hist = { c: [], cps: [], cpss: [], cpsss: [] };
+let typingTimer = null;
+
+function updateDisplay() {
+  document.getElementById("cookies").textContent = Math.floor(cookies);
+  document.getElementById("cps").textContent = cps;
+  document.getElementById("cpss").textContent = cpss;
+  document.getElementById("cpsss").textContent = cpsss;
+  document.querySelectorAll(".cps_d").forEach(e => e.textContent = cps);
+  document.querySelectorAll(".cpss_d").forEach(e => e.textContent = cpss);
+  document.querySelectorAll(".cpsss_d").forEach(e => e.textContent = cpsss);
+  document.querySelectorAll(".c0_d").forEach(e => e.textContent = Math.floor(cookies));
+  document.querySelectorAll(".cps0_d").forEach(e => e.textContent = cps);
+  document.querySelectorAll(".cpss0_d").forEach(e => e.textContent = cpss);
+
+  if (!msg.hint && cps < 1 && Math.floor(cookies) >= 25) {
+    msg.hint = true;
+    setTitle("Achetez un producteur de cookies");
+  }
+  if (!msg.cps1 && cps === 1) {
+    msg.cps1 = true;
+    setTitle("Vous produisez 1 cookie par seconde");
+    type("Vous avez dépensé 25 cookies mais en produisez désormais 1/s. Rentable dès la 25ème seconde.");
+  }
+  if (!msg.cps2 && cps >= 2) {
+    msg.cps2 = true;
+    setTitle("Production constante de cookies");
+    type("Votre production croît de manière linéaire — C(s) est un polynôme de degré 1.");
+  }
+  if (!msg.cpss1 && cpss >= 1) {
+    msg.cpss1 = true;
+    setTitle("Production accélérée !");
+    type("Votre cps augmente chaque seconde — C(s) devient quadratique, la production accélère.");
+  }
+  if (!msg.cpsss1 && cpsss >= 1) {
+    msg.cpsss1 = true;
+    setTitle("Croissance cubique !");
+    type("Votre cpss augmente — C(s) est désormais un polynôme de degré 3. Croissance explosive.");
+  }
+}
+
+function setTitle(t) {
+  document.getElementById("title_display").textContent = t;
+}
+
+function type(txt) {
+  const el = document.getElementById("text_display");
+  clearInterval(typingTimer);
+  el.textContent = "";
+  let i = 0;
+  typingTimer = setInterval(() => {
+    if (i < txt.length) el.textContent += txt[i++];
+    else clearInterval(typingTimer);
+  }, 22);
+}
+
+function clickCookie() { cookies++; updateDisplay(); }
+
+function buy(what) {
+  const costs = { cps: 25, cpss: 100, cpsss: 500 };
+  if (cookies >= costs[what]) {
+    cookies -= costs[what];
+    if (what === 'cps') cps++;
+    if (what === 'cpss') cpss++;
+    if (what === 'cpsss') cpsss++;
+    updateDisplay();
+  }
+}
+
+function pushHist() {
+  const add = (arr, v) => { arr.push(Math.floor(v)); if (arr.length > HIST) arr.shift(); };
+  add(hist.c, cookies);
+  add(hist.cps, cps);
+  add(hist.cpss, cpss);
+  add(hist.cpsss, cpsss);
+}
+
+setInterval(() => {
+  cookies += cps;
+  cps += cpss;
+  cpss += cpsss;
+  updateDisplay();
+  pushHist();
+  drawAll();
+}, 1000);
+
+pushHist();
+
+const COLORS = ['#00ff00', '#00ccff', '#ff8800', '#ff44ff'];
+const IDS = ['g0', 'g1', 'g2', 'g3'];
+const HKEYS = ['c', 'cps', 'cpss', 'cpsss'];
+
+function drawChart(canvasId, data, color) {
+  const cv = document.getElementById(canvasId);
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0a0a0a';
+  ctx.fillRect(0, 0, W, H);
+  if (data.length < 2) {
+    ctx.strokeStyle = '#333';
+    ctx.lineWidth = 0.5;
+    ctx.strokeRect(0.5, 0.5, W-1, H-1);
+    return;
+  }
+  const mn = Math.min(...data), mx = Math.max(...data);
+  const range = mx - mn || 1;
+  const pad = 8;
+  const sx = (i) => pad + (i / (HIST - 1)) * (W - pad * 2);
+  const sy = (v) => H - pad - ((v - mn) / range) * (H - pad * 2);
+
+  ctx.strokeStyle = '#1a1a1a';
+  ctx.lineWidth = 0.5;
+  for (let g = 0; g <= 3; g++) {
+    const y = pad + (g / 3) * (H - pad * 2);
+    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - pad, y); ctx.stroke();
+  }
+
+  const filled = [];
+  for (let i = 0; i < data.length; i++) filled.push(sx(HIST - data.length + i));
+
+  ctx.beginPath();
+  ctx.moveTo(filled[0], sy(data[0]));
+  for (let i = 1; i < data.length; i++) ctx.lineTo(filled[i], sy(data[i]));
+  ctx.lineTo(filled[filled.length-1], H - pad);
+  ctx.lineTo(filled[0], H - pad);
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, color + '33');
+  grad.addColorStop(1, color + '00');
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(filled[0], sy(data[0]));
+  for (let i = 1; i < data.length; i++) ctx.lineTo(filled[i], sy(data[i]));
+  ctx.stroke();
+
+  const lastX = filled[filled.length-1];
+  const lastY = sy(data[data.length-1]);
+  ctx.beginPath();
+  ctx.arc(lastX, lastY, 2.5, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
+
+  ctx.fillStyle = color;
+  ctx.font = '9px Consolas';
+  ctx.textAlign = 'right';
+  const disp = mx >= 1000 ? (mx/1000).toFixed(1)+'k' : mx;
+  ctx.fillText(disp, W - 2, pad + 8);
+}
+
+function drawAll() {
+  for (let i = 0; i < 4; i++) drawChart(IDS[i], hist[HKEYS[i]], COLORS[i]);
+}
+
+drawAll();
+updateDisplay();
+</script>
+
+</body>
+</html>
