@@ -76,7 +76,8 @@
   object-fit: cover;      
   border-radius: 8px;     
 }
-
+.btn-add { background: rgb(80,255,80); }
+.btn-add:hover { background: rgb(60,220,60); }
   </style>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script>
@@ -115,5 +116,146 @@
 </div>
 <br><br>
 <div id="parties">
-<center><h3>Partie 1: Passage obligatoire par les suites</h3>
+<center><h3>Partie 1: Passage obligatoire par les suites</h3></center>
+<p>Pour commencer, il faut essayer d'exprimer le nombre de cookies en fonction du temps. Cela nous permettra de prédire le nombre de cookies à un temps t.
+Imaginons que nous sommes au début du jeu, et que l'utilisateur a acheté un producteur de cookies (1 cookie par seconde)
+<p>Le nombre de cookies qu'il aura produit à la seconde n sera de 1*n. Autrement dit, le nombre total de cookies à la seconde n C(n) est la somme des cookies produits par la machine additionnés au nombre de cookies que l'on avait au départ. Cela s'écrit comme cela: 
+$$
+C(n)=C(0)+\sum_{i=0}^{n-1}\ C'(i)
+$$ <center><i><u>pour C'(i) étant le nombre de cookies par seconde à la seconde i</i></u></center><br>
+<br>
+<p>D'ailleurs, une propriété intéressante, est qu'entre la seconde p et la seconde n (des secondes entières bien sûr), on a produit C(n)-C(p) cookies... Autrement dit, 
+$$
+\sum_{p}^{n}\ C'(p) = C(n)-C(p)
+$$ <p>C'est très visuel: </p>
+<img src="1.jpg" width="43%"><img src="2.jpg" width="42%">
+<p>   Si on s'intéresse au fonctionnement de notre cookies clicker, on remarque qu'à chaque seconde: 
+<li>On ajoute le nombre de cookies par seconde au nombre de cookies
+$$
+\begin{cases}
+C_{n+1}=C_n+CPS_n\\
+C_0=C
+CPS_{n+1}=CPS
+\end{cases}
+$$
+Donc au temps n, on aura produit CPS+CPS+CPS... soit CPS*n cookies:
+$$
+\begin{cases}
+C_{n}=C+CPS*n\\
+\end{cases}
+$$
+Bien, maintenant, ajoutons l'option 'Cookies par seconde, par seconde: CPSS'
+On va devoir changer notre formule car CPS n'est plus constante: 
+$$
+\begin{cases}
+C_{n+1}=C_n+CPS_n\\
+CPS_{n+1}=CPS_n+CPSS_n\\
+CPSS_{n+1}=CPSS\\
+\end{cases}
+$$
+CPS(n)=CPSS+CPSS+CPSS...n=CPSS*n
+<br>Et donc C(n)=C(0)+CPS(0)+CPS(1)+...:
+<p>$$ C(n)=C(0)+\sum_{i=0}^{n}\ CPS(i) $$
+<p>$$ C(n)= C(0)+\sum_{i=0}^{n}\ CPSS*i $$
+
+<p>$$
+C(n)= C(0)+CPSS\sum_{i=0}^{n} i
+$$</p>
+
+<p>$$
+\Downarrow^{\text{Somme des entiers de }0\text{ à }n}
+$$</p>
+
+<p>$$
+C(n)= C(0)+CPSS\left(\frac{n(n+1)}{2}\right)
+$$</p>
+
+<li>Continuons: on ajoute le nombre de CPSSS au nombre de CPSS
+<li>Pas d'améliorations supérieures au CPSSS, c'est une constante (que l'utilisateur peut faire monter en achetant l'amélioration). <p>On a donc: 
+$$
+\begin{cases}
+C_{n+1}=C_n+CPS_n\\
+CPS_{n+1}=CPS_n+CPSS_n\\
+CPSS_{n+1}=CPSS_n+CPSSS_n\\
+CPSSS_{n+1}=Constante
+\end{cases}
+$$
+<p> Donc :
+<p>$$
+\begin{cases}
+C_{n+1}=C_n+CPS_n\\
+CPS(n)= CPSSS\left(\frac{n(n+1)}{2}\right)
+\end{cases}
+$$</p>
+<p>$$
+\begin{cases}
+C_{n+1}=C_n+CPSSS\left(\frac{n(n+1)}{2}\right)\\
+\end{cases}
+$$</p>
+<p>$$
+C(n)=C(0)+\sum_{i=0}^{n}CPSSS\left(\frac{n(n+1)}{2}\right)\\
+$$
+<p>
+<p>$$
+C(n)=C(0)+CPSSS\sum_{i=0}^{n}\left(\frac{n(n+1)}{2}\right)\\
+$$
+<p>$$
+C(n)=C(0)+\frac{CPSSS}{2}n^3+CPSSS\,n^2+\frac{CPSSS}{2}n
+$$
+<p>Voilà, il faudra résoudre cette suite avec cette démarche à chaque seconde (car l'utilisateur jouerait en même temps d'avoir activé l'option 'clique 1 fois par seconde sur le bouton le plus rentable' ce qui changerait toutes les variables...
 </div>
+<br><br><div id="parties">
+<center><h3>Partie 2- Équations cubiques, comparaisons, et codage de l'ia</h3></center>
+<p>Notre ia devra trouver l'expression C(n) à chaque seconde avec les variables <code>Cookies</code>; <code>CPS</code>; <code>CPSS</code> et <code>CPSSS</code>, qui peuvent à chaque seconde être modifiées par l'utilisateur qui, lui aussi cliquera sur les boutons en parallèle de l'ia (pour l'instant, on code le bouton 'clic parfait chaque seconde', pas 'meilleur scénario possible, qui ne nécessiterait pas de tout calculer avec de nouvelles variables chaque sec):
+$$
+\begin{cases}
+C_{n+1}=C_n+CPS_n\\
+C_{0}=\text{Cookies}\\[4pt]
+CPS_{n+1}=CPS_n+CPSS_n\\
+CPS_{0}=CPS\\[4pt]
+CPSS_{n+1}=CPSS_n+CPSSS_n\\
+CPSS_{0}=CPSS\\[4pt]
+CPSSS_{n+1}=CPSSS_n\\
+CPSSS_{0}=\text{Constante}
+\end{cases}
+$$
+<p>Mais dans notre cas, comme on cherche à tracer la fonction p(n) étant la fonction qui trace le nombre de cookies 'parfaits' possible d'acquérir en fonction du temps, on aura pas à faire ces calculs à chaque fois... 
+<p>Une fois que l'ia aura trouvé C(s) qui sera de la forme C(s)=as<sup>3</sup> +bs<sup>2</sup> +cs<sup></sup> +d, elle devra trouver sur quel bouton cliquer pour avoir l'amélioration la plus élevée en le moins de temps possible: 
+<p>En trouvant C(s), l'ia saura que l'amélioration la plus élevée (prix: 500 cookies) sera débloquée sans intervention dans t secondes, pour t étant le plus petit entier solution de Cookies(t) >= prix (ici 500)
+<p>Les règles sont assez simple: 
+<li>on peut cliquer sur<button class="btn-add">Produire 1 cookie 🍪</button> qui ajoute 1 à cookies donc C(s)=C(s)=as<sup>3</sup> +bs<sup>2</sup> +cs<sup></sup>+d+1
+<li>on peut cliquer sur<button class="btn-add">Acheter producteur (25🍪)</button> qui ajoute 1 à CPS et enlève 25 à cookies donc C(s)=C(s)=as<sup>3</sup> +bs<sup>2</sup> +s(c+0.5)<sup></sup>+d-25
+<li>on peut cliquer sur<button class="btn-add">Acheter usine (100🍪)</button> qui ajoute 1 à CPSS et enlève 100 à cookies donc C(s)=C(s)=as<sup>3</sup> +s(b+0.5)<sup>2</sup> +cs<sup></sup>+d-100
+<li>on peut cliquer sur<button class="btn-add">Acheter pays (500🍪)</button> qui ajoute 1 à CPSSS et enlève 500 à cookies donc C(s)=C(s)=(a+0.5)s<sup>3</sup> +bs<sup>2</sup> +s(c+0.5)<sup></sup>+d-500
+<br>
+<p>Il suffit maintenant de résoudre pour les 4 fonctions possibles C(t)>=500 pour t la plus petite valeur naturelle respectant l'inégalité. Celle qui aura le t le plus petit correspondra au bouton qui permet d'acquérir l'amélioration la plus rentable. 
+<p>Pour résoudre cela, on pourrait tenter une approche analytique classique : on cherche d’abord à résoudre l’inéquation
+$$
+C(t) \ge 500
+$$
+en la ramenant à une équation polynomiale du type
+$$
+at^3 + bt^2 + ct + d - 500 = 0.
+$$
+On pourrait alors déterminer les racines de ce polynôme afin d’obtenir les instants critiques où la fonction dépasse le seuil.</p>
+
+<p>Dans ce cadre, la solution exacte serait théoriquement donnée par les formules de Cardan pour les équations cubiques. On isolerait ensuite la plus petite racine réelle positive, puis on prendrait l’entier supérieur correspondant au premier instant où l’inégalité est vérifiée.</p>
+
+<p>Cependant, cette méthode devient rapidement lourde dans notre contexte. Parce que la résolution exacte d’une équation cubique à chaque seconde est trop coûteuse pour une exécution en temps réel, il y a plus simple:</p>
+
+<p>L'algorithmie: on simule l’évolution pas à pas et on teste l’inégalité à chaque itération.</p>
+	<div class="code-container" role="region" aria-label="Bloc de code Python">
+  <div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
+  </div>
+  <pre class="code-content" id="code-block">
+t = 0
+while C(t) < 500:
+    t = t + 1
+  </pre>
+</div>
+
+<p>Cette méthode, n'est pas élégante mathématiquement (c'est la méthode bourrine 😅), mais présente tout de même un avantage majeur : elle est stable, simple à implémenter et parfaitement adaptée à un système où les paramètres évoluent en continu. Elle permet donc de contourner la complexité analytique tout en conservant une décision optimale à chaque instant.</p>
