@@ -78,6 +78,15 @@
 }
 .btn-add { background: rgb(80,255,80); }
 .btn-add:hover { background: rgb(60,220,60); }
+h5 {
+  font-size: 1.25em;
+  font-weight: bold;
+  background: linear-gradient(to right, rgb(100, 10, 255), rgb(110, 20, 255)); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
   </style>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script>
@@ -205,7 +214,7 @@ $$
 <p>Voilà, il faudra résoudre cette suite avec cette démarche à chaque seconde (car l'utilisateur jouerait en même temps d'avoir activé l'option 'clique 1 fois par seconde sur le bouton le plus rentable' ce qui changerait toutes les variables...
 </div>
 <br><br><div id="parties">
-<center><h3>Partie 2- Équations cubiques, comparaisons, et codage de l'ia</h3></center>
+<center><h3>Partie 2- Équations cubiques et dérrivées</h3></center>
 <p>Notre ia devra trouver l'expression C(n) à chaque seconde avec les variables <code>Cookies</code>; <code>CPS</code>; <code>CPSS</code> et <code>CPSSS</code>, qui peuvent à chaque seconde être modifiées par l'utilisateur qui, lui aussi cliquera sur les boutons en parallèle de l'ia (pour l'instant, on code le bouton 'clic parfait chaque seconde', pas 'meilleur scénario possible, qui ne nécessiterait pas de tout calculer avec de nouvelles variables chaque sec):
 $$
 \begin{cases}
@@ -237,14 +246,23 @@ en la ramenant à une équation polynomiale du type
 $$
 at^3 + bt^2 + ct + d - 500 = 0.
 $$
-On pourrait alors déterminer les racines de ce polynôme afin d’obtenir les instants critiques où la fonction dépasse le seuil.</p>
+<p>
+On pourrait alors déterminer les racines de ce polynôme afin d’obtenir les instants critiques où la fonction dépasse le seuil.
+</p>
 
-<p>Dans ce cadre, la solution exacte serait théoriquement donnée par les formules de Cardan pour les équations cubiques. On isolerait ensuite la plus petite racine réelle positive, puis on prendrait l’entier supérieur correspondant au premier instant où l’inégalité est vérifiée.</p>
+<p>
+La solution exacte est donnée par les formules de Cardan pour les équations cubiques.
+On peut alors isoler la plus petite racine réelle positive, puis prendre l’entier supérieur correspondant au premier instant où l’inégalité est vérifiée.
+</p>
 
-<p>Cependant, cette méthode devient rapidement lourde dans notre contexte. Parce que la résolution exacte d’une équation cubique à chaque seconde est trop coûteuse pour une exécution en temps réel, il y a plus simple:</p>
-
-<p>L'algorithmie: on simule l’évolution pas à pas et on teste l’inégalité à chaque itération.</p>
-	<div class="code-container" role="region" aria-label="Bloc de code Python">
+<p>
+Cependant, cette méthode est assez lourde (il faudrait gérer toutes les opérations, les cas de discriminants... Et pour un petit script python, cela ne vaut pas le coup)
+Excluons donc cette méthode. 
+</p><br>
+<h5>I- while, et dichotomie: </h5>
+<p>
+On peut aussi rechercher la solution numériquement en simulant l’évolution du système pas à pas et à tester l’inégalité à chaque instant (avec while) :
+<div class="code-container" role="region" aria-label="Bloc de code Python">
   <div class="code-header">
     python
     <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
@@ -253,9 +271,120 @@ On pourrait alors déterminer les racines de ce polynôme afin d’obtenir les i
   </div>
   <pre class="code-content" id="code-block">
 t = 0
+
 while C(t) < 500:
     t = t + 1
   </pre>
 </div>
+<br>
+C'est simple, bourrin et efficace. Cela peut fonctionner dans notre cas mais si je décide de changer quelques paramètres et que le seuil mais plus de temps à être atteint, notre script mettra trois plomb à trouver. 
+Non, il nous faut autre chose qui permet de faire le moins d'itérations possible pour que le script s'éxécute rapidement...<br><br>
+Testons autre chose...<br>
+Si je vous dit dichotomie, ça vous parle ?
+Elle consiste à encadrer la racine dans un intervalle puis à réduire cet intervalle de moitié à chaque itération:<br>
+Si vous choisissez un nombre entre 0 et 100 000 000, je pourrais le trouver en 27 coups maximum en vous demandant à chaque fois "est ce que votre nombre est dans l'interval [0;50 000 000]" et à chaque fois, le nombre de possibilités sera divisé par 2 jusqu'à ce que je tombe dessus. Cela marche donc très bien pour trouver des entier...
+  <div class="code-container" role="region" aria-label="Bloc de code Python">
+  <div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
+  </div>
+  <pre class="code-content" id="code-block">
+a, b = 0, 500 ##Car le nombre de cookies au temps 500 est forcément supérieur (ou égal) à 500 si on a minimum 1Cps
+while b - a > 1e-6:
+    m = (a + b) / 2
 
-<p>Cette méthode, n'est pas élégante mathématiquement (c'est la méthode bourrine 😅), mais présente tout de même un avantage majeur : elle est stable, simple à implémenter et parfaitement adaptée à un système où les paramètres évoluent en continu. Elle permet donc de contourner la complexité analytique tout en conservant une décision optimale à chaque instant.</p>
+    if C(m) < 500:
+        a = m
+    else:
+        b = m
+
+print(a)
+  </pre>
+</div>
+<p>
+Si l’intervalle initial est de taille N, après une itération il reste N/2 possibilités, puis N/4, puis N/8, etc.
+Après n itérations, la taille de l’intervalle vaut :
+N / 2<sup>n</sup>
+</p>
+<p>Comme notre fonction Cookies(x) est continue, strictement croissante, tend vers l'infini, on est sûr qu'elle dépassera forcément le seuil fixé. En testant avec notre while, on aurait un nombre d'itérations qui peut devenir énorme. Calculons-le en fontion... de la fonction<br>
+notre script calcule avec un pas de 1 quand ax<sup>3</sup>+bx<sup>2</sup>+cx+d devient supérieur ou égal au seuil.
+Donc le nombre d'itérations effectuées par le script sera tout simplement la plus petite racine positive arrondie à l'entier supérieur, qui est solution de ax<sup>3</sup>+bx<sup>2</sup>+cx+d-seuil=0
+<center><img src="Figure_1.png" width="50%"></center><br>
+Maintenant, si on calcule le nombre d'itérations en fonction du seuil S avec la méthode de dichotomie, cela revient à résoudre
+N / 2<sup>n</sup> ≤ 1, c'est à dire, quand est ce que mon interval est plus petit ou égal à 1, autrement dit, quand est ce que j'aurais trouvé la solution à l'entier près, de l'équation ax<sup>3</sup>+bx<sup>2</sup>+cx+d-seuil=0
+</p>
+
+<p>
+en simplifiant, on trouve
+n ≥ log<sub>2</sub>(N)
+</p>
+<center><img src="Figure_2.png" width="50%"></center><br>
+<center><img src="Figure_3.png" width="50%"></center><br>
+<p>
+<h5>II- Encore plus rapide avec la méthode de Newton-Raphson:</h5>
+<p>
+La dichotomie est déjà très efficace car elle divise le problème par 2 à chaque itération.
+Mais elle ne tient pas compte de la forme de la fonction.
+
+On peut faire encore mieux avec une méthode qui "utilise la pente" de la courbe : la méthode de Newton-Raphson.
+L’idée est qu'au lieu de couper l’intervalle en deux, on suit la tangente de la courbe pour aller directement vers la racine. La formule à appliquer est:
+</p>
+<center>
+$$
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
+$$</center>
+
+<p>
+Ici, f(x) correspond à notre fonction :
+</p>
+
+<center>
+C(x) - S = ax<sup>3</sup> + bx<sup>2</sup> + cx + d - S
+</center>
+
+<p>
+et sa dérivée :
+</p>
+
+<center>
+f'(x) = 3ax<sup>2</sup> + 2bx + c
+</center>
+
+<div class="code-container" role="region" aria-label="Bloc de code Python">
+  <div class="code-header">
+    python
+    <button class="btn-copy" aria-label="Copier le code" onclick="copyCode()">
+      📋 Copier
+    </button>
+  </div>
+  <pre class="code-content" id="code-block">
+def f(x):
+    return C(x) - 500
+
+def df(x):
+    return 3*a*x**2 + 2*b*x + c   # dérivée de ax^3 + bx^2 + cx + d
+
+x = 1  # point de départ
+
+while abs(f(x)) > 1e-6:
+    x = x - f(x) / df(x)
+
+print(x)
+  </pre>
+</div>
+<p>
+Contrairement à la dichotomie, la méthode de Newton-Raphson converge en très peu d’itérations si le point de départ est bien choisi.
+</p>
+</p>
+<p>
+Là où la dichotomie nécessite environ log<sub>2</sub>(N) étapes,
+Newton-Raphson peut atteindre la solution en moins de 5 à 7 itérations dans de nombreux cas.
+</p>
+<p>
+Bon, après, cette rapidité a un prix: la méthode peut diverger si le point de départ est mal choisi ou si la dérivée est proche de zéro mais si on utilise cette méthode après que l'utilisateur ait acheté un cookie par seconde, et  qu'on prends x=0 comme point de départ, ça fonctionne bien.
+</p>
+</div><br><br>
+<div id="parties">
+<center><h3>Partie 3: Codage de l'ia</h3></center>
