@@ -81,11 +81,12 @@
 h5 {
   font-size: 1.25em;
   font-weight: bold;
-  background: linear-gradient(to right, rgb(100, 10, 255), rgb(110, 20, 255)); 
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
+  color: rgb(110, 20, 255);
+}
+
+h5 .emoji {
+  color: initial;
+  font-size: 1em;
 }
   </style>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -212,6 +213,102 @@ $$
 C(n)=C(0)+\frac{CPSSS}{2}n^3+CPSSS\,n^2+\frac{CPSSS}{2}n
 $$
 <p>Voilà, il faudra résoudre cette suite avec cette démarche à chaque seconde (car l'utilisateur jouerait en même temps d'avoir activé l'option 'clique 1 fois par seconde sur le bouton le plus rentable' ce qui changerait toutes les variables...
+<center><h5>Généralisation: vers la n-ième dérivée discrète</h5></center>
+
+<p>
+Jusqu'ici, on a vu que chaque nouvelle amélioration de type "cookies par seconde par seconde..." ajoute un degré au polynôme décrivant l'évolution du nombre de cookies.  
+Mais on peut généraliser ça (non ça ne nous sera pas utile, oui c'est par simple curiosité...):
+</p>
+
+$$
+\begin{cases}
+C_{n+1}=C_n+CPS_n\\
+CPS_{n+1}=CPS_n+CPSS_n\\
+CPSS_{n+1}=CPSS_n+CPSSS_n\\
+\vdots\\
+X^{(k)}_{n+1}=X^{(k)}_n+X^{(k+1)}_n
+\end{cases}
+$$
+<p>
+où X^(k) représente la k-ième dérivée discrète de la production de cookies. Car oui, chaque 'par seconde' supplémentaire est une dérrivée du précédent 'par seconde': CPS est la dérrivée de Cookies (en réalité, c'est plutôt Cookies qui est primitive de CPS mais l'un implique l'autre)
+</p>
+
+<p>
+Si la dernière dérivée ajoutée est une constante A, alors chaque remontée dans la chaîne correspond à une somme discrète.
+Et on a vu précédemment que sommer une constante donnait une fonction affine, sommer une fonction affine donnait une fonction quadratique, sommer une fonction quadratique donnaiot une fonction cubique, etc.
+Après k intégrations discrètes, on obtient donc un polynôme de degré k :
+</p>
+
+$$
+C(n)=a_kn^k+a_{k-1}n^{k-1}+\dots+a_1n+a_0
+$$
+
+<p>
+Le terme dominant (le coefficient devant le x<sup>le plus grand degré</sup>peut être trouvé directement :
+</p>
+
+$$
+C(n)\sim\frac{A}{k!}n^k
+$$
+
+<p>
+La formule (que je n'ai pas trouvé tout seul 😅) peut se retrouver intuitivement (même si ça n'a pas été mon cas 🤣 ): </p>
+
+$$
+1\rightarrow n
+$$
+
+$$
+\sum n \rightarrow \frac{n^2}{2}
+$$
+
+$$
+\sum n^2\rightarrow \frac{n^3}{3}
+$$
+
+$$
+\sum n^3\rightarrow \frac{n^4}{4}
+$$
+
+<p>
+et en continuant :
+</p>
+
+$$
+\sum n^p \rightarrow \frac{n^{p+1}}{p+1}
+$$
+
+
+<p>
+Donc en général :
+</p>
+
+$$
+\boxed{
+C(n)\sim\frac{A}{k!}n^k
+}
+$$
+
+
+<p>
+Les coefficients complets sont donnés par la formule de Faulhaber, qui fait intervenir les nombres de Bernoulli :
+</p>
+
+$$
+\sum_{i=1}^{n}i^m
+=
+\frac{1}{m+1}
+\sum_{j=0}^{m}
+(-1)^j
+\binom{m+1}{j}
+B_j n^{m+1-j}
+$$
+
+<p>
+où B_j sont les nombres de Bernoulli.
+</p>
+<p>ça fait un peu peur quand on la compare la formule d'une somme arithmétique (qu'on fait tous instinctivement en jouant aux cartes, quand on calcul la valeur d'une suite) ou géométrique (moins instinctive mais dont la démonstration n'est qu'un changement de variable bien pensé)
+Mais bon, nous n'en auront de toute manière plus besoin, la formule ne nous a servi qu'à assouvir cet insatiable besoin de comprendre l'essence de la chose et donc, par implication, la chose elle même y résultant(phrase très poétique, très 'je tourne autour du pot aussi', je vous l'accorde, mais quelle idée d'écrire après mon bac de philo)
 </div>
 <br><br><div id="parties">
 <center><h3>Partie 2- Équations cubiques et dérrivées</h3></center>
@@ -388,3 +485,7 @@ Bon, après, cette rapidité a un prix: la méthode peut diverger si le point de
 </div><br><br>
 <div id="parties">
 <center><h3>Partie 3: Codage de l'ia</h3></center>
+<h5>Premier problème: greedy algorithm 😫😫😫</h5> 
+<p>   J'avais terminé la partie maths, et commençai tout content à coder mon ia. Cela étant fait, j'éxécutai, et voici le output (la sortie) qu'il me renvoya:
+<figure><img src="output.jpg"></img><figcaption>Cps initial de 1, on voit que l'algorithme ne fait qu'ociller entre cps et cookies</figcaption>
+</figure>
