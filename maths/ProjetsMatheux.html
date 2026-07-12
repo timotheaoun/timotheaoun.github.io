@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -195,6 +196,8 @@
   .badge.notions { background-color: #4caf50; }
   .badge.informatique { background-color: #2196f3; }
   .badge.Physique { background-color: purple; }
+  .badge.Article { background:linear-gradient(100deg, rgba(100, 50, 45, 1), rgba(255, 150, 200, 0.1)); }
+  .badge.Philo { background:linear-gradient(180deg, rgba(100, 0, 200, 1), rgba(255, 150, 200, 0.1)); }
 
   /* highlight texte trouvé */
   mark.match {
@@ -268,6 +271,8 @@ select::-ms-expand { display: none; }
           <option value="projets">Projets</option>
           <option value="notions">Notions</option>
           <option value="informatique">Informatique</option>
+          <option value="Article">Article</option>
+		 <option value="Philo">Philo</option>
           <option value="Physique">Physique</option>
         </select>
       </div>
@@ -289,8 +294,15 @@ select::-ms-expand { display: none; }
       titre: "L'étrange complexité d'un jeu terriblement simple: la recette d'un cookie clicker",
       lien: "Projets/Cookie/Cookie.cl.html",
       image: "Images/Cookies.jpg",
-      classe: "équations polyomiales, dérivées",
+      classe: "équations polyomiales, dérivées n-èmes, python, intégrales",
       categorie: "projets"
+    },
+	{
+      titre: "Quelle est la différence entre un rêve et la réalité",
+      lien: "Projets/reve/reve.html",
+      image: "Images/reve.jpg",
+      classe: "Conversions, unités",
+      categorie: "Philo"
     },
     {
       titre: "Le théorème du blob",
@@ -305,6 +317,13 @@ select::-ms-expand { display: none; }
       image: "Images/Cookie.PNG",
       classe: "Suites, fonctions, primitives, intégrales",
       categorie: "notions"
+    },
+   {
+      titre: "à partir de combien de  temps un aliment laissé à température ambiante devient-il  dangereux ?",
+      lien: "Projets/GO/maths/maths.html",
+      image: "Images/go.jpg",
+      classe: "Suites, fonctions, primitives, intégrales",
+      categorie: "Article"
     },
   ];
 
