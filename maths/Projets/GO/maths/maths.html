@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Combien de temps met un aliment pour devenir nocif</title>
+  <link rel="stylesheet" href="../../../Style.css">
+
+  <meta name="description" content="Comment créer un grapheure python sans utiliser de bibliothèques ? (mise à part maths et turtle) | Timothé AOUN">
+  <meta name="keywords" content="grapheur python, créer un grapheur, python sans bibliothèques, comment faire un grapheur en python, sans bibliothèque, afficher graphique python, python graphique simple, Timothé AOUN">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Timothé AOUN">
+
+  <style>
+    a { text-decoration: none; color: green; }
+    a:hover { text-decoration: underline; color: orange; }
+    code1 { background-color: rgb(50, 10, 40); color: #444; }
+    .commentaire { flex: 1; font-family: Arial, sans-serif; font-size: 16px; color: #333; background: transparent; padding: 10px; border-left: 2px solid #888; }
+
+    .crayon { display: inline-block; padding: 0.2em 0.4em; position: relative; z-index: 0; color: #000; }
+    .crayon::before { content:''; position:absolute; top:0.1em; left:0; right:0; bottom:0.1em; z-index:-1; transform: rotate(-1deg); filter: blur(0.7px); opacity:.8; border-radius:8px; }
+    .crayon.vert::before { background: repeating-linear-gradient(45deg,#4caf50,#4caf50 2px,#388e3c 3px,#4caf50 4px); }
+    .crayon.bleu::before { background: repeating-linear-gradient(-45deg,#2196f3,#2196f3 2px,#1565c0 3px,#2196f3 4px); }
+    .crayon.rouge::before { background: repeating-linear-gradient(60deg,#f44336,#f44336 2px,#c62828 3px,#f44336 4px); }
+    .crayon.aqua::before { background: repeating-linear-gradient(-60deg,#00ffff,#00ffff 2px,#00cccc 3px,#00ffff 4px); }
+
+    .mark2 {
+      background-color: transparent; color: inherit; padding: 0 2px; display: inline-block;
+      background-image: linear-gradient(90deg, rgba(255,200,150,.6), rgba(255,150,150,.7), rgba(200,150,255,.8));
+      background-repeat: no-repeat; background-size: 100% 100%; background-position: 0 10%; border-radius: 5px;
+    }
+    .dots::after { content: ""; animation: dotsAnim 1.2s steps(4,end) infinite; }
+    @keyframes dotsAnim {
+      0%{content:""} 25%{content:"."} 50%{content:".."} 75%{content:"..."} 100%{content:""}
+    }
+li {
+  list-style-position: inside;
+}
+    .hero {
+      position: relative;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      overflow: hidden;
+      background-color:  #0a0014;   
+      isolation: isolate;         
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("../../../Images/go.jpg") center center / cover no-repeat; /* chemin de ton image */
+      filter: blur(6px);
+      transform: scale(1.08);      /* évite les bords vides causés par le blur */
+      z-index: 0;                  /* derrière le contenu */
+    }
+    .hero::after { /* léger voile pour améliorer le contraste du texte */
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.35));
+      z-index: 0;
+    }
+    .hero__content {
+      position: relative;
+      z-index: 1; /* au-dessus de l'image floutée */
+      padding: 0 1rem;
+    }
+    .hero h1 { margin: 0; font-size: clamp(1.8rem, 3vw + 1rem, 3rem); }
+    .hero .meta { margin-top: .5rem; opacity: .85; font-size: .95rem; }
+  .giflike {
+  width: 60%;
+  height: auto;
+  display: block;
+  pointer-events: none;   
+  object-fit: cover;      
+  border-radius: 8px;     
+}
+.btn-add { background: rgb(80,255,80); }
+.btn-add:hover { background: rgb(60,220,60); }
+h5 {
+  font-size: 1.25em;
+  font-weight: bold;
+  color: rgb(110, 20, 255);
+}
+
+h5 .emoji {
+  color: initial;
+  font-size: 1em;
+}
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    function copyCode() {
+      const code = document.getElementById('code-block')?.innerText || '';
+      navigator.clipboard.writeText(code).catch(()=>{});
+    }
+  </script>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <h1>Combien de temps un aliment met-il pour devenir dangereux ?</h1>
+      <div class="meta">Rédigé 25/06/2026</div>
+    </div>
+  </header>
+  <main style="padding: 1rem;">
+  
+<div id="Intro">
+<center><h3>Introduction</h3></center>
+<p>   Cela vous est probablement déjà arrivés: Vous rentrez des courses, fatigués et, horreur, quelques heures plus tard, vous constatez que vous avez oublié le sac des surgelés. Pouvez-vous consommer les aliments à l'intérieur ?
+<br>
+Pour savoir cela, on va devoir modéliser, et pour modéliser, nous allons être contraits de négliger des paramètres:
+<li>On va supposer que le danger ne vient que des bactéries, en négligeant les autres agents pathogènes (champignons, protozaires, parasites...)
+<li>On va négliger les bactéries qui résistent à la cuisson sous forme de spores (comme <i>Clostridium Botuli</i>, une bactérie vivant dans la terre qui, pour éliminer la concurrence, produit la toxine connue la plus puissante )
+<li>On va supposer que notre aliment contient B0 bactéries au temps 0 (avant le réchauffement)
+<br><br>
+     Tout d'abord, il faut savoir que le danger des bactéries pathogènes réside dans les toxines qu'elles produisent: Par sélection naturelle, les mutations des bactéries leur conférant la capacité de se transmettre facilement d'un individu à l'autre se sont davantage concervées. Les toxines produites par les bactéries ont souvent cette fonction: provoquer des symptômes afin que l'individu propage plus facilement la bactérie. Ainsi, si par coévolution, nous nous sommes adaptés en développant un système immunitaire stigmatisant ces bactéries pathogènes, le bénéfice de contaminer plus de monde a dominé leur désavantage de se faire neutraliser, c'est pour cela qu'on observe des bactéries pathogènes... Mais en cuisant nos aliments, les bactéries, étant comme nous, constituées en grande partie d'eau pour effectuer la respiration cellulaire, meurent car l'eau s'avapore... Cependant, de nombreuses toxines bactériennes sont thermoactives, c'est à dire qu'elles restent dangereuses même à des températures élevées. 
+</div>
+<br>
+<div id="parties">
+<center><h3>Modéliser l'évolution du nombre de bactéries</h3></center>
+<p>    Tentons de modéliser l'évolution du nombre de bactéries...</p>
+<p>Une première approche pourrait être de supposer qu'à chaque génération, le nombre de bactéries double. en notant Bn la quantité de bactéries à la génération n, on a la relation B(n+1)=Bn*2 et donc Bn=B0*2<sup>n</sup> puisque l'on aura multiplié n fois Bn par 2. En notant d le seuil de danger (presque impossible à fixer mais bon, nous sommes dans le cadre d'une modélisation...), il nous suffit de regarder mathématiquement quand Bn dépasse d (Bn>d) ce qui revient à résoudre l'inéquation 2<sup>n</sup> > d donc n > ln(d)/ln(2). Comme une génération bactérienne survient en environ 20 min dans des conditions optimales, le seuil d sera dépassé en 20/ln(2) * ln(d) minutes
+<br>
+<p>Cependant, nous sommes confrontés à une première limite: En résolvant l'inéquation Bn>d (comme Bn est croissante, on aurait pu résoudre Bn=d), si l'on obtient un n décimal (par exemple 5,4), il faudra arrondir au supérieur (donc 6) car la génération 5,4 n'existe pas... Sauf que les bactéries ne se multiplient pas de manière synchronisée, utiliser un modèle discret (modéliser par bonds, par générations ici) peu donc s'avérer imprécis. C'est pourquoi nous allons modéliser l'évolution bactérienne de manière continue:</p>
+<p>Comme Bn+1=2*Bn, autrement dit, à chaque génération, on ajoute le nombre actuel de bactéries au nombre actuel de bactéries (oui, je sais, j'aurais pu dire 'on multiplie le nombre de bactéries par 2' mais vous allez voir, cette tournure va vous faire comprendre), alors on en déduit que la variation entre deux générations (qui est donc de Bn) est proportionnelle au nombre de bactéries Bn. Cela s'écrit ainsi: B'(n)=aB(n). La fonction dont la dérivée donne a fois elle même est l'expodentielle Ce<sup>U</sup> = U'e<sup>U</sup> il faut que notre U' soit a, donc U=ax. donc B(n)= Ce<sup>ax</sup>. Or 
+on sait que B(0)=B0.Donc C=B0, donc B(n)=B0e<sup>ax</sup>. De plus, B(20)=2*B0 (car le nombre de bactéries double en 20 min) donc B0e<sup>20a</sup>=2*B0 donc e<sup>20a</sup>=2 donc 20a=ln(2) donc a=ln(2)/20 donc B(n)= B0e<sup>(ln(2)/20)x</sup><br>
+Nous voilà avec un modèle continu, qui nous permet d'estimer le nombre de bactéries au temps 3,14 par exemple.
+<br><br>    Mais si nous considérons que la nourriture est constante et limitée (qu'elle ne s'épuise jamais à cause des bactéries qui en consomment, mais que, malgré tout, il ne peut pas y avoir à un temps t plus de consommation de nourriture que de nourriture disponible), notre modèle, qui croît indéfiniment, de plus en plus vite, devient vite dépassé...
+<br><br>    Il nous faut créer un modèle qui serait croissant mais qui tendrait vers un seuil maximal k (seuil d'équilibre représentant la quantité de nourriture disponible divisée par la quantité de nourriture consommée par bactéries)...
+<br><br>    Un modèle pareil a déjà été trouvé et nous nous contenterons de le comprendre plutôt que de réinventer la roue. Ce modèle se nomme modèle logistique, il tend vers K quand x tend vers l'infini: 
