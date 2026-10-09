@@ -191,27 +191,12 @@ CPSSS_{n+1}=Constante
 \end{cases}
 $$
 <p> Donc :
-<p>$$
+
 \begin{cases}
-C_{n+1}=C_n+CPS_n\\
-CPS(n)= CPSSS\left(\frac{n(n+1)}{2}\right)
+CPS(n)=CPS_0+n\,CPSS_0+\dfrac{n(n-1)}{2}\,CPSSS\\
+C(n)=C_0+\displaystyle\sum_{i=0}^{n-1} CPS(i)
 \end{cases}
-$$</p>
-<p>$$
-\begin{cases}
-C_{n+1}=C_n+CPSSS\left(\frac{n(n+1)}{2}\right)\\
-\end{cases}
-$$</p>
-<p>$$
-C(n)=C(0)+\sum_{i=0}^{n}CPSSS\left(\frac{n(n+1)}{2}\right)\\
-$$
-<p>
-<p>$$
-C(n)=C(0)+CPSSS\sum_{i=0}^{n}\left(\frac{n(n+1)}{2}\right)\\
-$$
-<p>$$
-C(n)=C(0)+\frac{CPSSS}{2}n^3+CPSSS\,n^2+\frac{CPSSS}{2}n
-$$
+
 <p>Voilà, il faudra résoudre cette suite avec cette démarche à chaque seconde (car l'utilisateur jouerait en même temps d'avoir activé l'option 'clique 1 fois par seconde sur le bouton le plus rentable' ce qui changerait toutes les variables...
 <center><h5>Généralisation: vers la n-ième dérivée discrète</h5></center>
 
@@ -230,9 +215,7 @@ X^{(k)}_{n+1}=X^{(k)}_n+X^{(k+1)}_n
 \end{cases}
 $$
 <p>
-où X^(k) représente la k-ième dérivée discrète de la production de cookies. Car oui, chaque 'par seconde' supplémentaire est une dérrivée du précédent 'par seconde': CPS est la dérrivée de Cookies (en réalité, c'est plutôt Cookies qui est primitive de CPS mais l'un implique l'autre)
-</p>
-
+où X^(k) représente la k-ième dérivée discrète de la production de cookies. Car oui, chaque 'par seconde' supplémentaire est une dérrivée du précédent 'par seconde': CPS est la dérrivée de Cookies. Puisque La variation entre C(s) et C(s+1) est de CPS (assez trivial mais bon à rappeller)
 <p>
 Si la dernière dérivée ajoutée est une constante A, alors chaque remontée dans la chaîne correspond à une somme discrète.
 Et on a vu précédemment que sommer une constante donnait une fonction affine, sommer une fonction affine donnait une fonction quadratique, sommer une fonction quadratique donnaiot une fonction cubique, etc.
@@ -419,36 +402,19 @@ n ≥ log<sub>2</sub>(N)
 </p>
 <center><img src="Figure_2.png" width="50%"></center><br>
 <center><img src="Figure_3.png" width="50%"></center><br>
-<p>
-<h5>II- Encore plus rapide avec la méthode de Newton-Raphson:</h5>
-<p>
-La dichotomie est déjà très efficace car elle divise le problème par 2 à chaque itération.
-Mais elle ne tient pas compte de la forme de la fonction.
-
-On peut faire encore mieux avec une méthode qui "utilise la pente" de la courbe : la méthode de Newton-Raphson.
-L’idée est qu'au lieu de couper l’intervalle en deux, on suit la tangente de la courbe pour aller directement vers la racine. La formule à appliquer est:
-</p>
-<center>
-$$
-x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
-$$</center>
-
-<p>
-Ici, f(x) correspond à notre fonction :
-</p>
-
-<center>
-C(x) - S = ax<sup>3</sup> + bx<sup>2</sup> + cx + d - S
-</center>
-
-<p>
-et sa dérivée :
-</p>
-
-<center>
-f'(x) = 3ax<sup>2</sup> + 2bx + c
-</center>
-
+</div><br><br>
+<div id="parties">
+<center><h3>Partie 3: Codage de l'ia</h3></center>
+<h5>Premier problème: greedy algorithm 😫😫😫</h5> 
+<p>   J'avais terminé la partie maths, et commençai tout content à coder mon ia. Cela étant fait, j'éxécutai, et voici le output (la sortie) qu'il me renvoya:
+<figure><img src="output.jpg"></img><figcaption>Cps initial de 1, on voit que l'algorithme ne fait qu'ociller entre cps et cookies</figcaption>
+</figure>
+<p> L'algorithme était codé pour que chacune de ses actions fasse arriver la quantité de cookies à 500 le plus vite possible (pour obtenir le plus haut degré de production).
+Le souci était qu'il n'était pas codé pour que la totalité de ses actions fasse arriver la quantité de cookies à 500, mais que ce soit chacune de ses actions qui le fasse individuellement. 
+</p><p>Mon programme n'avait aucune vision de long terme puisque chaque décision prédisait la solution optimale dans la condition où la situation restait constante (sans prendre en compte les décisions futures)
+<br>
+<p>C'est donc avec regret que j'annonce ce projet comme non résolu. Il n'aura cependant pas été vain puisque les notions abordées étaient fort intéressantes...
+<p>J'ai donc fini par ce bon vieil algorithme très glouton, qui achète systématiquement l'amélioration la plus chère qu'il peut se permettre</p>
 <div class="code-container" role="region" aria-label="Bloc de code Python">
   <div class="code-header">
     python
@@ -457,35 +423,76 @@ f'(x) = 3ax<sup>2</sup> + 2bx + c
     </button>
   </div>
   <pre class="code-content" id="code-block">
-def f(x):
-    return C(x) - 500
 
-def df(x):
-    return 3*a*x**2 + 2*b*x + c   # dérivée de ax^3 + bx^2 + cx + d
+import math
 
-x = 1  # point de départ
+cookies = 0
+cps = 0
+cpss = 0
+cpsss = 0
 
-while abs(f(x)) > 1e-6:
-    x = x - f(x) / df(x)
+prixcps = 25
+prixcpss = 100
+prixcpsss = 500
 
-print(x)
+# Historique des variables
+temps = []
+historique_cookies = []
+historique_cps = []
+historique_cpss = []
+historique_cpsss = []
+historique_achats = []
+
+achats = 0
+
+# Simulation de 300 générations
+for generation in range(300):
+
+    if cookies >= prixcpsss:
+        cookies -= prixcpsss
+        cpsss += 1
+        achats += 1
+        action = "Acheter CPSSS"
+
+    elif cookies >= prixcpss:
+        cookies -= prixcpss
+        cpss += 1
+        achats += 1
+        action = "Acheter CPSS"
+
+    elif cookies >= prixcps:
+        cookies -= prixcps
+        cps += 1
+        achats += 1
+        action = "Acheter CPS"
+
+    else:
+        cookies += 1
+        action = "Produire cookies"
+
+    # Production automatique
+    cookies += cps
+    cps += cpss
+    cpss += cpsss
+
+    # Enregistrement des données
+    temps.append(generation + 1)
+    historique_cookies.append(cookies)
+    historique_cps.append(cps)
+    historique_cpss.append(cpss)
+    historique_cpsss.append(cpsss)
+    historique_achats.append(achats)
+
+    print(
+        generation + 1,
+        action,
+        cookies,
+        cps,
+        cpss,
+        cpsss
+    )
+
   </pre>
 </div>
-<p>
-Contrairement à la dichotomie, la méthode de Newton-Raphson converge en très peu d’itérations si le point de départ est bien choisi.
-</p>
-</p>
-<p>
-Là où la dichotomie nécessite environ log<sub>2</sub>(N) étapes,
-Newton-Raphson peut atteindre la solution en moins de 5 à 7 itérations dans de nombreux cas.
-</p>
-<p>
-Bon, après, cette rapidité a un prix: la méthode peut diverger si le point de départ est mal choisi ou si la dérivée est proche de zéro mais si on utilise cette méthode après que l'utilisateur ait acheté un cookie par seconde, et  qu'on prends x=0 comme point de départ, ça fonctionne bien.
-</p>
-</div><br><br>
-<div id="parties">
-<center><h3>Partie 3: Codage de l'ia</h3></center>
-<h5>Premier problème: greedy algorithm 😫😫😫</h5> 
-<p>   J'avais terminé la partie maths, et commençai tout content à coder mon ia. Cela étant fait, j'éxécutai, et voici le output (la sortie) qu'il me renvoya:
-<figure><img src="output.jpg"></img><figcaption>Cps initial de 1, on voit que l'algorithme ne fait qu'ociller entre cps et cookies</figcaption>
-</figure>
+<br><p>Enfin bref, j'ai encore eu les yeux plus gros que le ventre, heuresement, le glouton mangera les cookies de trop à ma place 😉
+<center><img src="end.png" width="100%"></center><br>
