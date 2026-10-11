@@ -12,6 +12,10 @@
   <meta name="author" content="Timothé AOUN">
 
   <style>
+    alinea {
+    display: block;
+    text-indent: 6ch;
+  }
     a { text-decoration: none; color: green; }
     a:hover { text-decoration: underline; color: orange; }
     code1 { background-color: rgb(50, 10, 40); color: #444; }
@@ -113,7 +117,7 @@ h5 .emoji {
 <center><h3>Introduction</h3></center>
 <p>   Cela vous est probablement déjà arrivés: Vous rentrez des courses, fatigués et, horreur, quelques heures plus tard, vous constatez que vous avez oublié le sac des surgelés. Pouvez-vous consommer les aliments à l'intérieur ?
 <br>
-Pour savoir cela, on va devoir modéliser, et pour modéliser, nous allons être contraits de négliger des paramètres:
+Pour savoir cela, on va devoir modéliser, et pour modéliser, nous allons être contraints de négliger des paramètres:
 <li>On va supposer que le danger ne vient que des bactéries, en négligeant les autres agents pathogènes (champignons, protozaires, parasites...)
 <li>On va négliger les bactéries qui résistent à la cuisson sous forme de spores (comme <i>Clostridium Botuli</i>, une bactérie vivant dans la terre qui, pour éliminer la concurrence, produit la toxine connue la plus puissante )
 <li>On va supposer que notre aliment contient B0 bactéries au temps 0 (avant le réchauffement)
@@ -122,14 +126,62 @@ Pour savoir cela, on va devoir modéliser, et pour modéliser, nous allons être
 </div>
 <br>
 <div id="parties">
-<center><h3>Modéliser l'évolution du nombre de bactéries</h3></center>
-<p>    Tentons de modéliser l'évolution du nombre de bactéries...</p>
-<p>Une première approche pourrait être de supposer qu'à chaque génération, le nombre de bactéries double. en notant Bn la quantité de bactéries à la génération n, on a la relation B(n+1)=Bn*2 et donc Bn=B0*2<sup>n</sup> puisque l'on aura multiplié n fois Bn par 2. En notant d le seuil de danger (presque impossible à fixer mais bon, nous sommes dans le cadre d'une modélisation...), il nous suffit de regarder mathématiquement quand Bn dépasse d (Bn>d) ce qui revient à résoudre l'inéquation 2<sup>n</sup> > d donc n > ln(d)/ln(2). Comme une génération bactérienne survient en environ 20 min dans des conditions optimales, le seuil d sera dépassé en 20/ln(2) * ln(d) minutes
+<center><h3>1- Modèle discret simple</h3></center>
+<p>Pour commencer, on peut essayer de modéliser le nombre de bactéries générations après générations.</p>
+<p>Si on suppose que le nombre de bactéries double à chaque génération, on obtient la relation B(n+1)=2B(n), pour B(n) la quantité de bactéries à la génération n.
+Donc à la génération n, on aura multiplié le nombre initial de bactéries par 2 n fois successivement: B(n)=B0*2<sup>n</sup>. On estime que chez certaines bactéries, une génération peut être engendrée toutes les 20 minutes.</p>
+<p>Bien, maintenant, entrons dans le vif du sujet: Supposons que chaque bactérie produit α quantité de toxines par minutes. La quantité de toxine PRODUITE à la génération n (notons-la T'(n) ) est donc de B(n)*20α donc de 2<sup>n</sup>B0*20α. Mais nous cherchons la quantité de toxines TOTALE au temps n, c'est à dire la somme des quantités de toxines produites à chaque génération, de 0 à n+ la quantité initiale de toxine (qui est ici égale à 0).
+
+
+<p>\(T(n)=\sum_{i=0}^{n}T'(i)\iff T(n)=\sum_{i=0}^{n}2^iB_0 \cdot 20\alpha\iff T(n)=20\alpha B_0 \cdot\sum_{i=0}^{n}2^i\)</p>
+<p>Or, en posant S=\(\sum_{i=0}^{n}2^i\), on a: <br><br>S-2S=\(\sum_{i=0}^{n}2^i\)-\(\sum_{i=1}^{n+1}2^i\)=(\(\color{blue}2^0+\color{red}\sum_{i=1}^{n}2^i\)) - (\(\color{green}2^{n+1}+\color{red}\sum_{i=1}^{n}2^i\))
+<p>Donc \(S-2S=2^0-2^{n+1}\) donc \(\frac {S(1-2)}{1-2} =  \frac {2^0-2^{n+1}} {1-2}\) et donc S=\(2^{n+1}-1\)
+<p>Donc \(T(n) = 20\alpha B_0 \cdot 2^{n+1}-1\).
 <br>
-<p>Cependant, nous sommes confrontés à une première limite: En résolvant l'inéquation Bn>d (comme Bn est croissante, on aurait pu résoudre Bn=d), si l'on obtient un n décimal (par exemple 5,4), il faudra arrondir au supérieur (donc 6) car la génération 5,4 n'existe pas... Sauf que les bactéries ne se multiplient pas de manière synchronisée, utiliser un modèle discret (modéliser par bonds, par générations ici) peu donc s'avérer imprécis. C'est pourquoi nous allons modéliser l'évolution bactérienne de manière continue:</p>
-<p>Comme Bn+1=2*Bn, autrement dit, à chaque génération, on ajoute le nombre actuel de bactéries au nombre actuel de bactéries (oui, je sais, j'aurais pu dire 'on multiplie le nombre de bactéries par 2' mais vous allez voir, cette tournure va vous faire comprendre), alors on en déduit que la variation entre deux générations (qui est donc de Bn) est proportionnelle au nombre de bactéries Bn. Cela s'écrit ainsi: B'(n)=aB(n). La fonction dont la dérivée donne a fois elle même est l'expodentielle Ce<sup>U</sup> = U'e<sup>U</sup> il faut que notre U' soit a, donc U=ax. donc B(n)= Ce<sup>ax</sup>. Or 
-on sait que B(0)=B0.Donc C=B0, donc B(n)=B0e<sup>ax</sup>. De plus, B(20)=2*B0 (car le nombre de bactéries double en 20 min) donc B0e<sup>20a</sup>=2*B0 donc e<sup>20a</sup>=2 donc 20a=ln(2) donc a=ln(2)/20 donc B(n)= B0e<sup>(ln(2)/20)x</sup><br>
-Nous voilà avec un modèle continu, qui nous permet d'estimer le nombre de bactéries au temps 3,14 par exemple.
-<br><br>    Mais si nous considérons que la nourriture est constante et limitée (qu'elle ne s'épuise jamais à cause des bactéries qui en consomment, mais que, malgré tout, il ne peut pas y avoir à un temps t plus de consommation de nourriture que de nourriture disponible), notre modèle, qui croît indéfiniment, de plus en plus vite, devient vite dépassé...
-<br><br>    Il nous faut créer un modèle qui serait croissant mais qui tendrait vers un seuil maximal k (seuil d'équilibre représentant la quantité de nourriture disponible divisée par la quantité de nourriture consommée par bactéries)...
-<br><br>    Un modèle pareil a déjà été trouvé et nous nous contenterons de le comprendre plutôt que de réinventer la roue. Ce modèle se nomme modèle logistique, il tend vers K quand x tend vers l'infini: 
+<p>On en conclut qu'à la génération n, la quantité de toxines sera de 20αB0(2<sup>n+1</sup>-1). Le problème est qu'on ne peut calculer la quantité de toxines qu'à des temps multiples de 20 minutes (car les générations sont entières).</p>
+<p>Si d est la quantité de toxines mortelle pour un adulte, alors pour savoir quand ce seuil sera atteint, il suffit de résoudre l'inéquation \(T(n)\geq d\). Dans notre cas, (\(20\alpha B_0 \cdot 2^{n+1}-1 \geq d \)) donc \(n\geq \frac {d+1}{20\alpha B_0\ln(2)}-1\) car ln(2),2<sup>n+1</sup>,B0 supérieurs à 0, et avec B0 différent de 0
+<p>Si on prends par exemple, α=10ng, B0=1 et d=1000ng, on aura \(n\geq \frac {1001}{200 \ln(2)}-1\) donc le seuil est atteint pour n≈ 6.22 donc entre la 6e et la 7e génération. Si on arrondi à l'inférieur (question de sécurité), il sera atteint en 6*20 soit 120 minutes soit 2h00.
+<p>On constate cependant que cela reste imprécis quand on obtient une génération non-entière puisque nous sommes alors obligés d'arrondir. C'est pourquoi nous pouvons tenter une autre méthode en modélisant cette fois non pas le nombre de bactéries à la génération n, mais au temps t...
+</div><br>
+<div id="parties">
+<center><h3>2- Modèle continu simple</h3></center>
+<p><alinea>Pour modéliser le nombre de bactéries au temps t, intéressons-nous rapidement à la notion de dérivée... 
+<p>D'abord, parlons de pente:
+<div style="display: flex; align-items: center; gap: 20px;">
+    <img src="Pente.png" width="50%" alt="Illustration de la pente">
+
+    <p><alinea>Par définition, la pente est la variation de \(y\) lorsque \(x\) augmente de 1 unité. Dans notre cas, lorsqu'on avance de xb-xa unités, on monte de yb-ya unités. Par proportionalité, quand on avance de 1 (donc \(\frac {x_b-x_a}{x_b-x_a}\)), je monte de \(\frac {y_b-y_a}{x_b-x_a}\). Cela est la pente moyenne, mais il peut évidemment exister un point C entre A et B tel que \(\frac{y_C-y_A}{x_C-x_A} \neq \frac{y_B-y_C}{x_B-x_C}\).<br> Dans une fonction type f(x)=ax+b, on remarque qu'à chaque fois qu'on avance d'un x, on monte de a. C'est à dire que \(f(x+1)-f(x)=a\). La pente exprime donc la variation entre deux points...
+    </p>
+</div>
+<br><p><alinea>Bien, maintenant, si je voulais donner la pente d'une fonction (donc la pente de tous les points qui la compose)... On viens de voir que la pente de la fonction f(x)=ax+b était de a, car à chaque fois que j'avance de 1, je monte de a (on peut le démontrer en calculant \((a(x+1)+b)-(ax+b) =a\)). Mais si nous prenons une fonction dont la pente est différente d'un point à l'autre (points non alignés), le scénario se complique:
+<p>Prenons \(f(x)=x^2\), on voit que lorsqu'on avance de 1, on monte de \((x+1)^2-x^2\) soit \(2x+1\), et ceci n'est pas une contante. La pente entre deux points consécutifs sera donc toujours différente (sauf pour \(2x+1 = x^2)\), nous aurons l'occasion de démontrer la résolution de ce type d'équations dans d'autres projets... Bref, il faut donc qu'on exprime la pente de chaque point de f(x) pour connaître la variation de celle-ci pour tout x. Or, comme les points ne sont pas alignés (nous venons de le voir), calculer la pente de tous les points consécutifs ne suffit pas (car il y aura alors d'autres points non-alignés entre ces deux points). Il faut donc caluler la pente entre deux points infiniement proches: variation(x)=\(\frac {f(x+o)-f(x)}{x+o-x}\) avec o tendant vers 0
+<p>Par convention, variation(x) s'appelle dérrivée de x et se note: \(f'(x)=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}\) par exemple si f(x)=x<sup>2</sup> alors la pente de f au point x sera \(
+f'(x)=\lim_{h\to 0}\frac{x^2+h^2+2xh-x^2}{h}
+=\frac{h(h+2x)}{h}
+=2x+h
+=2x
+\)
+<br><br>
+<p><alinea>Revenons maintenant à nos bactéries: On sait que la variation entre deux générations de bactéries est de B(n) puisque B(n+1)=B(n)*2 donc B(n)+B(n). Par conséquent on en déduit que la dérrivée B'(n) est proportionnelle à B(n). De manière continue, cela donnerait donc \(B'(t)=aB(t)\) avec t un nombre réel. La fonction dont la dérrivée donne a fois elle-même est l'expodentielle: \(B'(t)=aB(t)\implies B(t)=Ce^{at}\). Une génération durant 20 min, B(20)=2B0 et B(0) étant égal à \(B_0\), on a donc \(\begin{cases} Ce^{20}=2B_0a\\ Ce^0=B_0 \end{cases}\) donc \(\begin{cases} a=\frac {Ce^{20}}{2B_0}\\ C=B_0 \end{cases}\)donc
+\( a=\frac {e^{20}}{2}\) et donc \(B(t)=B_0e^{(\frac {e^{20}}{2}t)}\). La quantité de toxines PRODUITES au temps t est donc égale au nombre de bactéries au temps t multiplié par la quantité de toxines produites par bactéries par génération. On a donc \(T'(t)=20αB(t)=20αB_0e^{(\frac {e^{20}}{2}t)}\)
+<br><br><alinea>Pour calculer la quantité TOTALE de toxines, il nous faudrait calculer la somme de toutes les toxines produites antérieurement, une sorte de somme continue de T'(t), avec t allant de 0 à n, et un pas infiniement petit. Pour pouvoir calculer cela, levons un peu la tête de nos calculs...
+<br><br><alinea>Au fond, dans la vie, nous passons notre temps à faire des sommes continues sans nous en rendre compte. Imaginons que vous décidiez de remplir un sceau contenant un volume V0 d'eau. vous ouvrez le robinet, plus ou moins, faisant varier le flux. Si au temps t, je vous demande d'arrêter de remplir le sceau, et que je vous demande qu'elle est la somme continue de toutes les variations d'eau dans le sceau, il ne vous sera pas difficile de répondre: ce sera le volume final d'eau dans votre sceau - v0. C'est cela la définition d'une somme continue (appellée intégrale): La somme des variation entre a et b est tout simplement f(b)-f(a). Écrivons cela rigoureusement: 
+\[
+\int_a^b f'(x)\,dx = f(b)-f(a)
+\]
+Pour l'instant, cela ne nous aide pas vraiment car nous cherchons \(\int_a^b f(x)\,dx\). Cepeandant, si nous connaissons une fonction F dont la dérivée serait f, nous aurions alors \[
+\int_a^b f(x)\,dx = F(b)-F(a)
+\] Et c'est cela qu'on va devoir faire: trouver une fonction dont la dérivée est \(20αB_0e^{(\frac {e^{20}}{2}t)}\). Une telle fonction (réciproque de la dérrivée) se nomme primitive...
+<br>
+<p>Récapitulons: <li>on cherche \(\int_0^t T'(x)\,dx\) donc \(\int_0^t 20αB_0e^{(\frac {e^{20}}{2}t)}\,dx\) qui est notre quantité totale de toxines au temps t. </li><li>Pour cela, il nous faut trouver la fonction primitive de T (notons-la P). Notre quantité totale de toxine au temps t sera donc de P(t)-P(0). <li>Le seuil d de toxines sera dépassé à 
+\(
+P(t)-P(0)\geq d
+\)
+\(
+\text{donc } P(t)\geq d+P(0)\)
+</li>
+</div><br><div id="parties">
+<center><h3>2- Modèle continu logistique</h3></center>
+<alinea> Mais si nous considérons que la nourriture est constante et limitée (qu'elle ne s'épuise jamais à cause des bactéries qui en consomment, mais que, malgré tout, il ne peut pas y avoir à un temps t plus de consommation de nourriture que de nourriture disponible), notre modèle, qui croît indéfiniment, de plus en plus vite, devient vite dépassé...
+<br><br>    Il nous faut créer un modèle qui serait croissant mais qui tendrait vers un seuil maximal k (seuil d'équilibre représentant la quantité de nourriture disponible divisée par la quantité de nourriture consommée par bactéries)...
+<br><br>On pourrait par exemple créer 
