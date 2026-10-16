@@ -12,6 +12,11 @@
   <meta name="author" content="Timothé AOUN">
 
   <style>
+  h5 {
+font-size: 1em;
+  font-weight: bold;
+  color: rgb(110, 20, 255);
+}
     alinea {
     display: block;
     text-indent: 6ch;
@@ -84,11 +89,6 @@ li {
 }
 .btn-add { background: rgb(80,255,80); }
 .btn-add:hover { background: rgb(60,220,60); }
-h5 {
-  font-size: 1.25em;
-  font-weight: bold;
-  color: rgb(110, 20, 255);
-}
 
 h5 .emoji {
   color: initial;
@@ -170,7 +170,7 @@ Nous pouvons tenter de représenter cela avec une somme de i=0 à t de T(i) avec
 <li>Pour une somme de a à b pour un pas de ε : ε*ε<sup>-1</sup>=1 donc on répète la boucle de sommation (b-a)(1/ε)fois. On aura donc \[\sum_{i=a}^{\frac {b}{ε}}iε\] mais comme i ne prend que des valeurs entières, on doit prendre la valeur entière de b/ε qu'on note \(\lfloor b/ε \rfloor \). La somme continue des variations T'(t) entre le temps 0 et le temps t peut donc s'écrire ainsi:
 \[T(t)=T_0+\lim_{ε\to 0}\sum_{i=0}^{\lfloor t/ε \rfloor}εT'(iε)
 \]
-Cette somme triviale s'appelle somme de Riemann. Elle est la définition de ce qu'on appellera une intégrale...
+Cette somme a été formalisée par le mathématicien Bernhard Riemann. Elle est la définition de ce qu'on appellera une intégrale...
 On constate qu'il est IMPOSSIBLE de calculer la valeur exacte de T(t) avec cette méthode, on ne peut que l'approximer en prenant un epsilon très petit puis en traçant le graphe de cette somme de t (→voir mon article <a href="https://timotheaoun.github.io/maths/Projets/Grapheur/Grapheur.html">recoder maplotlib</a>) (car il faudrait alors calculer avec un pas infiniement petit ce qui n'est pas possible) ... 
 Pour pouvoir calculer la valeur EXACTE de T(t), levons un peu la tête de nos calculs...
 <br><br><alinea>Au fond, dans la vie, nous passons notre temps à faire des sommes continues sans nous en rendre compte. Imaginons que vous décidiez de remplir un sceau contenant un volume V0 d'eau. vous ouvrez le robinet, plus ou moins, faisant varier le flux. Si au temps t, je vous demande d'arrêter de remplir le sceau, et que je vous demande qu'elle est la somme continue de toutes les variations d'eau dans le sceau, il ne vous sera pas difficile de répondre: ce sera le volume final d'eau dans votre sceau - v0. C'est cela la définition d'une somme continue (appellée intégrale): La somme des variation entre a et b est tout simplement f(b)-f(a). Écrivons cela rigoureusement: 
@@ -181,24 +181,56 @@ Pour l'instant, cela ne nous aide pas vraiment car nous cherchons \(\int_a^b f(x
 \int_a^b f(i)\,di = F(b)-F(a)
 \] Et c'est cela qu'on va devoir faire: trouver une fonction dont la dérivée est \(40αB_0e^{t/20}\). Une telle fonction (réciproque de la dérrivée) se nomme primitive...
 <br>
-<p>Récapitulons: <li>on cherche \(\int_0^t T'(t)\,dt\) donc \(\int_0^t 40αB_0e^{t/20}\,dt\) qui est notre quantité totale de toxines au temps t. </li><li>Pour cela, il nous faut trouver la fonction primitive de T (notons-la P). Notre quantité totale de toxine au temps t sera donc de P(t)-P(0). <li>Le seuil d de toxines sera dépassé à 
+<p>Récapitulons: <li>on cherche \(\int_0^t T'(i)\,di\) donc \(\int_0^t 40αB_0e^{i/20}\,di\) qui est notre quantité totale de toxines au temps t. </li><li>Pour cela, il nous faut trouver la fonction primitive de T (notons-la P). Notre quantité totale de toxine au temps t sera donc de P(t)-P(0). <li>Le seuil d de toxines sera dépassé à 
 \(
 P(t)-P(0)\geq d
 \)
 \(
 \text{donc } P(t)\geq d+P(0)\)
 </li>
+<p>Nous cherchons  \(\int_0^t 40αB_0e^{i/20}\,di\). Posons \(X=40αB_0\) (donc X constant, ne dépendant pas de i). On a donc: \(\int_0^t Xe^{i/20}\,di\). Or, la dérrivée de e<sup>U</sup>=U'e<sup>U</sup>. La fonction dont la dérrivée donne \(Xe^{i/20}\) est donc \(20Xe^{i/20}\). On a donc \(\int_0^t 40\alpha B_0 e^{i/20}\,di = F(t)-F(0)\)
+avec \(F(i)=800\alpha B_0 e^{i/20}\). Donc \(T(t)=800\alpha B_0 e^{t/20}-800\alpha B_0= 800\alpha B_0(e^{t/20}-1)\). Il suffirait ensuite de résoudre l'équation T(t)=d (car T(t) strictement croissant) pour avoir le temps(en minutes) à partir duquel le seuil d de toxine serait dépassé.
 </div><br><div id="parties">
-<center><h3>3- Modèle logistique et observation</h3></center>
+<center><h3>3- Modèles plus intéressants (mais plus compliqués)</h3></center>
+<h5>1) Modèle logistique</h5>
 <alinea> Mais si nous considérons que la nourriture est constante et limitée (qu'elle ne s'épuise jamais à cause des bactéries qui en consomment, mais que, malgré tout, il ne peut pas y avoir à un temps t plus de consommation de nourriture que de nourriture disponible), notre modèle, qui croît indéfiniment, de plus en plus vite, devient vite dépassé...
 <p>
 Il nous faut créer un modèle qui serait croissant mais qui tendrait vers un seuil maximal k (nombre maximal que le milieu peut acceuillir étant égal à la quantité de ressources disponibles divisé par la quantité de ressources consommées par bactéries)
 <p>Le taux de reproduction (donc la variation B') des bactéries est inversement proportionnel à la capacité maximale du milieu. Donc on multiplie a par 
 \(\frac {1 − B(t)}{K} \) Donc \(B’(t) = \frac {ln(\frac {2B_0}{C})}{20}B(t)\frac {1 − B(t)}{K} \) Ce modèle est un modèle logistique qui est très utilisé en biologie, pour tout ce qui est dynamique des populations
-<p>La fonction dont la dérrivée donne \(a \frac {1 − B(t)}{K} \) fois elle-même est \(B(t)= \frac {K} {\frac {1+(K-B0)}{B0}e^{-at}} \). 
-<p>La fonction dont la dérrivée donne \(a \frac {1 − B(t)}{K} \) fois elle-même est \(B(t)= \frac {K} {\frac {1+(K-B0)}{B0}e^{-at}} \). 
-<p> On a donc: \[B(t)= \frac {K} {\frac {1+(K-B0)}{B0}e^{-2tB_0e^{-20}}} \]
+<p>La fonction dont la dérrivée donne \(a \frac {1 − B(t)}{K} \) fois elle-même est \(B(t)= \frac {K} {\frac {1+(K-B0)}{B0}e^{-at}} \). à ce niveau là, il est assez difficile voir impossible de la retrouver intuitivement. On admettra simplement cela dans notre raisonnement.
+On obtient donc: \(B(t)= \frac {K} {\frac {1+(K-B0)}{B0}e^{-2tB_0e^{-20}}} \)
 <p> T'(t)=20αB(t) donc comme T(t) est la somme continue de toutes les variations T'(t), c'est à dire l'intégrale de 0 à t de T'(t), on a:
-\[T(t)=
-\int_0^t 20α \frac {K}{\frac {1+(K-B0)}{B0}e^{-2tB_0e^{-20}}}\,dt
-\] 
+\(T(t)=
+\int_0^t \frac {20αKe^{-40iB_0}}{\frac {1+(K-B0)}{B0}}\,di
+\). là encore, trouver une la primitive d'une telle expression est assez laborieux. Toutefois, on peut grandement simplifier l'expression en regroupant les constantes en une variable \(X→20αK\) et \(Y→\frac {1+(K-B0)}{B0}\): 
+\(T(t)=
+\int_0^t \frac {Xe^{-40iB_0}}{Y}\,di
+\) donc on cherche une primitive à la fonction \(T'(i)=\frac{X}{\sqrt{Y}}\frac{-40iB_0}{\sqrt{Y}}\) avec Y positif
+Mais ne nous attardons pas à résoudre cela, notre but est juste de modéliser avec des outils mathématiques dont on comprend le sens.<br>
+<h5>2)Modélisation dans l'espace</h5>
+<p>Ajoutons le paramètre distance à notre fonction B(t): On aura B(d,t) le nombre de bactéries à une distance d du centre de la colonie, au temps t. B'(d,t) sera donc la variation du nombre de bactéries à une distance d du centre de la colonie au temps t. On peut remarquer que plus une bactérie est proche du centre de la colonie par rapport au rayon total de la colonie, plus elle est désavantagée (manque de nutriments et d'autres ressources, compétition accrue). Au contraire, plus une bactérie est loin du centre (plus sa position se rapproche du rayon de la colonie), moins elle sera désavantagée par les autres bactéries (plus de nutriments disponibles, plus d'oxygène...)
+<p>On peut donc dire que la variaiton B'(d,t) est proportionnelle à la distance d au centre de la colonie/le rayon de la colonie. Donc \(B'(d,t)=a \frac {d}{r(t)}\). Avec r(t) le rayon de la colonie au temps t.
+<p>De plus, on sait que le volume total de la colonie est égal au nombre total de bactéries*le volume v d'une bactérie (en supposant qu'elles sont toutes collées)
+<p>Donc \(vB(t)=\frac{4}{3}\pi r^3(t)\) donc \(r(t)=\sqrt[3]{\frac{3vB(t)}{4𝜋}}\) On a donc \(B'(d,t)=a \frac {d}{\sqrt[3]{\frac{3vB(t)}{4𝜋}})}\). Voici un petit schéma pour éclaircir tout cela: 
+<br><div class="conteneur">
+<img src="Bactéries.png" width="70%"><i>PS: on est sur des calculs de volume et non d'aire, ce dique est une sphère</i></div>
+<style>
+.conteneur {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+	color: grey;
+}
+
+.conteneur img {
+    height: auto;
+}
+
+.conteneur p {
+    margin: 0;
+}
+</style>
+<p>Nous pouvons remarquer que le nombre de bactéries au temps t est égal à la somme continue(l'intégrale) de toutes les bactéries entre la distance 0 et la distance r(t) du centre de la colonie (on somme donc une infinité de périmètres de sphères d'un rayon de 0 à r) ce qui est égal au volume de la colonie divisé par le volume d'une bactérie.
+<div class="conteneur"><img src="Bact2.png" width="50%">PS: Imaginez seulement que ce disque est une sphère</i></div>
+<p>On a donc \[T(t)=\int_0^t(20\alpha \int_0^r(t) B(i,t))di\]
